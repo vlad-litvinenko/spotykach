@@ -67,7 +67,7 @@ void Trigger::prepareCWordPattern(int onsets, double shift, int numerator, int d
     _triggerPoints->clear();
     _beatsPerPattern = _numerator;
     double beatShift = shift * _numerator;
-    for (auto i = 0; i < pattern.size(); i++) {
+    for (auto i = 0; i < int(pattern.size()); i++) {
         if (!pattern[i]) continue;
         double point = static_cast<double>(i) / _numerator + beatShift;
         if (point >= _beatsPerPattern) {
