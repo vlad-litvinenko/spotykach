@@ -8,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Sat Jun 11 14:37:51 2022
+# Make data base, printed on Sat Jun 11 15:11:46 2022
 
 # Variables
 
@@ -20,7 +20,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 LDSCRIPT = $(SYSTEM_FILES_DIR)/STM32H750IB_flash.lds
 # environment
 VSCODE_LOG_NATIVE = false
-# makefile (from `Makefile', line 8)
+# makefile (from `Makefile', line 6)
 CPP_SOURCES = that_simple.cpp core/Engine.cpp core/Envelope.cpp core/Generator.cpp core/Slice.cpp core/SliceBuffer.cpp core/Source.cpp core/Spotykach.cpp core/ Trigger.cpp
 # makefile (from `Makefile', line 2)
 TARGET = that_simple
@@ -51,7 +51,7 @@ _ = /usr/bin/make
 # makefile (from `../DaisyExamples/libDaisy//core/Makefile', line 180)
 CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -Wno-missing-attributes -fasm -fdata-sections -ffunction-sections -Wno-stringop-overflow -g -ggdb -MMD -MP -MF"$(@:%.o=%.d)"
 # makefile (from `build/startup_stm32h750xx.d', line 1)
-MAKEFILE_LIST :=  Makefile ../DaisyExamples/libDaisy//core/Makefile build/Engine.d build/Envelope.d build/Generator.d build/Slice.d build/SliceBuffer.d build/Source.d build/Spotykach.d build/Trigger.d build/spotykach_daisy.d build/startup_stm32h750xx.d
+MAKEFILE_LIST :=  Makefile ../DaisyExamples/libDaisy//core/Makefile build/startup_stm32h750xx.d
 # makefile (from `../DaisyExamples/libDaisy//core/Makefile', line 83)
 CP = $(PREFIX)objcopy
 # makefile (from `../DaisyExamples/libDaisy//core/Makefile', line 193)
@@ -67,7 +67,7 @@ INFOPATH = /opt/homebrew/share/info:
 # makefile (from `../DaisyExamples/libDaisy//core/Makefile', line 3)
 CHIPSET = stm32h7x
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/sq/35n50zm93tj7r487wzgp5p3c0000gn/T/vscode-ipc-0280cf41-54a0-45e9-8700-db23679ac9c1.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/sq/35n50zm93tj7r487wzgp5p3c0000gn/T/vscode-ipc-e64f2f10-3a21-4a2f-bc11-34f31d2ff15b.sock
 # makefile (from `../DaisyExamples/libDaisy//core/Makefile', line 23)
 GDB_FLAGS = 
 # environment
@@ -76,7 +76,7 @@ VSCODE_CWD = /
 PATH = /Users/vlly/.yarn/bin:/Users/vlly/.config/yarn/global/node_modules/.bin:/Users/vlly/DK/google-cloud-sdk/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/opt/local/bin:/opt/local/sbin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/vlly/DK/flutter/bin
 # makefile (from `../DaisyExamples/libDaisy//core/Makefile', line 194)
 CPP_STANDARD = -std=gnu++14
-# makefile (from `Makefile', line 12)
+# makefile (from `Makefile', line 10)
 DAISYSP_DIR = ../DaisyExamples/DaisySP/
 # environment
 VSCODE_LOG_STACK = false
@@ -157,6 +157,7 @@ USER = vlly
 # makefile (from `../DaisyExamples/libDaisy//core/Makefile', line 210)
 LIBDIR = -L$(LIBDAISY_DIR)/build -L $(DAISYSP_DIR)/build
 # makefile (from `../DaisyExamples/libDaisy//core/Makefile', line 93)
+ 
 CPU = -mcpu=cortex-m7
 # makefile (from `../DaisyExamples/libDaisy//core/Makefile', line 96)
 FPU = -mfpu=fpv5-d16
@@ -199,7 +200,6 @@ HOMEBREW_REPOSITORY = /opt/homebrew
 # makefile (from `../DaisyExamples/libDaisy//core/Makefile', line 102)
 MCU = $(CPU) -mthumb $(FPU) $(FLOAT-ABI)
 # makefile (from `../DaisyExamples/libDaisy//core/Makefile', line 166)
- 
 C_INCLUDES = -Icore -include stm32h7xx.h -I$(LIBDAISY_DIR) -I$(LIBDAISY_DIR)/src/ -I$(LIBDAISY_DIR)/src/sys -I$(LIBDAISY_DIR)/src/usbd -I$(LIBDAISY_DIR)/src/usbh -I$(LIBDAISY_DIR)/Drivers/CMSIS/Include/ -I$(LIBDAISY_DIR)/Drivers/CMSIS/DSP/Include -I$(LIBDAISY_DIR)/Drivers/CMSIS/Device/ST/STM32H7xx/Include -I$(LIBDAISY_DIR)/Drivers/STM32H7xx_HAL_Driver/Inc/ -I$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Host_Library/Core/Inc -I$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc -I$(SYSTEM_FILES_DIR)/ -I$(DAISYSP_DIR)/Source -I$(FATFS_DIR)
 # environment
 __CF_USER_TEXT_ENCODING = 0x1F5:0x0:0x2
@@ -219,9 +219,9 @@ CXX = $(PREFIX)g++
 FATFS_SOURCES =  $(FATFS_DIR)/diskio.c $(FATFS_DIR)/ff.c $(FATFS_DIR)/ff_gen_drv.c $(FATFS_DIR)/option/ccsbcs.c
 # environment
 LC_ALL = C
-# makefile (from `Makefile', line 15)
+# makefile (from `Makefile', line 13)
 SYSTEM_FILES_DIR = $(LIBDAISY_DIR)/core
-# makefile (from `Makefile', line 11)
+# makefile (from `Makefile', line 9)
 LIBDAISY_DIR = ../DaisyExamples/libDaisy/
 # makefile (from `../DaisyExamples/libDaisy//core/Makefile', line 81)
 GDB = $(PREFIX)gdb
@@ -242,9 +242,9 @@ OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.c=.o))) $(addprefix $(
 # environment
 LANG = C
 # environment
-VSCODE_PID = 1754
+VSCODE_PID = 5557
 # variable set hash-table stats:
-# Load=115/1024=11%, Rehash=0, Collisions=27/286=9%
+# Load=115/1024=11%, Rehash=0, Collisions=27/268=10%
 
 # Pattern-specific Variable Values
 
@@ -255,9 +255,9 @@ VSCODE_PID = 1754
 # . (device 16777233, inode 21495648): 11 files, no impossibilities.
 # ../DaisyExamples/libDaisy//core (device 16777233, inode 21402975): No files, no impossibilities so far.
 # core (device 16777233, inode 21495721): No files, no impossibilities so far.
-# build (device 16777233, inode 21495720): 36 files, no impossibilities.
+# build (device 16777233, inode 21498546): 5 files, no impossibilities.
 
-# 47 files, no impossibilities in 4 directories.
+# 16 files, no impossibilities in 4 directories.
 
 # Implicit Rules
 
@@ -298,16 +298,6 @@ build/%.bin: build/%.elf | build
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/libDaisy//src/dev/lcd_hd44780.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Filters/biquad.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_iwdg.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -315,26 +305,6 @@ build/%.bin: build/%.elf | build
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/DaisySP//Source/Dynamics/limiter.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Utility/dcblock.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/PhysicalModeling/modalvoice.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Effects/fold.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h:
 #  Implicit rule search has been done.
@@ -344,13 +314,8 @@ build/%.bin: build/%.elf | build
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-build/Trigger.o: core/Trigger.cpp ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h7xx.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h750xx.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/core_cm7.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/cmsis_compiler.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/cmsis_gcc.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/system_stm32h7xx.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h ../DaisyExamples/libDaisy//src/sys/stm32h7xx_hal_conf.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdma.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hash.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hash_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dcmi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma2d.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dsi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dfsdm.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Dri 
-ver/Inc/stm32h7xx_hal_exti.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cortex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_adc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_fdcan.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cec.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_comp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_crc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_crc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cryp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cryp_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hrtim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hsem.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sram.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_fmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nor.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nand.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2s.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_iwdg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_jpeg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdios.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_sdmmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_lptim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_qspi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ramecc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rng.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_delayblock.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sdram.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spdifrx.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_swpmi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smbus.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_wwdg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hcd.h core/Trigger.h core/IGenerator.h core/Parameters.h core/ITrigger.h core/IEnvelope.h
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Filters/moogladder.h:
+# Not a target:
+build/Trigger.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -372,16 +337,6 @@ program:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/DaisySP//Source/Synthesis/oscillatorbank.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/per/dac.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -398,16 +353,6 @@ debug_client:
 	ddd --eval-command="target remote localhost:3333" --debugger $(GDB) $(TARGET_ELF)
 	
 
-../DaisyExamples/libDaisy//src/hid/usb_host.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Synthesis/vosim.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -415,27 +360,6 @@ debug_client:
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-# Not a target:
-build/SliceBuffer.d:
-#  A default, MAKEFILES, or -include/sinclude makefile.
-#  Implicit rule search has been done.
- 
-#  Last modified 2022-06-10 21:47:07
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/DaisySP//Source/PhysicalModeling/stringvoice.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/hid/MidiEvent.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 # Not a target:
 ../DaisyExamples/libDaisy//core/startup_stm32h750xx.c:
@@ -454,6 +378,7 @@ build/SliceBuffer.d:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
+ 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spdifrx.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -461,11 +386,6 @@ build/SliceBuffer.d:
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/libDaisy//src/per/tim.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc_ex.h:
 #  Implicit rule search has been done.
@@ -492,11 +412,6 @@ openocd:
 	$(OCD) -s $(OCD_DIR) $(OCDFLAGS)
 	
 
-../DaisyExamples/DaisySP//Source/Synthesis/fm2.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_exti.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -504,26 +419,6 @@ openocd:
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/libDaisy//Middlewares/Third_Party/FatFs/src/ff.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/ui/AbstractMenu.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/util/bsp_sd_diskio.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/ui/ButtonMonitor.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda_ex.h:
 #  Implicit rule search has been done.
@@ -541,14 +436,6 @@ openocd:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc.h:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-09 21:32:35
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_wwdg.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -556,21 +443,6 @@ openocd:
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/DaisySP//Source/Filters/comb.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/dev/leddriver.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Effects/tremolo.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rng.h:
 #  Implicit rule search has been done.
@@ -580,46 +452,6 @@ openocd:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/DaisySP//Source/Noise/dust.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/PhysicalModeling/drip.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/util/FixedCapStr.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-build/Generator.d:
-#  A default, MAKEFILES, or -include/sinclude makefile.
-#  Implicit rule search has been done.
-#  Last modified 2022-06-10 21:47:06
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/libDaisy//src/util/MappedValue.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/hid/switch3.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Synthesis/variablesawosc.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smbus.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -628,29 +460,13 @@ build/Generator.d:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-core/ITrigger.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/hid/logger.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sdram.h:
 #  Implicit rule search has been done.
- 
 #  Last modified 2022-06-09 21:32:35
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/DaisySP//Source/Synthesis/oscillator.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hsem.h:
 #  Implicit rule search has been done.
@@ -660,11 +476,6 @@ core/ITrigger.h:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/libDaisy//src/hid/ctrl.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 program-dfu:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -672,16 +483,6 @@ program-dfu:
 #  commands to execute (from `../DaisyExamples/libDaisy//core/Makefile', line 289):
 	dfu-util -a 0 -s $(FLASH_ADDRESS):leave -D $(BUILD_DIR)/$(TARGET_BIN) -d ,0483:df11
 	
-
-../DaisyExamples/DaisySP//Source/Control/adsr.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Filters/mode.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_qspi.h:
 #  Implicit rule search has been done.
@@ -695,36 +496,11 @@ program-dfu:
 build/startup_stm32h750xx.d:
 #  A default, MAKEFILES, or -include/sinclude makefile.
 #  Implicit rule search has been done.
-#  Last modified 2022-06-10 21:47:05
+#  Last modified 2022-06-11 15:01:32
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/libDaisy//src/util/PersistentStorage.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-build/Engine.d:
-#  A default, MAKEFILES, or -include/sinclude makefile.
-#  Implicit rule search has been done.
-#  Last modified 2022-06-10 21:47:06
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/libDaisy//src/sys/ffconf.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/per/uart.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio_ex.h:
 #  Implicit rule search has been done.
@@ -734,36 +510,6 @@ build/Engine.d:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/libDaisy//src/dev/sr_4021.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-core/Envelope.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/util/oled_fonts.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/per/adc.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/daisy_seed.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/ui/PotMonitor.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_jpeg.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -772,49 +518,14 @@ core/Envelope.h:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/DaisySP//Source/PhysicalModeling/KarplusString.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Utility/looper.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-build/Spotykach.o: core/Spotykach.cpp ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h7xx.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h750xx.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/core_cm7.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/cmsis_compiler.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/cmsis_gcc.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/system_stm32h7xx.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h ../DaisyExamples/libDaisy//src/sys/stm32h7xx_hal_conf.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdma.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hash.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hash_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dcmi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma2d.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dsi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dfsdm.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_exti.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cortex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_adc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_fdcan.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cec.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_comp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_crc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_crc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cryp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cryp_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac.h ../DaisyExample 
-s/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hrtim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hsem.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sram.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_fmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nor.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nand.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2s.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_iwdg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_jpeg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdios.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_sdmmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_lptim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_qspi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ramecc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rng.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_delayblock.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sdram.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spdifrx.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_swpmi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smbus.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_wwdg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hcd.h core/Spotykach.h core/Engine.h core/ITrigger.h core/IEnvelope.h core/ISource.h core/IGenerator.h core/Parameters.h
+# Not a target:
+build/Spotykach.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
 # Not a target:
 .SUFFIXES:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Utility/delayline.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Utility/samplehold.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/PhysicalModeling/pluck.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/util/WaveTableLoader.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/dev/codec_wm8731.h:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -826,11 +537,6 @@ s/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac_ex.h ../DaisyExam
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-core/Trigger.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//src/sys/stm32h7xx_hal_conf.h:
 #  Implicit rule search has been done.
@@ -851,21 +557,11 @@ core/Trigger.h:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-11 14:37:13
+#  Last modified 2022-06-11 15:11:39
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/DaisySP//Source/Filters/svf.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/ui/../util/FIFO.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc_ex.h:
 #  Implicit rule search has been done.
@@ -875,16 +571,6 @@ Makefile:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/DaisySP//Source/Synthesis/zoscillator.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-core/Parameters.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -892,12 +578,6 @@ core/Parameters.h:
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/libDaisy//src/per/rng.h:
- 
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd_ex.h:
 #  Implicit rule search has been done.
@@ -924,11 +604,6 @@ debug:
 	fi
 	
 
-core/ISliceBuffer.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc_ex.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -936,12 +611,6 @@ core/ISliceBuffer.h:
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-# Not a target:
-core/Envelope.cpp:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc.h:
 #  Implicit rule search has been done.
@@ -951,16 +620,7 @@ core/Envelope.cpp:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/DaisySP//Source/Drums/synthsnaredrum.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Filters/nlfilt.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
+ 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -977,60 +637,14 @@ program-app:
 	dfu-util -a 0 -s $(QSPI_ADDRESS):leave -D $(BUILD_DIR)/$(TARGET_BIN) -d ,0483:df11
 	
 
-../DaisyExamples/libDaisy//src/ui/../util/Stack.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/per/gpio.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-build/Source.d:
-#  A default, MAKEFILES, or -include/sinclude makefile.
-#  Implicit rule search has been done.
-#  Last modified 2022-06-10 21:47:07
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-# Not a target:
-core/Trigger.cpp:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 build:
 #  Implicit rule search has not been done.
-#  Last modified 2022-06-10 21:47:09
+#  Last modified 2022-06-11 15:01:32
 #  File has been updated.
 #  Successfully updated.
 #  commands to execute (from `../DaisyExamples/libDaisy//core/Makefile', line 250):
 	mkdir $@
 	
-
-../DaisyExamples/DaisySP//Source/Noise/particle.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/hid/switch.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-build/spotykach_daisy.d:
-#  A default, MAKEFILES, or -include/sinclude makefile.
-#  Implicit rule search has been done.
-#  Last modified 2022-06-10 21:47:05
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dfsdm.h:
 #  Implicit rule search has been done.
@@ -1040,54 +654,8 @@ build/spotykach_daisy.d:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/libDaisy//src/ui/UI.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-build/SliceBuffer.o: core/SliceBuffer.cpp ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h7xx.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h750xx.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/core_cm7.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/cmsis_compiler.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/cmsis_gcc.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/system_stm32h7xx.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h ../DaisyExamples/libDaisy//src/sys/stm32h7xx_hal_conf.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdma.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hash.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hash_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dcmi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma2d.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dsi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dfsdm.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_exti.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cortex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_adc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_fdcan.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cec.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_comp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_crc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_crc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cryp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cryp_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac.h ../DaisyExa 
-mples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hrtim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hsem.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sram.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_fmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nor.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nand.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2s.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_iwdg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_jpeg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdios.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_sdmmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_lptim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_qspi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ramecc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rng.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_delayblock.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sdram.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spdifrx.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_swpmi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smbus.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_wwdg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hcd.h core/SliceBuffer.h core/ISliceBuffer.h
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Synthesis/variableshapeosc.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 # Not a target:
-build/that_simple.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/dev/sdram.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/per/sdmmc.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/PhysicalModeling/PolyPluck.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-build/Slice.d:
-#  A default, MAKEFILES, or -include/sinclude makefile.
-#  Implicit rule search has been done.
-#  Last modified 2022-06-10 21:47:07
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/DaisySP//Source/Drums/synthbassdrum.h:
+build/SliceBuffer.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -1100,36 +668,6 @@ build/Slice.d:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/libDaisy//src/util/ringbuffer.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/util/CpuLoadMeter.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Filters/atone.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Effects/phaser.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Dynamics/balance.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/hid/encoder.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hash_ex.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -1137,11 +675,6 @@ build/Slice.d:
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/DaisySP//Source/Dynamics/crossfade.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard.h:
 #  Implicit rule search has been done.
@@ -1156,44 +689,8 @@ build/Slice.d:
 #  Last modified 2022-06-09 21:32:35
 #  File has been updated.
 #  Successfully updated.
- 
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/DaisySP//Source/Drums/analogbassdrum.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/hid/disp/graphics_common.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Filters/allpass.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Effects/chorus.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Utility/maytrig.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/ui/../sys/system.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-core/IGenerator.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sram.h:
 #  Implicit rule search has been done.
@@ -1203,18 +700,8 @@ core/IGenerator.h:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/libDaisy//src/per/qspi.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-build/Generator.o: core/Generator.cpp ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h7xx.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h750xx.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/core_cm7.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/cmsis_compiler.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/cmsis_gcc.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/system_stm32h7xx.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h ../DaisyExamples/libDaisy//src/sys/stm32h7xx_hal_conf.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdma.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hash.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hash_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dcmi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma2d.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dsi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dfsdm.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_exti.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cortex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_adc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_fdcan.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cec.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_comp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_crc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_crc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cryp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cryp_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hrtim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hsem.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sram.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_fmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nor.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nand.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2s.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_iwdg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_jpeg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdios.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_sdmmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_lptim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_qspi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ramecc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rng.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_delayblock.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sdram.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h 
-7xx_hal_spi_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spdifrx.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_swpmi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smbus.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_wwdg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hcd.h core/Generator.h core/IGenerator.h core/Parameters.h core/ISource.h core/IEnvelope.h core/Slice.h core/ISliceBuffer.h core/SliceBuffer.h
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/per/sai.h:
+# Not a target:
+build/Generator.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -1243,27 +730,6 @@ build/Generator.o: core/Generator.cpp ../DaisyExamples/libDaisy//Drivers/CMSIS/D
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/libDaisy//src/sys/system.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-core/Generator.cpp:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Effects/pitchshifter.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/dev/mcp23x17.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hash.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -1271,11 +737,6 @@ core/Generator.cpp:
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-core/Spotykach.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cryp_ex.h:
 #  Implicit rule search has been done.
@@ -1297,7 +758,7 @@ build/startup_stm32h750xx.o: ../DaisyExamples/libDaisy//core/startup_stm32h750xx
 7xx_HAL_Driver/Inc/stm32h7xx_hal_dac.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hrtim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hsem.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sram.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_fmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nor.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nand.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2s.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_iwdg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_jpeg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdios.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_sdmmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_lptim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_qspi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ramecc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rng.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_delayblock.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sdram.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spdifrx.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_swpmi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smbus.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_wwdg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hcd.h | build
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `startup_stm32h750xx'
-#  Last modified 2022-06-10 21:47:05
+#  Last modified 2022-06-11 15:01:32
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # automatic
@@ -1324,11 +785,13 @@ xamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac.h ../DaisyE
 	$(CC) -c $(CFLAGS) $(C_STANDARD) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
 	
 
-build/Engine.o: core/Engine.cpp ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h7xx.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h750xx.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/core_cm7.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/cmsis_compiler.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/cmsis_gcc.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/system_stm32h7xx.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h ../DaisyExamples/libDaisy//src/sys/stm32h7xx_hal_conf.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdma.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hash.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hash_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dcmi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma2d.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dsi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dfsdm.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_exti.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cortex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_adc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_fdcan.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cec.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_comp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_crc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_crc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cryp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cryp_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac.h ../DaisyExamples/libD 
-aisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hrtim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hsem.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sram.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_fmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nor.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nand.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2s.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_iwdg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_jpeg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdios.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_sdmmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_lptim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_qspi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ramecc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rng.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_delayblock.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sdram.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spdifrx.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_swpmi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smbus.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_wwdg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hcd.h core/Engine.h core/ITrigger.h core/IEnvelope.h core/ISource.h core/IGenerator.h core/Parameters.h core/Envelope.h core/Source.h core/Generator.h core/Slice.h core/ISliceBuffer.h core/Trigger.h core/SliceBuffer.h
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-09 21:32:35
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h:
 #  Implicit rule search has been done.
@@ -1354,16 +817,6 @@ aisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac_ex.h ../DaisyExamples/l
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/DaisySP//Source/Filters/tone.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/util/color.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc_ex.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -1372,17 +825,14 @@ aisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac_ex.h ../DaisyExamples/l
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/libDaisy//src/hid/gatein.h:
+# Not a target:
+build/that_simple.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
-../DaisyExamples/DaisySP//Source/Noise/whitenoise.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/dev/codec_pcm3060.h:
+# Not a target:
+build/Engine.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -1394,12 +844,6 @@ aisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac_ex.h ../DaisyExamples/l
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-# Not a target:
-core/Engine.cpp:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 # Not a target:
 build/that_simple.hex:
@@ -1415,11 +859,6 @@ build/that_simple.hex:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-core/IEnvelope.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c_ex.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -1427,17 +866,6 @@ core/IEnvelope.h:
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/DaisySP//Source/Utility/port.h:
- 
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/hid/usb_midi.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_adc.h:
 #  Implicit rule search has been done.
@@ -1447,29 +875,14 @@ core/IEnvelope.h:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/libDaisy//src/hid/disp/oled_display.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-core/Spotykach.cpp:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
+ 
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-core/ISource.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth.h:
 #  Implicit rule search has been done.
@@ -1479,17 +892,6 @@ core/ISource.h:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/libDaisy//src/util/WavWriter.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-core/Source.cpp:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -1497,11 +899,6 @@ core/Source.cpp:
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/libDaisy//src/ui/UiEventQueue.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 # Not a target:
 .DEFAULT:
@@ -1525,16 +922,6 @@ core/Source.cpp:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-core/SliceBuffer.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/hid/rgb_led.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -1542,16 +929,6 @@ core/SliceBuffer.h:
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/libDaisy//src/daisy.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/daisysp.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard_ex.h:
 #  Implicit rule search has been done.
@@ -1561,34 +938,14 @@ core/SliceBuffer.h:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/DaisySP//Source/PhysicalModeling/resonator.h:
+# Not a target:
+build/Source.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
-build/Source.o: core/Source.cpp ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h7xx.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h750xx.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/core_cm7.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/cmsis_compiler.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/cmsis_gcc.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/system_stm32h7xx.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h ../DaisyExamples/libDaisy//src/sys/stm32h7xx_hal_conf.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdma.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hash.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hash_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dcmi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma2d.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dsi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dfsdm.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_exti.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cortex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_adc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_fdcan.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cec.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_comp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_crc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_crc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cryp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cryp_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac.h ../DaisyExamples/libD 
-aisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hrtim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hsem.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sram.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_fmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nor.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nand.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2s.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_iwdg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_jpeg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdios.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_sdmmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_lptim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_qspi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ramecc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rng.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_delayblock.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sdram.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spdifrx.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_swpmi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smbus.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_wwdg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hcd.h core/Source.h core/ISource.h
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-build/Slice.o: core/Slice.cpp ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h7xx.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h750xx.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/core_cm7.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/cmsis_compiler.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/cmsis_gcc.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/system_stm32h7xx.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h ../DaisyExamples/libDaisy//src/sys/stm32h7xx_hal_conf.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdma.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hash.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hash_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dcmi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma2d.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dsi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dfsdm.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_exti.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cortex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_adc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_fdcan.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cec.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_comp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_crc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_crc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cryp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cryp_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac.h ../DaisyExamples/libDai 
-sy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hrtim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hsem.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sram.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_fmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nor.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nand.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2s.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_iwdg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_jpeg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdios.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_sdmmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_lptim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_qspi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ramecc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rng.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_delayblock.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sdram.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spdifrx.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_swpmi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smbus.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_wwdg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hcd.h core/Slice.h core/ISource.h core/ISliceBuffer.h core/IEnvelope.h
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/util/VoctCalibration.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/hid/usb.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Effects/reverbsc.h:
+# Not a target:
+build/Slice.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -1601,27 +958,6 @@ sy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac_ex.h ../DaisyExamples/lib
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/DaisySP//Source/Utility/smooth_random.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/dev/sr_595.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/per/i2c.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-core/SliceBuffer.cpp:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -1629,11 +965,6 @@ clean:
 #  commands to execute (from `../DaisyExamples/libDaisy//core/Makefile', line 256):
 	-rm -fR $(BUILD_DIR)
 	
-
-../DaisyExamples/DaisySP//Source/Noise/grainlet.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp_ex.h:
 #  Implicit rule search has been done.
@@ -1643,11 +974,6 @@ clean:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/libDaisy//src/hid/parameter.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac_ex.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -1655,21 +981,6 @@ clean:
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/DaisySP//Source/Utility/metro.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-core/Generator.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Filters/fir.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h:
 #  Implicit rule search has been done.
@@ -1679,22 +990,6 @@ core/Generator.h:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-# Not a target:
-build/Envelope.d:
-#  A default, MAKEFILES, or -include/sinclude makefile.
-#  Implicit rule search has been done.
-#  Last modified 2022-06-10 21:47:06
-#  File has been updated.
- 
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/DaisySP//Source/Effects/autowah.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/core_cm7.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -1702,11 +997,6 @@ build/Envelope.d:
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/DaisySP//Source/Effects/decimator.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 build/that_simple.elf: build/startup_stm32h750xx.o build/that_simple.o build/Engine.o build/Envelope.o build/Generator.o build/Slice.o build/SliceBuffer.o build/Source.o build/Spotykach.o build/Trigger.o Makefile
 #  Implicit rule search has not been done.
@@ -1726,31 +1016,6 @@ build/that_simple.elf: build/startup_stm32h750xx.o build/that_simple.o build/Eng
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/DaisySP//Source/Effects/sampleratereducer.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/per/spiMultislave.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/util/unique_id.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Utility/jitter.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/ui/FullScreenItemMenu.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h:
 #  Implicit rule search has been done.
@@ -1774,11 +1039,6 @@ build/that_simple.bin:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/DaisySP//Source/Noise/fractal_noise.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -1787,12 +1047,6 @@ build/that_simple.bin:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-# Not a target:
-spotykach_daisy.cpp:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_delayblock.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -1800,26 +1054,6 @@ spotykach_daisy.cpp:
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-# Not a target:
-build/Trigger.d:
-#  A default, MAKEFILES, or -include/sinclude makefile.
-#  Implicit rule search has been done.
-#  Last modified 2022-06-10 21:47:08
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/DaisySP//Source/Effects/bitcrush.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-core/Engine.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash.h:
 #  Implicit rule search has been done.
@@ -1846,28 +1080,6 @@ core/Engine.h:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/libDaisy//src/hid/audio.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/hid/led.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/hid/logger_impl.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-build/spotykach_daisy.o: spotykach_daisy.cpp ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h7xx.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h750xx.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/core_cm7.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/cmsis_compiler.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/cmsis_gcc.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/system_stm32h7xx.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h ../DaisyExamples/libDaisy//src/sys/stm32h7xx_hal_conf.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdma.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hash.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hash_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dcmi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma2d.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dsi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dfsdm.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H 
-7xx_HAL_Driver/Inc/stm32h7xx_hal_exti.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cortex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_adc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_fdcan.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cec.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_comp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_crc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_crc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cryp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cryp_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hrtim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hsem.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sram.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_fmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nor.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nand.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2s.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_iwdg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_jpeg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdios.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_sdmmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_lptim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_qspi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ramecc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rng.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_delayblock.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sdram.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spdifrx.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_swpmi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smbus.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_wwdg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hcd.h ../DaisyExamples/libDaisy//src/daisy_seed.h ../DaisyExamples/libDaisy//src/daisy.h ../DaisyExamples/libDaisy//src/daisy_core.h ../DaisyExamples/libDaisy//src/version.h ../DaisyExamples/libDaisy//src/sys/system.h ../DaisyExamples/libDaisy//src/per/tim.h ../DaisyExamples/libDaisy//src/per/qspi.h ../DaisyExamples/libDaisy//src/per/dac.h ../DaisyExamples/libDaisy//src/per/gpio.h ../DaisyExamples/libDaisy//src/dev/leddriver.h ../DaisyExamples/libDaisy//src/per/i2c.h ../DaisyExamples/libDaisy//src/dev/sdram.h ../DaisyExamples/libDaisy//src/dev/sr_4021.h ../DaisyExamples/libDaisy//src/sys/system.h ../DaisyExamples/libDaisy//src/hid/audio.h ../DaisyExamples/libDaisy//src/per/sai.h ../DaisyExamples/libDaisy//src/util/unique_id.h ../DaisyExamples/libDaisy//src/per/adc.h ../DaisyExamples/libDaisy//src/per/uart.h ../DaisyExamples/libDaisy//src/hid/midi.h ../DaisyExamples/libDaisy//src/util/ringbuffer.h ../DaisyExamples/libDaisy//src/hid/MidiEvent.h ../DaisyExamples/libDaisy//src/hid/usb_midi.h ../DaisyExamples/libDaisy//src/hid/usb.h ../DaisyExamples/libDaisy//src/hid/encoder.h ../DaisyExamples/libDaisy//src/hid/switch.h ../DaisyExamples/libDaisy//src/hid/switch3.h ../DaisyExamples/libDaisy//src/hid/ctrl.h ../DaisyExamples/libDaisy//src/hid/gatein.h ../DaisyExamples/libDaisy//src/hid/parameter.h ../DaisyExamples/libDaisy//src/hid/logger.h ../DaisyExamples/libDaisy//src/hid/logger_impl.h ../DaisyExamples/libDaisy//src/hid/usb_host.h ../DaisyExamples/libDaisy//src/per/sdmmc.h ../DaisyExamples/libDaisy//src/per/spi.h ../DaisyExamples/libDaisy//src/per/spiMultislave.h ../DaisyExamples/libDaisy//src/per/rng.h ../DaisyExamples/libDaisy//src/hid/disp/display.h ../DaisyExamples/libDaisy//src/util/oled_fonts.h ../DaisyExamples/libDaisy//src/hid/disp/graphics_common.h ../DaisyExamples/libDaisy//src/hid/disp/oled_display.h ../DaisyExamples/libDaisy//src/hid/wavplayer.h ../DaisyExamples/libDaisy//src/util/wav_format.h ../DaisyExamples/libDaisy//Middlewares/Third_Party/FatFs/src/ff.h ../DaisyExamples/libDaisy//Middlewares/Third_Party/FatFs/src/integer.h ../DaisyExamples/libDaisy//src/sys/ffconf.h ../DaisyExamples/libDaisy//src/util/bsp_sd_diskio.h ../DaisyExamples/libDaisy//src/hid/led.h ../DaisyExamples/libDaisy//src/hid/rgb_led.h ../DaisyExamples/libDaisy//src/util/color.h ../DaisyExamples/libDaisy//src/dev/sr_595.h ../DaisyExamples/libDaisy//src/dev/codec_pcm3060.h ../DaisyExamples/libDaisy//src/dev/codec_wm8731.h ../DaisyExamples/libDaisy//src/dev/lcd_hd44780.h ../DaisyExamples/libDaisy//src/dev/mcp23x17.h ../DaisyExamples/libDaisy//src/dev/max11300.h ../DaisyE 
-xamples/libDaisy//src/ui/ButtonMonitor.h ../DaisyExamples/libDaisy//src/ui/UiEventQueue.h ../DaisyExamples/libDaisy//src/ui/../util/FIFO.h ../DaisyExamples/libDaisy//src/ui/../util/scopedirqblocker.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/cmsis_gcc.h ../DaisyExamples/libDaisy//src/ui/../sys/system.h ../DaisyExamples/libDaisy//src/ui/PotMonitor.h ../DaisyExamples/libDaisy//src/ui/UI.h ../DaisyExamples/libDaisy//src/ui/../util/Stack.h ../DaisyExamples/libDaisy//src/ui/AbstractMenu.h ../DaisyExamples/libDaisy//src/util/MappedValue.h ../DaisyExamples/libDaisy//src/util/FixedCapStr.h ../DaisyExamples/libDaisy//src/ui/FullScreenItemMenu.h ../DaisyExamples/libDaisy//src/util/CpuLoadMeter.h ../DaisyExamples/libDaisy//src/util/PersistentStorage.h ../DaisyExamples/libDaisy//src/per/qspi.h ../DaisyExamples/libDaisy//src/util/VoctCalibration.h ../DaisyExamples/libDaisy//src/util/WaveTableLoader.h ../DaisyExamples/libDaisy//src/sys/fatfs.h ../DaisyExamples/libDaisy//src/util/WavWriter.h ../DaisyExamples/DaisySP//Source/daisysp.h ../DaisyExamples/DaisySP//Source/Control/adenv.h ../DaisyExamples/DaisySP//Source/Control/adsr.h ../DaisyExamples/DaisySP//Source/Control/line.h ../DaisyExamples/DaisySP//Source/Control/phasor.h ../DaisyExamples/DaisySP//Source/Drums/analogbassdrum.h ../DaisyExamples/DaisySP//Source/Synthesis/oscillator.h ../DaisyExamples/DaisySP//Source/Utility/dsp.h ../DaisyExamples/DaisySP//Source/Filters/svf.h ../DaisyExamples/DaisySP//Source/Drums/analogsnaredrum.h ../DaisyExamples/DaisySP//Source/Drums/hihat.h ../DaisyExamples/DaisySP//Source/Drums/synthbassdrum.h ../DaisyExamples/DaisySP//Source/Drums/synthsnaredrum.h ../DaisyExamples/DaisySP//Source/Dynamics/balance.h ../DaisyExamples/DaisySP//Source/Dynamics/compressor.h ../DaisyExamples/DaisySP//Source/Dynamics/crossfade.h ../DaisyExamples/DaisySP//Source/Dynamics/limiter.h ../DaisyExamples/DaisySP//Source/Effects/autowah.h ../DaisyExamples/DaisySP//Source/Effects/bitcrush.h ../DaisyExamples/DaisySP//Source/Effects/chorus.h ../DaisyExamples/DaisySP//Source/Utility/delayline.h ../DaisyExamples/DaisySP//Source/Effects/decimator.h ../DaisyExamples/DaisySP//Source/Effects/flanger.h ../DaisyExamples/DaisySP//Source/Effects/fold.h ../DaisyExamples/DaisySP//Source/Effects/overdrive.h ../DaisyExamples/DaisySP//Source/Effects/reverbsc.h ../DaisyExamples/DaisySP//Source/Effects/phaser.h ../DaisyExamples/DaisySP//Source/Effects/pitchshifter.h ../DaisyExamples/DaisySP//Source/Effects/sampleratereducer.h ../DaisyExamples/DaisySP//Source/Effects/tremolo.h ../DaisyExamples/DaisySP//Source/Filters/allpass.h ../DaisyExamples/DaisySP//Source/Filters/atone.h ../DaisyExamples/DaisySP//Source/Filters/biquad.h ../DaisyExamples/DaisySP//Source/Filters/comb.h ../DaisyExamples/DaisySP//Source/Filters/mode.h ../DaisyExamples/DaisySP//Source/Filters/moogladder.h ../DaisyExamples/DaisySP//Source/Filters/nlfilt.h ../DaisyExamples/DaisySP//Source/Filters/tone.h ../DaisyExamples/DaisySP//Source/Filters/fir.h ../DaisyExamples/DaisySP//Source/Noise/clockednoise.h ../DaisyExamples/DaisySP//Source/Noise/dust.h ../DaisyExamples/DaisySP//Source/Noise/fractal_noise.h ../DaisyExamples/DaisySP//Source/Noise/grainlet.h ../DaisyExamples/DaisySP//Source/Noise/particle.h ../DaisyExamples/DaisySP//Source/Noise/whitenoise.h ../DaisyExamples/DaisySP//Source/PhysicalModeling/drip.h ../DaisyExamples/DaisySP//Source/PhysicalModeling/modalvoice.h ../DaisyExamples/DaisySP//Source/PhysicalModeling/resonator.h ../DaisyExamples/DaisySP//Source/PhysicalModeling/pluck.h ../DaisyExamples/DaisySP//Source/PhysicalModeling/PolyPluck.h ../DaisyExamples/DaisySP//Source/Utility/dcblock.h ../DaisyExamples/DaisySP//Source/PhysicalModeling/KarplusString.h ../DaisyExamples/DaisySP//Source/PhysicalModeling/stringvoice.h ../DaisyExamples/DaisySP//Source/Synthesis/blosc.h ../DaisyExamples/DaisySP//Source/Synthesis/fm2.h ../DaisyExamples/DaisySP//Source/Synthesis/formantosc.h ../DaisyExamples/DaisySP//Source/Synthesis/harmonic_osc.h ../DaisyExamples/DaisySP//Source/Synthesis/oscillatorbank.h ../DaisyExamples/DaisySP//Source/Synthesis/variablesawosc.h ../DaisyExamples/DaisySP//Source/Synthesis/variableshapeosc.h ../DaisyExamples/DaisySP//Source/Synthesis/vosim.h ../DaisyExamples/DaisySP//Source/Synthesis/zoscillator.h ../DaisyExamples/DaisySP//Source/Utility/jitter.h ../DaisyExamples/DaisySP//Source/Utility/looper.h ../DaisyExamples/DaisySP//Source/Utility/maytrig.h ../DaisyExamples/DaisySP//Source/Utility/metro.h ../DaisyExamples/DaisySP//Source/Utility/port.h ../DaisyExamples/DaisySP//Source/Utility/samplehold.h ../DaisyExamples/DaisySP//Source/Utility/smooth_random.h core/Spotykach.h core/Engine.h core/ITrigger.h core/IEnvelope.h core/ISource.h core/IGenerator.h core/Parameters.h
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd_ex.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -1875,21 +1087,6 @@ xamples/libDaisy//src/ui/ButtonMonitor.h ../DaisyExamples/libDaisy//src/ui/UiEve
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/DaisySP//Source/Control/line.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Synthesis/harmonic_osc.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Control/phasor.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dcmi.h:
 #  Implicit rule search has been done.
@@ -1907,11 +1104,6 @@ xamples/libDaisy//src/ui/ButtonMonitor.h ../DaisyExamples/libDaisy//src/ui/UiEve
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/DaisySP//Source/Noise/clockednoise.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dsi.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -1925,23 +1117,9 @@ xamples/libDaisy//src/ui/ButtonMonitor.h ../DaisyExamples/libDaisy//src/ui/UiEve
 #  Last modified 2022-06-09 21:32:35
 #  File has been updated.
 #  Successfully updated.
+ 
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-# Not a target:
-build/Spotykach.d:
-#  A default, MAKEFILES, or -include/sinclude makefile.
-#  Implicit rule search has been done.
-#  Last modified 2022-06-10 21:47:08
-#  File has been updated.
-#  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/libDaisy//src/ui/../util/scopedirqblocker.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi_ex.h:
 #  Implicit rule search has been done.
@@ -1950,37 +1128,6 @@ build/Spotykach.d:
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/DaisySP//Source/Synthesis/formantosc.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Effects/flanger.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/version.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
- 
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Effects/overdrive.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/per/spi.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/hid/disp/display.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cortex.h:
 #  Implicit rule search has been done.
@@ -1998,21 +1145,6 @@ build/Spotykach.d:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/libDaisy//src/dev/max11300.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-core/Source.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-core/Slice.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_comp.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -2020,11 +1152,6 @@ core/Slice.h:
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/DaisySP//Source/Utility/dsp.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc.h:
 #  Implicit rule search has been done.
@@ -2066,16 +1193,6 @@ core/Slice.h:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/libDaisy//Middlewares/Third_Party/FatFs/src/integer.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/DaisySP//Source/Drums/analogsnaredrum.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash_ex.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -2092,16 +1209,6 @@ core/Slice.h:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/DaisySP//Source/Dynamics/compressor.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/daisy_core.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -2110,24 +1217,13 @@ core/Slice.h:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/DaisySP//Source/Synthesis/blosc.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h750xx.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
- 
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
-../DaisyExamples/libDaisy//src/sys/fatfs.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma_ex.h:
 #  Implicit rule search has been done.
@@ -2137,17 +1233,6 @@ core/Slice.h:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/DaisySP//Source/Drums/hihat.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-core/Slice.cpp:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-09 21:32:35
@@ -2156,11 +1241,6 @@ core/Slice.cpp:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/libDaisy//src/hid/midi.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 program-boot:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -2168,11 +1248,6 @@ program-boot:
 #  commands to execute (from `../DaisyExamples/libDaisy//core/Makefile', line 295):
 	dfu-util -a 0 -s $(FLASH_ADDRESS):leave -D $(BOOT_BIN) -d ,0483:df11
 	
-
-../DaisyExamples/DaisySP//Source/Control/adenv.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nand.h:
 #  Implicit rule search has been done.
@@ -2214,24 +1289,14 @@ program-boot:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-../DaisyExamples/libDaisy//src/hid/wavplayer.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-../DaisyExamples/libDaisy//src/util/wav_format.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-build/Envelope.o: core/Envelope.cpp ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h7xx.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h750xx.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/core_cm7.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/cmsis_compiler.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Include/cmsis_gcc.h ../DaisyExamples/libDaisy//Drivers/CMSIS/Device/ST/STM32H7xx/Include/system_stm32h7xx.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h ../DaisyExamples/libDaisy//src/sys/stm32h7xx_hal_conf.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdma.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hash.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hash_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dcmi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma2d.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dsi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dfsdm.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_exti.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cortex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_adc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_adc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_fdcan.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cec.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_comp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_crc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_crc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cryp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cryp_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dac_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hrtim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hsem.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sram.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_fmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nor.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_nand.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2c_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_i2s.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm3 
-2h7xx_hal_iwdg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_jpeg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mdios.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_sdmmc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_mmc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_lptim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ltdc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_opamp_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pwr_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_qspi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_ramecc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rng.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sai_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_delayblock.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sd_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_sdram.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spdifrx.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_swpmi.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_usart_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_irda_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smartcard_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_smbus.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_wwdg.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd_ex.h ../DaisyExamples/libDaisy//Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hcd.h core/Envelope.h core/IEnvelope.h
+# Not a target:
+build/Envelope.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=298/1024=29%, Rehash=0, Collisions=376/2380=16%
+# Load=123/1024=12%, Rehash=0, Collisions=35/261=13%
 # VPATH Search Paths
 
 vpath %.c ../DaisyExamples/libDaisy//core
@@ -2241,11 +1306,11 @@ vpath %.cpp core
 
 # No general (`VPATH' variable) search path.
 
-# # of strings in strcache: 12
+# # of strings in strcache: 3
 # # of strcache buffers: 1
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
-# strcache free: total = 3861 / max = 3861 / min = 3861 / avg = 3861
+# strcache free: total = 4018 / max = 4018 / min = 4018 / avg = 4018
 
-# Finished Make data base on Sat Jun 11 14:37:51 2022
+# Finished Make data base on Sat Jun 11 15:11:46 2022
 
  
