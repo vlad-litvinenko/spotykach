@@ -44,7 +44,8 @@ void Source::write(float in0, float in1) {
     _buffer[0][_writeHead] = in0;
     _buffer[1][_writeHead] = in1;
     _readHead = _writeHead;
-    _writeHead = ++_writeHead % _bufferLength;
+    _writeHead ++;
+    _writeHead %= _bufferLength;
 }
 
 void Source::reset() {
