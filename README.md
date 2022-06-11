@@ -1,8 +1,12 @@
 ## Spotykach for Simple platform / Daisy Seed
 Work In Progress
 
+[Simple Platform](https://www.synthux.academy/simple)
+
+[Daisy Seed](https://www.electro-smith.com/daisy/daisy)
+
 ```
-- ... If you'd like to hear it I can sing it for you.
+- If you'd like to hear it I can sing it for you.
 
 - Yes, I'd like to hear it, HAL. Sing it for me.
 
