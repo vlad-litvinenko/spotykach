@@ -88,6 +88,9 @@ private:
     long _framesPerSlice;
     long _framesTillTrigger;
     long _framesTillUnlock;
+
+    void internalNext(bool);
+    void countdownUnlock();
 };
 
 #endif

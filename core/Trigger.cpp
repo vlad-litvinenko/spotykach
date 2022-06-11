@@ -164,25 +164,34 @@ void Trigger::schedule(double currentBeat, bool isLaunch) {
 }
 
 void Trigger::next(bool engaged) {
-    if (_scheduled && (--_framesTillTrigger) <= 0) {
-        long onset = 0;
-        bool reset = false;
-        if (_retrigger && _nextPointIndex % _retrigger == 0) {
-            //at this point we're using _retriggerChance as binary switch
-            if (_retriggerChance == 1.0 || double(_retriggerDice()) / (_retriggerDice.max() - _retriggerDice.min()) > 0.5) {
-                onset = _triggerPoints->at(_nextPointIndex) * _framesPerBeat;
-                reset = true;
-            }
+    internalNext(engaged);
+    countdownUnlock();
+} 
+
+void Trigger::internalNext(bool engaged) {
+    if (!_scheduled) return;
+    if (--_framesTillTrigger > 0) return;
+
+    long onset = 0;
+    bool reset = false;
+    if (_retrigger && _nextPointIndex % _retrigger == 0) {
+        //at this point we're using _retriggerChance as binary switch
+        if (_retriggerChance == 1.0 || double(_retriggerDice()) / (_retriggerDice.max() - _retriggerDice.min()) > 0.5) {
+            onset = _triggerPoints->at(_nextPointIndex) * _framesPerBeat;
+            reset = true;
         }
-        if (engaged && _nextPointIndex < _repeats) {
-            _generator.activateSlice(onset, _pickupOffsetFrames, _framesPerSlice, reset);
-            _framesTillUnlock = 0.015625 * _framesPerBeat * _numerator;
-        }
-        _nextPointIndex++;
-        if (_nextPointIndex > _pointsCount - 1) _nextPointIndex = 0;
-        _scheduled = false;
     }
-    _framesTillUnlock = std::max(0l, --_framesTillUnlock);
+    if (engaged && _nextPointIndex < _repeats) {
+        _generator.activateSlice(onset, _pickupOffsetFrames, _framesPerSlice, reset);
+        _framesTillUnlock = 0.015625 * _framesPerBeat * _numerator;
+    }
+    _nextPointIndex++;
+    _nextPointIndex %= _pointsCount;
+    _scheduled = false;
+}
+
+void Trigger::countdownUnlock() {
+    if (_framesTillUnlock > 0) _framesTillUnlock--;
 }
 
 void Trigger::reset() {
