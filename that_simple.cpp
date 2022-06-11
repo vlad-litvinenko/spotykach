@@ -1,6 +1,5 @@
 #include "daisy_seed.h"
 #include "daisysp.h"
-#include "Spotykach.h"
 
 using namespace daisy;
 using namespace daisysp;
