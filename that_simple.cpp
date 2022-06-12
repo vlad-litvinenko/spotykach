@@ -1,6 +1,7 @@
 #include "daisy_seed.h"
 #include "daisysp.h"
 #include "core/Spotykach.h"
+#include "control/controller.h"
 
 using namespace daisy;
 using namespace daisysp;
@@ -10,9 +11,11 @@ using namespace spotykach;
 
 DaisySeed hw;
 Spotykach* core;
+Controller* controller;
 
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
+	controller->configure(*core);
 
 	for (size_t i = 0; i < size; i++) {
 		float** outBufs[4] = { out, nullptr, nullptr, nullptr };
@@ -22,6 +25,7 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 
 int main(void) {
 	core = new Spotykach();	
+	controller = new Controller(hw);
 
 	hw.Init();
 	hw.SetAudioBlockSize(4); // number of samples handled per callback
