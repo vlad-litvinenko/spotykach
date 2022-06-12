@@ -5,7 +5,7 @@ TARGET = that_simple
 
 # Sources
 C_INCLUDES = -Icore
-CPP_SOURCES = that_simple.cpp core/Engine.cpp core/Envelope.cpp core/Generator.cpp core/Slice.cpp core/SliceBuffer.cpp core/Source.cpp core/Spotykach.cpp core/ Trigger.cpp
+CPP_SOURCES = that_simple.cpp $(wildcard */*.cpp)
 
 # Library Locations
 LIBDAISY_DIR = ../DaisyExamples/libDaisy/
