@@ -47,7 +47,7 @@ public:
     void sendToOwnBus(bool value, int index) { _raw.ownBus[index] = value; };
     
     void preprocess(PlaybackParameters p);
-    void process(float** inBuf, bool inMono, float** outBuf[kEnginesCount], bool outMono, int numFrames);
+    void process(const float* const* inBuff, bool inMono, float** outBuf[kEnginesCount], bool outMono, int numFrames);
     
     SpotykachRawParameters rawParameters() { return _raw; }
     

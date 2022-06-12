@@ -72,7 +72,7 @@ void Spotykach::preprocess(PlaybackParameters p) {
     for (Engine* e: _engines) e->preprocess(p);
 }
 
-void Spotykach::process(float** inBuf, bool inMono, float** outBuf[kEnginesCount], bool outMono, int numFrames) {
+void Spotykach::process(const float* const* inBuf, bool inMono, float** outBuf[kEnginesCount], bool outMono, int numFrames) {
     for (int f = 0; f < numFrames; f++) {
         float in0Ext = inBuf[0][f];
         float in1Ext = inMono ? in0Ext : inBuf[1][f];
