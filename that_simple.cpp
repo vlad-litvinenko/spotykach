@@ -12,9 +12,21 @@ using namespace spotykach;
 DaisySeed hw;
 Spotykach* core;
 Controller* controller;
+PlaybackParameters p;
 
-void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
-{
+void configurePlayback(Spotykach& core, size_t bufferSize) {
+	p.isPlaying = true;
+	p.tempo = 120;
+	p.numerator = 4;
+	p.denominator = 4;
+	p.currentBeat = 0;//TODO INCREMENT
+	p.sampleRate = 48000;
+	p.bufferSize = bufferSize;
+	core.preprocess(p);
+}
+
+void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size) {
+	configurePlayback(*core, size);
 	controller->setPatrameters(*core);
 
 	for (size_t i = 0; i < size; i++) {
