@@ -15,7 +15,7 @@ Controller* controller;
 
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
-	controller->configure(*core);
+	controller->setPatrameters(*core);
 
 	for (size_t i = 0; i < size; i++) {
 		float** outBufs[4] = { out, nullptr, nullptr, nullptr };

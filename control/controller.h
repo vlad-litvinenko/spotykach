@@ -9,7 +9,7 @@ public:
     Controller(daisy::DaisySeed& hw);
     ~Controller();
 
-    void configure(vlly::spotykach::Spotykach& core);
+    void setPatrameters(vlly::spotykach::Spotykach& core);
 
 private:
     static const int _knobsCount    = 4;

@@ -17,7 +17,7 @@ void Controller::initKnobs(DaisySeed& hw) {
     for (auto k: _knobs) k->charge(hw, false);
 }
 
-void Controller::configure(Spotykach& core) {
+void Controller::setPatrameters(Spotykach& core) {
     for (auto k: _knobs) {
         auto v = k->value();
         switch (k->usage()) {
