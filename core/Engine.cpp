@@ -12,7 +12,6 @@
 #include "Source.h"
 #include "Generator.h"
 #include "Trigger.h"
-#include "SliceBuffer.h"
 
 using namespace vlly;
 using namespace spotykach;
@@ -25,27 +24,26 @@ inline int gridStepCount(Grid grid) {
     }
 }
 
-Engine::Engine(): _tempo(0), _step(0.125), _grid(kGrid_Even)
-{
-    _envelope       = new Envelope();
-    _source         = new Source();
-    _generator      = new Generator(*_source, *_envelope);
-    _trigger        = new Trigger(*_generator);
+Engine::Engine(): _tempo(0), _step(0.125), _grid(kGrid_Even) {
+    _envelope   = new Envelope();
+    _source     = new Source();
+    _generator  = new Generator(*_source, *_envelope);
+    _trigger    = new Trigger(*_generator);
     
-    setStart(_raw.start);
-    setShift(_raw.shift);
-    setGrid(_raw.grid);
-    setStepPosition(_raw.stepGridPosition);
-    setSlice(_raw.slice);
-    setRepeats(_raw.repeats);
-    setDirection(_raw.direction);
-    setRetrigger(_raw.retrigger);
-    setIsOn(_raw.on);
-    setDeclick(_raw.declick);
-    setRetriggerChance(_raw.retriggerChance);
+    setStart(0);
+    setShift(0);
+    setGrid(kGrid_Even);
+    setStepPosition(6.0 / (EvenStepsCount - 1));
+    setSlice(0.5);
+    setRepeats(8);
+    setDirection(kDirection_Forward);
+    setRetrigger(0);
+    setIsOn(false);
+    setDeclick(false);
+    setRetriggerChance(1.0);
     
     _trigger->prepareMeterPattern(_step, 0, 4, 4);
-}
+};
 
 void Engine::setIsOn(bool on) {
     _raw.on = on;
@@ -53,15 +51,14 @@ void Engine::setIsOn(bool on) {
 };
 
 void Engine::setShift(double normVal) {
+    if (normVal == _raw.shift) return;
     _raw.shift = normVal;
-    double shiftValue = normVal * 15 / 16;
-    if (shiftValue != _shift) {
-        _shift = shiftValue;
-        _invalidatePattern = true;
-    }
+    _shift = normVal * 15 / 16;
+    _invalidatePattern = true;
 }
 
 void Engine::setStepPosition(double normVal) {
+    if (normVal == _raw.stepGridPosition) return;
     _raw.stepGridPosition = normVal;
     int maxIndex;
     int valueIndex;
@@ -99,31 +96,26 @@ void Engine::setStepPosition(double normVal) {
 }
 
 void Engine::setGrid(double normVal) {
+    if (normVal == _raw.grid) return;
     _raw.grid = normVal;
-    Grid grid = spotykach::Grid(normVal * (kGrids_Count - 1));
-    if (grid != _grid) {
-        _grid = grid;
-        setStepPosition(_raw.stepGridPosition);
-        _invalidatePattern = true;
-    }
+    _grid = spotykach::Grid(normVal * (kGrids_Count - 1));
+    setStepPosition(_raw.stepGridPosition);
+    _invalidatePattern = true;
 }
 
 void Engine::setStart(double normVal) {
+    if (normVal == _raw.start) return;
     _raw.start = normVal;
-    double start = std::min(normVal, 127./128.);
-    if (start != _start) {
-        _start = start;
-        _invalidateStart = true;
-    }
+    _start = std::min(normVal, 127./128.);
+    _invalidateStart = true;
+    
 }
 
 void Engine::setSlice(double normVal) {
+    if (normVal == _raw.slice) return;
     _raw.slice = normVal;
-    double slice = fmax(normVal, 1./128.);
-    if (slice != _slice) {
-        _slice = slice;
-        _invalidateSlice = true;
-    }
+    _slice = fmax(normVal, 1./128.);
+    _invalidateSlice = true;
 }
 
 int Engine::pointsCount() {
@@ -131,26 +123,31 @@ int Engine::pointsCount() {
 }
 
 void Engine::setRepeats(double normVal) {
+    if (normVal == _raw.repeats) return;
     _raw.repeats = normVal;
     _trigger->setRepeats(round(normVal * pointsCount()));
 }
 
 void Engine::setRetrigger(double normVal) {
+    if (normVal == _raw.retrigger) return;
     _raw.retrigger = normVal;
     _trigger->setRetrigger(round(normVal * 16));
 }
 
 void Engine::setRetriggerChance(bool value) {
+    if (value == _raw.retriggerChance) return;
     _raw.retriggerChance = value;
     _trigger->setRetriggerChance(value);
 }
 
 void Engine::setDeclick(bool declick) {
+    if (declick == _raw.declick) return;
     _raw.declick = declick;
     _envelope->setDeclick(declick);
 }
 
 void Engine::setDirection(double normVal) {
+    if (normVal == _raw.direction) return;
     _raw.direction = normVal;
     Direction direction = static_cast<Direction>(round(normVal * (kDirections_Count - 1)));
     _generator->setDirection(direction);

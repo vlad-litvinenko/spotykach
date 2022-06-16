@@ -28,15 +28,15 @@ struct PlaybackParameters {
 };
 
 struct RawParameters {
-    double grid             = 0;
-    double shift            = 0;
-    double stepGridPosition = 6.0 / (EvenStepsCount - 1);
-    double start            = 0;
-    double slice            = 0.5;
-    double direction        = 0;
-    double repeats          = 8;
-    double retrigger        = 0;
-    double retriggerChance  = 1.0;
+    double grid             = -1;
+    double shift            = -1;
+    double stepGridPosition = -1;
+    double start            = -1;
+    double slice            = -1;
+    double direction        = -1;
+    double repeats          = -1;
+    double retrigger        = -1;
+    double retriggerChance  = -1;
     bool on                 = false;
     bool declick            = false;
 };
