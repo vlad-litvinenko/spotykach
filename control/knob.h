@@ -22,8 +22,7 @@ private:
     daisy::Parameter _param;
     daisy::AnalogControl _ctrl;
 
-    constexpr static Knob::Usage _usages[] 
-    { 
+    inline static Knob::Usage _usages[4] = { 
         Knob::Usage::PositionOne,
         Knob::Usage::PositionTwo, 
         Knob::Usage::PositionThree,
