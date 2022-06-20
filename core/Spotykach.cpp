@@ -6,7 +6,6 @@
 //
 
 #include "Spotykach.h"
-#include <cassert>
 
 using namespace vlly;
 using namespace spotykach;
@@ -25,7 +24,6 @@ Spotykach::Spotykach() {
 }
 
 Engine& Spotykach::engineAt(int index) {
-    assert(index < enginesCount());
     return *(_engines[index]);
 }
 
@@ -53,23 +51,21 @@ void Spotykach::setMainVolume(double normVal) {
 }
 
 void Spotykach::setVolume(double value, int index) {
-    assert(index < enginesCount());
     _raw.vol[index] = value;
     _vol[index] = logVolume(value);
 }
 
 void Spotykach::setCascade(bool value, int index) {
-    assert(index < enginesCount());
     _raw.cascade[index] = value;
     _cascade[index] = value;
     
     Engine& e = engineAt(index);
-    e.setMode(value ? SourceMode::flow : SourceMode::freeze);
+    if (value) e.setFrozen(false);
     e.reset();
 }
 
 void Spotykach::preprocess(PlaybackParameters p) {
-    for (Engine* e: _engines) e->preprocess(p);
+    for (auto e: _engines) e->preprocess(p);
 }
 
 void Spotykach::process(const float* const* inBuf, bool inMono, float** outBuf[kEnginesCount], bool outMono, int numFrames) {

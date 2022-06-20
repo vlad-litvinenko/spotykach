@@ -8,15 +8,10 @@
 #ifndef ISource_h
 #define ISource_h
 
-enum SourceMode {
-    freeze,
-    flow
-};
-
 class ISource {
 public:
-    virtual void setMode(SourceMode mode) = 0;
-    virtual bool isFlow() = 0;
+    virtual void setFrozen(bool frozen) = 0;
+    virtual bool isFrozen() = 0;
     
     virtual void size(unsigned long size) = 0;
     

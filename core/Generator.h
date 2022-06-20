@@ -24,7 +24,7 @@ public:
     void adjustBuffers(long size) override;
     void activateSlice(long, long, long, bool) override;
     void generate(float*, float*) override;
-    void reset() override;
+    void reset(bool) override;
     
     void setDirection(vlly::spotykach::Direction) override;
     
@@ -38,6 +38,8 @@ private:
     long _offset;
     bool _fwd;
     vlly::spotykach::Direction _direction;
+    
+    void setNeedresetSlices();
 };
 
 #endif /* defined(__Spotykach__Synth__) */

@@ -153,8 +153,9 @@ void Engine::setDirection(double normVal) {
     _generator->setDirection(direction);
 }
 
-void Engine::setMode(SourceMode mode) {
-    _source->setMode(mode);
+void Engine::setFrozen(bool frozen) {
+    _raw.frozen = frozen;
+    _source->setFrozen(frozen);
 }
 
 void Engine::preprocess(PlaybackParameters p) {
@@ -162,7 +163,7 @@ void Engine::preprocess(PlaybackParameters p) {
     if (p.isPlaying != _isPlaying) {
         _isPlaying = p.isPlaying;
         isLaunch = _isPlaying;
-        reset(false);
+        reset(true);
     }
     
     bool invalidatMeasure = p.tempo != _tempo;
@@ -206,7 +207,8 @@ void Engine::process(float in0, float in1, float* out0, float* out1, bool engage
     _generator->generate(out0, out1);
 }
 
-void Engine::reset(bool soft) {
-    _generator->reset();
-    _trigger->reset();
+void Engine::reset(bool hard) {
+    _generator->reset(hard);
+    if (hard) _trigger->reset();
+    
 }

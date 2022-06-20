@@ -10,15 +10,12 @@
 #include <vector>
 #include <algorithm>
 
-Source::Source() : _mode(SourceMode::freeze), _writeHead(0), _readHead(0) {
+Source::Source() : _frozen(false), _writeHead(0), _readHead(0) {
     reset();
 }
 
-void Source::setMode(SourceMode mode) {
-    if (mode != _mode) {
-        _mode = mode;
-        reset();
-    }
+void Source::setFrozen(bool frozen) {
+    _frozen = frozen;
 }
 
 unsigned long Source::readHead() {
@@ -40,21 +37,18 @@ void Source::read(float& out0, float& out1, unsigned long frame) {
 }
 
 void Source::write(float in0, float in1) {
-    if (_mode == SourceMode::freeze && _readHead == _bufferLength - 1) return;
-    _buffer[0][_writeHead] = in0;
-    _buffer[1][_writeHead] = in1;
+    if (!_frozen) {
+        _buffer[0][_writeHead] = in0;
+        _buffer[1][_writeHead] = in1;
+    }
     _readHead = _writeHead;
-    _writeHead ++;
+    _writeHead++;
     _writeHead %= _bufferLength;
 }
 
 void Source::reset() {
     std::fill(_buffer[0].begin(), _buffer[0].end(), 0);
     std::fill(_buffer[1].begin(), _buffer[1].end(), 0);
-    rewind();
-    _readHead = 0;
-}
-
-void Source::rewind() {
     _writeHead = 0;
+    _readHead = 0;
 }

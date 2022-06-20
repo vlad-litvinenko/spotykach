@@ -10,7 +10,6 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
-#include <cassert>
 
 static const int kDefaultQuadrat        = 4;
 static const double kSecondsPerMinute   = 60.0;
@@ -129,8 +128,6 @@ void Trigger::setStart(double start) {
 }
 
 void Trigger::measure(double tempo, double sampleRate, int bufferSize) {
-    assert(_pointsCount > 0);
-    
     double beatsPerMeasure = kDefaultQuadrat * _numerator / _denominator;
     long framesPerMeasure = static_cast<long>(kSecondsPerMinute * sampleRate * beatsPerMeasure / tempo);
     _framesPerBeat = framesPerMeasure / _numerator;
@@ -139,9 +136,6 @@ void Trigger::measure(double tempo, double sampleRate, int bufferSize) {
 }
 
 void Trigger::setSlice(double slice, IEnvelope& envelope) {
-    assert(_framesPerBeat > 0);
-    assert(_framesPerBeat > 0);
-    
     long framesPerMeasure = _framesPerBeat * _denominator;
     long framesPerStep { static_cast<long>(_step * framesPerMeasure) };
     _framesPerSlice = framesPerMeasure * slice * 2 * _step;

@@ -23,7 +23,7 @@ Generator::Generator(ISource& inSource, IEnvelope& inEnvelope) :
         auto buffer = new SliceBuffer();
         _slices.push_back(new Slice(_source, *buffer ,_envelope));
     }
-    reset();
+    reset(true);
 }
 
 void Generator::setDirection(Direction direction) {
@@ -31,8 +31,8 @@ void Generator::setDirection(Direction direction) {
 }
 
 void Generator::adjustBuffers(long size) {
-    _source.size(2 * size);
-    for (Slice* s: _slices) s->sizeBuffer(size);
+    _source.size(size);
+    for (auto s: _slices) s->sizeBuffer(size);
 }
 
 void Generator::generate(float* out0, float* out1) {
@@ -54,7 +54,7 @@ void Generator::generate(float* out0, float* out1) {
 
 void Generator::activateSlice(long onset, long offset, long length, bool reset) {
     if (reset) {
-        for (Slice* s: _slices) s->setNeedsReset();
+        setNeedresetSlices();
         _onset = onset;
     }
     
@@ -77,9 +77,12 @@ void Generator::activateSlice(long onset, long offset, long length, bool reset) 
     }
 }
 
-void Generator::reset () {
+void Generator::reset(bool hard) {
     _fwd = true;
-    _source.reset();
-    //for (Slice* s: _slices) s->setNeedsReset();
-    //std::for_each(_slices.begin(), _slices.end(), [](Slice* s) { s->setNeedsReset(); });
+    setNeedresetSlices();
+    if (hard) _source.reset();
+}
+
+void Generator::setNeedresetSlices() {
+    for (auto s: _slices) s->setNeedsReset();
 }
