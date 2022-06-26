@@ -13,6 +13,6 @@ public:
 
 private:
     static const int _knobsCount    = 4;
-    Knob* _knobs[_knobsCount];
+    std::array<Knob *, _knobsCount> _knobs;
     void initKnobs(daisy::DaisySeed& hw);
 };
