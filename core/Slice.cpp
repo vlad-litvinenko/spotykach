@@ -11,11 +11,11 @@
 
 Slice::Slice(ISource& inSource, ISliceBuffer& inBuffer, IEnvelope& inEnvelope) :
     _source(inSource),
-    _buffer(inBuffer),
     _envelope(inEnvelope),
+    _buffer(inBuffer),
     _active(false),
-    _offset(0),
     _length(0),
+    _offset(0),
     _iterator(0),
     _direction(0) {}
 
@@ -58,8 +58,8 @@ void Slice::synthesize(float *out0, float* out1) {
     next();
 }
 
-void Slice::sizeBuffer(unsigned long size) {
-    _buffer.size(size);
+void Slice::initialize() {
+    _buffer.initialize();
 }
 
 void Slice::next() {

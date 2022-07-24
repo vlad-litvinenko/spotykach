@@ -9,9 +9,17 @@
 #include "Source.h"
 #include <vector>
 #include <algorithm>
+#include <cstring>
+#include "Buffers.h"
 
-Source::Source() : _frozen(false), _writeHead(0), _readHead(0) {
-    reset();
+Source::Source() :
+    _frozen(false),
+    _filled(false),
+    _writeHead(0),
+    _readHead(0) {
+        _bufferLength = kSourceBufferLength;
+        _buffer[0] = Buffers::pull().sourceBuffer();
+        _buffer[1] = Buffers::pull().sourceBuffer();
 }
 
 void Source::setFrozen(bool frozen) {
@@ -22,12 +30,8 @@ unsigned long Source::readHead() {
     return _readHead;
 }
 
-void Source::size(unsigned long bufferLength) {
-    _bufferLength = bufferLength;
-    if (bufferLength > _buffer[0].size()) {
-        _buffer[0].resize(bufferLength);
-        _buffer[1].resize(bufferLength);
-    }
+void Source::initialize() {
+    reset();
 }
 
 void Source::read(float& out0, float& out1, unsigned long frame) {
@@ -37,18 +41,20 @@ void Source::read(float& out0, float& out1, unsigned long frame) {
 }
 
 void Source::write(float in0, float in1) {
-    if (!_frozen) {
+    if (!_frozen || !_filled) {
         _buffer[0][_writeHead] = in0;
         _buffer[1][_writeHead] = in1;
     }
     _readHead = _writeHead;
     _writeHead++;
     _writeHead %= _bufferLength;
+    if (_writeHead == 0) _filled = true;
 }
 
 void Source::reset() {
-    std::fill(_buffer[0].begin(), _buffer[0].end(), 0);
-    std::fill(_buffer[1].begin(), _buffer[1].end(), 0);
+    memset(_buffer[0], 0, _bufferLength * sizeof(float));
+    memset(_buffer[1], 0, _bufferLength * sizeof(float));
     _writeHead = 0;
     _readHead = 0;
+    _filled = false;
 }

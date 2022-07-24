@@ -10,36 +10,36 @@
 #define __Spotykach__Synth__
 
 #include "IGenerator.h"
-#include <stdio.h>
-#include <vector>
+
 #include "ISource.h"
 #include "IEnvelope.h"
 #include "Slice.h"
 #include "Parameters.h"
 
+static const int kSlicesCount = 2;
+
 class Generator: public IGenerator {
 public:
     Generator(ISource&, IEnvelope&);
     
-    void adjustBuffers(long size) override;
+    void initialize() override;
     void activateSlice(long, long, long, bool) override;
     void generate(float*, float*) override;
-    void reset(bool) override;
+    void reset() override;
     
     void setDirection(vlly::spotykach::Direction) override;
     
 private:
-    std::vector<Slice *> _slices;
-    
     ISource& _source;
     IEnvelope& _envelope;
+    Slice* _slices[kSlicesCount];
     
     long _onset;
     long _offset;
     bool _fwd;
     vlly::spotykach::Direction _direction;
     
-    void setNeedresetSlices();
+    void setNeedsResetSlices();
 };
 
 #endif /* defined(__Spotykach__Synth__) */

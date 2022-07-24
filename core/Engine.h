@@ -12,6 +12,7 @@
 #include "ISource.h"
 #include "IEnvelope.h"
 #include "IGenerator.h"
+#include "ILFO.h"
 #include "Parameters.h"
 
 namespace vlly {
@@ -31,12 +32,13 @@ struct RawParameters {
     double grid             = -1;
     double shift            = -1;
     double stepGridPosition = -1;
-    double start            = -1;
-    double slice            = -1;
+    double slicePosition    = -1;
+    double sliceLength      = -1;
     double direction        = -1;
     double repeats          = -1;
     double retrigger        = -1;
     double retriggerChance  = -1;
+    double jitterAmount     = -1;
     bool on                 = false;
     bool declick            = false;
     bool frozen             = false;
@@ -44,18 +46,20 @@ struct RawParameters {
 
 class Engine {
 public:
-    Engine();
+    Engine(ITrigger&, ISource&, IEnvelope&, IGenerator&, ILFO&);
     ~Engine() {};
     
     RawParameters rawParameters() { return _raw; }
     
+    void initialize();
+    
     bool isOn() { return _isOn; };
     void setIsOn(bool on);
     
-    bool isLocking() { return _trigger->locking(); };
+    bool isLocking() { return _trigger.locking(); };
     
-    void setStart(double start);
-    void setSlice(double slice);
+    void setSlicePosition(double start);
+    void setSliceLength(double slice);
     
     void setShift(double shift);
     void setStepPosition(double stepPosition);
@@ -64,10 +68,13 @@ public:
     int pointsCount();
     
     void setRepeats(double repeats);
-    int repeats() { return _trigger->repeats(); };
+    int repeats() { return _trigger.repeats(); };
     
     void setRetrigger(double retrigger);
     void setRetriggerChance(bool value);
+    
+    void setJitterAmount(double value);
+    void setJitterRate(double value);
     
     void setDeclick(bool declick);
     
@@ -82,28 +89,30 @@ public:
     void reset(bool hard = true);
     
 private:
-    ITrigger* _trigger;
-    ISource* _source;
-    IEnvelope* _envelope;
-    IGenerator* _generator;
+    ITrigger& _trigger;
+    ISource& _source;
+    IEnvelope& _envelope;
+    IGenerator& _generator;
+    ILFO& _jitterLFO;
     
     RawParameters _raw;
     
     bool _isOn;
     bool _isPlaying;
+    bool _isInitialized;
     
     double _tempo;
     
-    double _step;
     Grid _grid;
     int _onsets;
+    double _step;
     double _shift;
     double _start;
     double _slice;
     
     bool _invalidatePattern;
-    bool _invalidateStart;
-    bool _invalidateSlice;
+    bool _invalidateSlicePosition;
+    bool _invalidateSliceLength;
 };
 }
 }

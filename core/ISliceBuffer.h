@@ -10,7 +10,7 @@
 
 class ISliceBuffer {
 public:
-    virtual void size(unsigned long size) = 0;
+    virtual void initialize() = 0;
     
     virtual float read(int channel, long frame) = 0;
     

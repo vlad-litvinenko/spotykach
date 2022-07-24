@@ -19,20 +19,19 @@ Generator::Generator(ISource& inSource, IEnvelope& inEnvelope) :
     _onset(0),
     _offset(0),
     _direction(kDirection_Forward) {
-    for (auto i = 0; i < 2; i++) {
+    for (auto i = 0; i < kSlicesCount; i++) {
         auto buffer = new SliceBuffer();
-        _slices.push_back(new Slice(_source, *buffer ,_envelope));
+        _slices[i] = new Slice(_source, *buffer ,_envelope);
     }
-    reset(true);
+    reset();
 }
 
 void Generator::setDirection(Direction direction) {
     _direction = direction;
 }
 
-void Generator::adjustBuffers(long size) {
-    _source.size(size);
-    for (auto s: _slices) s->sizeBuffer(size);
+void Generator::initialize() {
+    for (auto s: _slices) s->initialize();
 }
 
 void Generator::generate(float* out0, float* out1) {
@@ -41,9 +40,9 @@ void Generator::generate(float* out0, float* out1) {
     float sliceOut0 = 0;
     float sliceOut1 = 0;
     
-    for (auto slice : _slices) {
-        if (slice->isActive()) {
-            slice->synthesize(&sliceOut0, &sliceOut1);
+    for (auto s: _slices) {
+        if (s->isActive()) {
+            s->synthesize(&sliceOut0, &sliceOut1);
             out0Val += sliceOut0;
             out1Val += sliceOut1;
         }
@@ -54,14 +53,16 @@ void Generator::generate(float* out0, float* out1) {
 
 void Generator::activateSlice(long onset, long offset, long length, bool reset) {
     if (reset) {
-        setNeedresetSlices();
+        setNeedsResetSlices();
         _onset = onset;
     }
     
     _offset = offset;
     
-    for (auto slice : _slices) {
-        if (slice->isInactive()) {
+    if (!_source.isFilled() && _source.readHead() < _onset + _offset) return;
+    
+    for (auto s: _slices) {
+        if (s->isInactive()) {
             if (reset) {
                 _fwd = true;
             }
@@ -71,18 +72,17 @@ void Generator::activateSlice(long onset, long offset, long length, bool reset) 
                 _fwd = bnf ? !_fwd : !rev;
             }
             int direction = _fwd ? 1 : -1;
-            slice->activate(_onset + _offset, length, direction);
+            s->activate(_onset + _offset, length, direction);
             break;
         }
     }
 }
 
-void Generator::reset(bool hard) {
+void Generator::reset() {
     _fwd = true;
-    setNeedresetSlices();
-    if (hard) _source.reset();
+    setNeedsResetSlices();
 }
 
-void Generator::setNeedresetSlices() {
+void Generator::setNeedsResetSlices() {
     for (auto s: _slices) s->setNeedsReset();
 }

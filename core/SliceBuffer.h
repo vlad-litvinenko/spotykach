@@ -13,7 +13,9 @@
 
 class SliceBuffer: public ISliceBuffer {
 public:
-    void size(unsigned long) override;
+    SliceBuffer();
+
+    void initialize() override;
     float read(int, long) override;
     void write(float, float) override;
     unsigned long writeHead() override { return _writeHead; }
@@ -26,7 +28,7 @@ public:
 private:
     unsigned long _size;
     unsigned long _writeHead;
-    std::vector<float> _buffer[2];
+    float* _buffer[2];
 };
 
 #endif /* SliceBuffer_h */

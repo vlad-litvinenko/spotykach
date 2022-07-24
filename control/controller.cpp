@@ -22,19 +22,19 @@ void Controller::setPatrameters(Spotykach& core) {
         auto v = k->value();
         switch (k->usage()) {
             case Knob::Usage::PositionOne: 
-                core.engineAt(0).setStart(v);
+                core.engineAt(0).setSlicePosition(v);
                 break;
 
             case Knob::Usage::PositionTwo:
-                core.engineAt(1).setStart(v);
+                core.engineAt(1).setSlicePosition(v);
                 break;
 
             case Knob::Usage::PositionThree:
-                core.engineAt(2).setStart(v);
+                core.engineAt(2).setSlicePosition(v);
                 break;
 
             case Knob::Usage::PositionFour:
-                core.engineAt(3).setStart(v);
+                core.engineAt(3).setSlicePosition(v);
                 break;
         }
     }

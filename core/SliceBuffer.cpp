@@ -7,17 +7,22 @@
 
 #include <stdio.h>
 #include <algorithm>
+#include <cstring>
 #include "SliceBuffer.h"
+#include "Buffers.h"
 
-void SliceBuffer::size(unsigned long size) {
-    _size = size;
-    if (size > _buffer[0].size()) {
-        _buffer[0].resize(size);
-        _buffer[1].resize(size);
-    }
+SliceBuffer::SliceBuffer() {
+    _size = kSliceBufferLength;
+    _buffer[0] = Buffers::pull().sliceBuffer();
+    _buffer[1] = Buffers::pull().sliceBuffer();
+}
+
+void SliceBuffer::initialize() {
+    reset();
 }
 
 float SliceBuffer::read(int channel, long frame) {
+    if (frame >= _size) return 0;
     return _buffer[channel][frame];
 }
 
@@ -37,7 +42,7 @@ bool SliceBuffer::isFull() {
 
 void SliceBuffer::reset() {
     rewind();
-    std::fill(_buffer[0].begin(), _buffer[0].end(), 0);
-    std::fill(_buffer[1].begin(), _buffer[1].end(), 0);
+    memset(_buffer[0], 0, _size * sizeof(float));
+    memset(_buffer[1], 0, _size * sizeof(float));
     
 }

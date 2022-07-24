@@ -6,21 +6,31 @@
 //
 
 #include "Spotykach.h"
+#include "Envelope.h"
+#include "Source.h"
+#include "Generator.h"
+#include "Trigger.h"
+#include "LFO.h"
 
 using namespace vlly;
 using namespace spotykach;
 
 Spotykach::Spotykach() {
+    auto l = new LFO();
     for (int i = 0; i < enginesCount(); i++) {
-        _engines[i] = new Engine();
+        auto e = new Envelope();
+        auto s = new Source();
+        auto g = new Generator(*s, *e);
+        auto t = new Trigger(*g, *l);
+        _engines[i] = new Engine(*t, *s, *e, *g, *l);
         setVolume(_raw.vol[i], i);
         setCascade(_raw.cascade[i], i);
     }
     
-    _engines[0]->setIsOn(true);
     setMutex(_raw.mutex);
     setMix(_raw.mix);
     setMainVolume(_raw.mainVol);
+    setJitterRate(_raw.jitterRate);
 }
 
 Engine& Spotykach::engineAt(int index) {
@@ -29,6 +39,12 @@ Engine& Spotykach::engineAt(int index) {
 
 long Spotykach::enginesCount() {
     return kEnginesCount;
+}
+
+void Spotykach::setJitterRate(double normVal) {
+    for (int i = 0; i < enginesCount(); i++) {
+        engineAt(i).setJitterRate(normVal);
+    }
 }
 
 void Spotykach::setMutex(int mutex) {
@@ -58,14 +74,19 @@ void Spotykach::setVolume(double value, int index) {
 void Spotykach::setCascade(bool value, int index) {
     _raw.cascade[index] = value;
     _cascade[index] = value;
-    
+    if (!value) return;
+
     Engine& e = engineAt(index);
-    if (value) e.setFrozen(false);
+    e.setFrozen(false);
     e.reset();
 }
 
+void Spotykach::initialize() {
+    for (auto* e: _engines) e->initialize();
+}
+
 void Spotykach::preprocess(PlaybackParameters p) {
-    for (auto e: _engines) e->preprocess(p);
+    for (auto* e: _engines) e->preprocess(p);
 }
 
 void Spotykach::process(const float* const* inBuf, bool inMono, float** outBuf[kEnginesCount], bool outMono, int numFrames) {

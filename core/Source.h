@@ -18,22 +18,25 @@ public:
     void setFrozen(bool) override;
     bool isFrozen() override { return _frozen; }
     
-    void size(unsigned long) override;
+    void initialize() override;
     
     void write(float, float) override;
     unsigned long readHead() override;
     
     void read(float&, float&, unsigned long) override;
     
+    bool isFilled() override { return _filled; }
+    
     void reset() override;
     
 private:
-    std::vector<float> _buffer[2];
+    float* _buffer[2];
     unsigned long _bufferLength;
-    bool _frozen;
     unsigned long _writeHead;
     unsigned long _readHead;
-    
+    bool _frozen;
+    bool _filled;
+    bool _isInitialized;
 };
 
 #endif

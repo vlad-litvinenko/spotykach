@@ -6,12 +6,7 @@
 //
 
 #include <stdio.h>
-
 #include "Engine.h"
-#include "Envelope.h"
-#include "Source.h"
-#include "Generator.h"
-#include "Trigger.h"
 
 using namespace vlly;
 using namespace spotykach;
@@ -24,26 +19,33 @@ inline int gridStepCount(Grid grid) {
     }
 }
 
-Engine::Engine(): _tempo(0), _step(0.125), _grid(kGrid_Even) {
-    _envelope   = new Envelope();
-    _source     = new Source();
-    _generator  = new Generator(*_source, *_envelope);
-    _trigger    = new Trigger(*_generator);
-    
-    setStart(0);
+Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
+    _tempo{0},
+    _grid{kGrid_CWord},
+    _onsets{7},
+    _envelope{e},
+    _source{s},
+    _generator{g},
+    _jitterLFO{l},
+    _trigger{t},
+    _isInitialized{false}
+{
+    setSlicePosition(0);
     setShift(0);
-    setGrid(kGrid_Even);
-    setStepPosition(6.0 / (EvenStepsCount - 1));
-    setSlice(0.5);
-    setRepeats(8);
-    setDirection(kDirection_Forward);
+    setGrid(1);
+    setStepPosition(4.0 / (CWordsCount - 1));
+    setSliceLength(0.5);
+    setRepeats(9);
+    setDirection(0);
     setRetrigger(0);
-    setIsOn(false);
+    setIsOn(true);
     setDeclick(false);
-    setRetriggerChance(1.0);
-    
-    _trigger->prepareMeterPattern(_step, 0, 4, 4);
-};
+    setRetriggerChance(1);
+    setJitterAmount(0);
+    setJitterRate(0.75);
+    setFrozen(false);
+    _trigger.prepareMeterPattern(_step, 0, 4, 4);
+}
 
 void Engine::setIsOn(bool on) {
     _raw.on = on;
@@ -51,14 +53,15 @@ void Engine::setIsOn(bool on) {
 };
 
 void Engine::setShift(double normVal) {
-    if (normVal == _raw.shift) return;
     _raw.shift = normVal;
-    _shift = normVal * 15 / 16;
-    _invalidatePattern = true;
+    double shiftValue = normVal * 15 / 16;
+    if (shiftValue != _shift) {
+        _shift = shiftValue;
+        _invalidatePattern = true;
+    }
 }
 
 void Engine::setStepPosition(double normVal) {
-    if (normVal == _raw.stepGridPosition) return;
     _raw.stepGridPosition = normVal;
     int maxIndex;
     int valueIndex;
@@ -96,66 +99,81 @@ void Engine::setStepPosition(double normVal) {
 }
 
 void Engine::setGrid(double normVal) {
-    if (normVal == _raw.grid) return;
     _raw.grid = normVal;
-    _grid = spotykach::Grid(normVal * (kGrids_Count - 1));
-    setStepPosition(_raw.stepGridPosition);
-    _invalidatePattern = true;
+    Grid grid = spotykach::Grid(normVal * (kGrids_Count - 1));
+    if (grid != _grid) {
+        _grid = grid;
+        setStepPosition(_raw.stepGridPosition);
+        _invalidatePattern = true;
+    }
 }
 
-void Engine::setStart(double normVal) {
-    if (normVal == _raw.start) return;
-    _raw.start = normVal;
-    _start = std::min(normVal, 127./128.);
-    _invalidateStart = true;
-    
+void Engine::setSlicePosition(double normVal) {
+    _raw.slicePosition = normVal;
+    double start = std::min(normVal, 127./128.);
+    if (start != _start) {
+        _start = start;
+        _invalidateSlicePosition = true;
+    }
 }
 
-void Engine::setSlice(double normVal) {
-    if (normVal == _raw.slice) return;
-    _raw.slice = normVal;
-    _slice = fmax(normVal, 1./128.);
-    _invalidateSlice = true;
+void Engine::setSliceLength(double normVal) {
+    _raw.sliceLength = normVal;
+    double slice = fmax(normVal, 1./128.);
+    if (slice != _slice) {
+        _slice = slice;
+        _invalidateSliceLength = true;
+    }
 }
 
 int Engine::pointsCount() {
-    return _trigger->pointsCount();
+    return _trigger.pointsCount();
 }
 
 void Engine::setRepeats(double normVal) {
-    if (normVal == _raw.repeats) return;
     _raw.repeats = normVal;
-    _trigger->setRepeats(round(normVal * pointsCount()));
+    _trigger.setRepeats(round(normVal * pointsCount()));
 }
 
 void Engine::setRetrigger(double normVal) {
-    if (normVal == _raw.retrigger) return;
     _raw.retrigger = normVal;
-    _trigger->setRetrigger(round(normVal * 16));
+    _trigger.setRetrigger(round(normVal * 16));
 }
 
 void Engine::setRetriggerChance(bool value) {
-    if (value == _raw.retriggerChance) return;
     _raw.retriggerChance = value;
-    _trigger->setRetriggerChance(value);
+    _trigger.setRetriggerChance(value);
+}
+
+void Engine::setJitterAmount(double value) {
+    _raw.jitterAmount = value;
+    _jitterLFO.setAmplitude(value);
+}
+
+void Engine::setJitterRate(double value) {
+    _jitterLFO.setPeriod(1. - value);
 }
 
 void Engine::setDeclick(bool declick) {
-    if (declick == _raw.declick) return;
     _raw.declick = declick;
-    _envelope->setDeclick(declick);
+    _envelope.setDeclick(declick);
 }
 
 void Engine::setDirection(double normVal) {
-    if (normVal == _raw.direction) return;
     _raw.direction = normVal;
     Direction direction = static_cast<Direction>(round(normVal * (kDirections_Count - 1)));
-    _generator->setDirection(direction);
+    _generator.setDirection(direction);
 }
 
 void Engine::setFrozen(bool frozen) {
     _raw.frozen = frozen;
-    _source->setFrozen(frozen);
+    _source.setFrozen(frozen);
+}
+
+void Engine::initialize() {
+    _source.initialize();
+    _generator.initialize();
+    _isInitialized = true;
 }
 
 void Engine::preprocess(PlaybackParameters p) {
@@ -166,49 +184,46 @@ void Engine::preprocess(PlaybackParameters p) {
         reset(true);
     }
     
-    bool invalidatMeasure = p.tempo != _tempo;
-    _tempo = p.tempo;
+    if (p.tempo != _tempo) {
+        _tempo = p.tempo;
+        _trigger.measure(p.tempo, p.sampleRate, p.bufferSize);
+    }
     
     if (_invalidatePattern) {
         if (_grid == Grid::kGrid_CWord) {
-            _trigger->prepareCWordPattern(_onsets, _shift, p.numerator, p.denominator);
+            _trigger.prepareCWordPattern(_onsets, _shift, p.numerator, p.denominator);
         }
         else {
-            _trigger->prepareMeterPattern(_step, _shift, p.numerator, p.denominator);
+            _trigger.prepareMeterPattern(_step, _shift, p.numerator, p.denominator);
         }
-        invalidatMeasure = true;
-        _invalidateSlice = true;
+        _invalidateSliceLength = true;
         _invalidatePattern = false;
     }
     
-    if (_invalidateStart) {
-        _trigger->setStart(_start);
-        invalidatMeasure = true;
-        _invalidateStart = false;
+    if (_invalidateSlicePosition) {
+        _trigger.setSlicePosition(_start);
+        _invalidateSlicePosition = false;
     }
     
-    if (invalidatMeasure) {
-        _trigger->measure(p.tempo, p.sampleRate, p.bufferSize);
-    }
-    
-    if (_invalidateSlice) {
-        _trigger->setSlice(_slice, *_envelope);
-        _invalidateSlice = false;
+    if (_invalidateSliceLength) {
+        _trigger.setSliceLength(_slice, _envelope);
+        _invalidateSliceLength = false;
     }
     
     if (_isPlaying) {
-        _trigger->schedule(p.currentBeat, isLaunch);
+        _trigger.schedule(p.currentBeat, isLaunch);
     }
 }
 
 void Engine::process(float in0, float in1, float* out0, float* out1, bool engaged) {
-    _trigger->next(_isOn && engaged);
-    _source->write(in0, in1);
-    _generator->generate(out0, out1);
+    _trigger.next(_isOn && engaged);
+    _source.write(in0, in1);
+    _generator.generate(out0, out1);
 }
 
 void Engine::reset(bool hard) {
-    _generator->reset(hard);
-    if (hard) _trigger->reset();
+    _source.reset();
+    _generator.reset();
+    if (hard) _trigger.reset();
     
 }
