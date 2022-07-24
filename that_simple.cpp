@@ -50,6 +50,8 @@ int main(void) {
 	controller = new Controller(hw);
 
 	hw.Init();
+	core->initialize();
+
 	hw.SetAudioBlockSize(bufferSize); // number of samples handled per callback
 	hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_48KHZ);
 	hw.StartAudio(AudioCallback);
