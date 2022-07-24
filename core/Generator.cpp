@@ -51,7 +51,7 @@ void Generator::generate(float* out0, float* out1) {
     *out1 = out1Val;
 }
 
-void Generator::activateSlice(long onset, long offset, long length, bool reset) {
+void Generator::activateSlice(uint32_t onset, uint32_t offset, uint32_t length, bool reset) {
     if (reset) {
         setNeedsResetSlices();
         _onset = onset;

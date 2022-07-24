@@ -21,9 +21,9 @@ public:
     void initialize() override;
     
     void write(float, float) override;
-    unsigned long readHead() override;
+    uint32_t readHead() override;
     
-    void read(float&, float&, unsigned long) override;
+    void read(float&, float&, uint32_t) override;
     
     bool isFilled() override { return _filled; }
     
@@ -31,12 +31,11 @@ public:
     
 private:
     float* _buffer[2];
-    unsigned long _bufferLength;
-    unsigned long _writeHead;
-    unsigned long _readHead;
+    uint32_t _bufferLength;
     bool _frozen;
     bool _filled;
-    bool _isInitialized;
+    uint32_t _writeHead;
+    uint32_t _readHead;
 };
 
 #endif

@@ -10,7 +10,7 @@
 #define __Spotykach__Synth__
 
 #include "IGenerator.h"
-
+#include <algorithm>
 #include "ISource.h"
 #include "IEnvelope.h"
 #include "Slice.h"
@@ -23,7 +23,7 @@ public:
     Generator(ISource&, IEnvelope&);
     
     void initialize() override;
-    void activateSlice(long, long, long, bool) override;
+    void activateSlice(uint32_t, uint32_t, uint32_t, bool) override;
     void generate(float*, float*) override;
     void reset() override;
     

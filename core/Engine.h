@@ -99,7 +99,6 @@ private:
     
     bool _isOn;
     bool _isPlaying;
-    bool _isInitialized;
     
     double _tempo;
     

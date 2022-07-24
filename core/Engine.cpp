@@ -20,15 +20,14 @@ inline int gridStepCount(Grid grid) {
 }
 
 Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
-    _tempo{0},
-    _grid{kGrid_CWord},
-    _onsets{7},
-    _envelope{e},
+    _trigger{t},
     _source{s},
+    _envelope{e},
     _generator{g},
     _jitterLFO{l},
-    _trigger{t},
-    _isInitialized{false}
+    _tempo{0},
+    _grid{kGrid_CWord},
+    _onsets{7}
 {
     setSlicePosition(0);
     setShift(0);
@@ -173,7 +172,6 @@ void Engine::setFrozen(bool frozen) {
 void Engine::initialize() {
     _source.initialize();
     _generator.initialize();
-    _isInitialized = true;
 }
 
 void Engine::preprocess(PlaybackParameters p) {

@@ -8,6 +8,8 @@
 #ifndef ISource_h
 #define ISource_h
 
+#include <algorithm>
+
 class ISource {
 public:
     virtual void setFrozen(bool frozen) = 0;
@@ -16,9 +18,9 @@ public:
     virtual void initialize() = 0;
     
     virtual void write(float in0, float in1) = 0;
-    virtual unsigned long readHead() = 0;
+    virtual uint32_t readHead() = 0;
     
-    virtual void read(float& out0, float& out1, unsigned long frameIndex) = 0;
+    virtual void read(float& out0, float& out1, uint32_t frameIndex) = 0;
     
     virtual bool isFilled() = 0;
     
