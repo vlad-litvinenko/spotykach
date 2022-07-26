@@ -10,7 +10,6 @@
 #define __Spotykach__Synth__
 
 #include "IGenerator.h"
-#include <algorithm>
 #include "ISource.h"
 #include "IEnvelope.h"
 #include "Slice.h"
@@ -34,8 +33,8 @@ private:
     IEnvelope& _envelope;
     Slice* _slices[kSlicesCount];
     
-    long _onset;
-    long _offset;
+    uint32_t _onset;
+    uint32_t _offset;
     bool _fwd;
     vlly::spotykach::Direction _direction;
     

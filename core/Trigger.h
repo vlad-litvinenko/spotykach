@@ -21,7 +21,7 @@ static inline void adjustNextIndex(double* points, uint32_t pointsCount, uint32_
     }
     int newNextIndex = 0;
     float nextDiff = INT32_MAX;
-    for (int i = 0; i < pointsCount; i++) {
+    for (uint32_t i = 0; i < pointsCount; i++) {
         auto point = points[i];
         if (!isLaunch && point >= beat && point - beat < nextDiff) {
             nextDiff = point - beat;

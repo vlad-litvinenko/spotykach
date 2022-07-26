@@ -9,7 +9,7 @@
 #define IGenerator_h
 
 #include "Parameters.h"
-#include <algorithm>
+#include <stdint.h>
 
 class IGenerator {
 public:

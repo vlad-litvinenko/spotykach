@@ -8,7 +8,7 @@
 #ifndef ISource_h
 #define ISource_h
 
-#include <algorithm>
+#include <stdint.h>
 
 class ISource {
 public:
