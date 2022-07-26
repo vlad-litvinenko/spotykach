@@ -1,3 +1,5 @@
+#pragma once
+
 #include <assert.h>
 #include "dev/sdram.h"
 
@@ -9,23 +11,23 @@ static const int kSampleRate { 48000 };
 static const int kSourceBufferLength = kSourceBufferSeconds * kSampleRate;
 static const int kSliceBufferLength = kSliceBufferSeconds * kSampleRate;
 
-float DSY_SDRAM_BSS _srcBuf1L[kSourceBufferLength];
-float DSY_SDRAM_BSS _srcBuf1R[kSourceBufferLength];
+static float DSY_SDRAM_BSS _srcBuf1L[kSourceBufferLength];
+static float DSY_SDRAM_BSS _srcBuf1R[kSourceBufferLength];
 
-float DSY_SDRAM_BSS _srcBuf2L[kSourceBufferLength];
-float DSY_SDRAM_BSS _srcBuf2R[kSourceBufferLength];
+static float DSY_SDRAM_BSS _srcBuf2L[kSourceBufferLength];
+static float DSY_SDRAM_BSS _srcBuf2R[kSourceBufferLength];
 
-float DSY_SDRAM_BSS _slcBuf1L[kSliceBufferLength];
-float DSY_SDRAM_BSS _slcBuf1R[kSliceBufferLength];
+static float DSY_SDRAM_BSS _slcBuf1L[kSliceBufferLength];
+static float DSY_SDRAM_BSS _slcBuf1R[kSliceBufferLength];
 
-float DSY_SDRAM_BSS _slcBuf2L[kSliceBufferLength];
-float DSY_SDRAM_BSS _slcBuf2R[kSliceBufferLength];
+static float DSY_SDRAM_BSS _slcBuf2L[kSliceBufferLength];
+static float DSY_SDRAM_BSS _slcBuf2R[kSliceBufferLength];
 
-float DSY_SDRAM_BSS _slcBuf3L[kSliceBufferLength];
-float DSY_SDRAM_BSS _slcBuf3R[kSliceBufferLength];
+static float DSY_SDRAM_BSS _slcBuf3L[kSliceBufferLength];
+static float DSY_SDRAM_BSS _slcBuf3R[kSliceBufferLength];
 
-float DSY_SDRAM_BSS _slcBuf4L[kSliceBufferLength];
-float DSY_SDRAM_BSS _slcBuf4R[kSliceBufferLength];
+static float DSY_SDRAM_BSS _slcBuf4L[kSliceBufferLength];
+static float DSY_SDRAM_BSS _slcBuf4R[kSliceBufferLength];
 
 class Buffers {
 public:
