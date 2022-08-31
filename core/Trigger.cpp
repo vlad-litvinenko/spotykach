@@ -46,9 +46,11 @@ void Trigger::prepareCWordPattern(int onsets, double shift, int numerator, int d
     const size_t size = 16;
     int y = onsets, a = y;
     int x = size - onsets, b = x;
-    std::array<char, size> pattern { 1 };
-    size_t i = pattern.size();
-
+    std::array<char, size> pattern;
+    
+    pattern[0] = 1;
+    
+    size_t i = 1;
     while (a != b) {
         if (a > b) {
             pattern[i] = 1;
@@ -74,6 +76,7 @@ void Trigger::prepareCWordPattern(int onsets, double shift, int numerator, int d
     
     _beatsPerPattern = _numerator;
     _pointsCount = 0;
+    _triggerPoints.fill(0);
     double beatShift = shift * _numerator;
     for (size_t i = 0; i < pattern.size(); i++) {
         if (!pattern[i]) continue;
