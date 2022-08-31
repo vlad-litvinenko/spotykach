@@ -5,7 +5,8 @@ using namespace vlly;
 using namespace spotykach;
 
 Controller::Controller(DaisySeed& hw) {
-    initKnobs(hw);
+    // initKnobs(hw);
+    initMuxKnobs(hw);
 };
 
 void Controller::initKnobs(DaisySeed& hw) {
@@ -18,24 +19,19 @@ void Controller::initKnobs(DaisySeed& hw) {
 }
 
 void Controller::setPatrameters(Spotykach& core) {
-    for (auto k: _knobs) {
-        auto v = k->value();
-        switch (k->usage()) {
-            case Knob::Usage::PositionOne: 
-                core.engineAt(0).setSlicePosition(v);
-                break;
-
-            case Knob::Usage::PositionTwo:
-                core.engineAt(1).setSlicePosition(v);
-                break;
-
-            case Knob::Usage::PositionThree:
-                core.engineAt(2).setSlicePosition(v);
-                break;
-
-            case Knob::Usage::PositionFour:
-                core.engineAt(3).setSlicePosition(v);
-                break;
-        }
-    }
+   for (auto mk: _muxKnobs) {
+        mk.Process();
+        auto v = mk.Value();
+        printf("### %f", v);
+   }
 };
+
+void Controller::initMuxKnobs(daisy::DaisySeed& hw) {
+    AdcChannelConfig conf[1];
+    conf[0].InitMux(hw.GetPin(22), 8, hw.GetPin(13), hw.GetPin(14), hw.GetPin(15));
+    hw.adc.Init(conf, 1);
+
+    for (size_t i = 0; i < _muxKnobs.size(); i++) {
+        _muxKnobs[i].Init(hw.adc.GetMuxPtr(0, i), hw.AudioCallbackRate());
+    }
+}
