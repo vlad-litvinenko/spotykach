@@ -12,6 +12,7 @@
 #include "Parameters.h"
 #include <array>
 
+
 namespace vlly {
 namespace spotykach {
 
@@ -65,7 +66,7 @@ private:
     SpotykachRawParameters _raw;
     
     double _vol[kEnginesCount];
-    bool _cascade[kEnginesCount];
+      bool _cascade[kEnginesCount];
     
     double _mix;
     double _mainVol;
