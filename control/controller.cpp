@@ -1,13 +1,17 @@
 #include "controller.h"
+#include "../logging.h"
+#include <string>
 
 using namespace daisy;
 using namespace vlly;
 using namespace spotykach;
 
-Controller::Controller(DaisySeed& hw) {
-    // initKnobs(hw);
+Controller::Controller() {};
+
+void Controller::Init(DaisySeed& hw) {
     initMuxKnobs(hw);
-};
+    hw.adc.Start();
+}
 
 void Controller::initKnobs(DaisySeed& hw) {
     AdcChannelConfig conf[_knobsCount];
@@ -19,19 +23,25 @@ void Controller::initKnobs(DaisySeed& hw) {
 }
 
 void Controller::setPatrameters(Spotykach& core) {
-   for (auto mk: _muxKnobs) {
+    std::string s = "";
+    for (size_t i = 0; i < _muxKnobs.size(); i++) {
+        auto mk = _muxKnobs[i];
         mk.Process();
-        auto v = mk.Value();
-        printf("### %f", v);
-   }
+        auto v = mk.GetRawValue();
+        s.
+    }
+
+
+    printLog("%lu :: %d", i, v);
 };
 
 void Controller::initMuxKnobs(daisy::DaisySeed& hw) {
     AdcChannelConfig conf[1];
-    conf[0].InitMux(hw.GetPin(22), 8, hw.GetPin(13), hw.GetPin(14), hw.GetPin(15));
+    conf[0].InitMux(hw.GetPin(15), 8, hw.GetPin(14), hw.GetPin(13), hw.GetPin(12));
     hw.adc.Init(conf, 1);
 
     for (size_t i = 0; i < _muxKnobs.size(); i++) {
         _muxKnobs[i].Init(hw.adc.GetMuxPtr(0, i), hw.AudioCallbackRate());
+        _muxKnobs[i].SetSampleRate(hw.AudioCallbackRate());
     }
 }

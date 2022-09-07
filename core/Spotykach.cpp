@@ -16,21 +16,21 @@ using namespace vlly;
 using namespace spotykach;
 
 Spotykach::Spotykach() {
-    auto l = new LFO();
-    for (int i = 0; i < enginesCount(); i++) {
-        auto e = new Envelope();
-        auto s = new Source();
-        auto g = new Generator(*s, *e);
-        auto t = new Trigger(*g, *l);
-        _engines[i] = new Engine(*t, *s, *e, *g, *l);
-        setVolume(_raw.vol[i], i);
-        setCascade(_raw.cascade[i], i);
-    }
+    //auto l = new LFO();
+    // for (int i = 0; i < enginesCount(); i++) {
+    //     auto e = new Envelope();
+        // auto s = new Source();
+        // auto g = new Generator(*s, *e);
+        // auto t = new Trigger(*g, *l);
+        // _engines[i] = new Engine(*t, *s, *e, *g, *l);
+        //setVolume(_raw.vol[i], i);
+        // setCascade(_raw.cascade[i], i);
+    // }
     
-    setMutex(_raw.mutex);
-    setMix(_raw.mix);
-    setMainVolume(_raw.mainVol);
-    setJitterRate(_raw.jitterRate);
+    // setMutex(_raw.mutex);
+    // setMix(_raw.mix);
+    // setMainVolume(_raw.mainVol);
+    // setJitterRate(_raw.jitterRate);
 }
 
 Engine& Spotykach::engineAt(int index) {

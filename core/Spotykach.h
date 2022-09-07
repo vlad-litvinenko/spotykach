@@ -31,7 +31,7 @@ static const int kEnginesCount = 2;
 class Spotykach {
 public:
     Spotykach();
-    ~Spotykach();
+    ~Spotykach() {};
     
     Engine& engineAt(int index);
     long enginesCount();

@@ -6,8 +6,10 @@
 
 class Controller {
 public:
-    Controller(daisy::DaisySeed& hw);
-    ~Controller();
+    Controller();
+    ~Controller() {};
+
+    void Init(daisy::DaisySeed& hw);
 
     void setPatrameters(vlly::spotykach::Spotykach& core);
 
