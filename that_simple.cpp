@@ -2,7 +2,6 @@
 #include "daisysp.h"
 #include "core/Spotykach.h"
 #include "control/controller.h"
-#include "logging.h"
 
 using namespace daisy;
 using namespace daisysp;
@@ -49,18 +48,16 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 int main(void) {
 	hw.Configure();
 	hw.Init();
-	initLogger(hw);
 	
 	controller.Init(hw);
 
-	// core->initialize();
+	core.initialize();
 
 	// hw.SetAudioBlockSize(bufferSize); // number of samples handled per callback
 	// hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_48KHZ);
 	// hw.StartAudio(AudioCallback);
 
 	while(1) {
-		controller.setPatrameters(core);
-		System::Delay(500);
+		
 	}
 }

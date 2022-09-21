@@ -1,6 +1,4 @@
 #include "controller.h"
-#include "../logging.h"
-#include <string>
 
 using namespace daisy;
 using namespace vlly;
