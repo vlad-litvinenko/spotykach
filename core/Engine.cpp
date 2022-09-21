@@ -20,14 +20,15 @@ inline int gridStepCount(Grid grid) {
 }
 
 Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
-    _trigger{t},
-    _source{s},
-    _envelope{e},
-    _generator{g},
-    _jitterLFO{l},
-    _tempo{0},
-    _grid{kGrid_CWord},
-    _onsets{7}
+    _trigger {t},
+    _source {s},
+    _envelope {e},
+    _generator {g},
+    _jitterLFO {l},
+    _tempo {0},
+    _grid {kGrid_CWord},
+    _onsets {7},
+    _step {0}
 {
     setSlicePosition(0);
     setShift(0);
@@ -109,7 +110,7 @@ void Engine::setGrid(float normVal) {
 
 void Engine::setSlicePosition(float normVal) {
     _raw.slicePosition = normVal;
-    float start = std::min(normVal, 127./128.);
+    float start = std::min(normVal, 127.f/128.f);
     if (start != _start) {
         _start = start;
         _invalidateSlicePosition = true;
