@@ -31,7 +31,7 @@ static float DSY_SDRAM_BSS _slcBuf4R[kSliceBufferLength];
 
 class Buffers {
 public:
-    static Buffers& pull() {
+    static Buffers& pool() {
         static Buffers instance;
         return instance;
     }

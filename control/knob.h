@@ -16,7 +16,7 @@ public:
 
     void charge(daisy::DaisySeed& hw, bool isLog);
     Knob::Usage usage() { return _usages[_channel]; };
-    double value();
+    float value();
 
 private:
     daisy::Parameter _param;

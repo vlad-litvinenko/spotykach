@@ -18,8 +18,8 @@ Source::Source() :
     _writeHead(0),
     _readHead(0) {
         _bufferLength = kSourceBufferLength;
-        _buffer[0] = Buffers::pull().sourceBuffer();
-        _buffer[1] = Buffers::pull().sourceBuffer();
+        _buffer[0] = Buffers::pool().sourceBuffer();
+        _buffer[1] = Buffers::pool().sourceBuffer();
 }
 
 void Source::setFrozen(bool frozen) {

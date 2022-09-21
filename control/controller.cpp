@@ -21,16 +21,11 @@ void Controller::initKnobs(DaisySeed& hw) {
 }
 
 void Controller::setPatrameters(Spotykach& core) {
-    std::string s = "";
-    for (size_t i = 0; i < _muxKnobs.size(); i++) {
+   for (size_t i = 0; i < _muxKnobs.size(); i++) {
         auto mk = _muxKnobs[i];
         mk.Process();
         auto v = mk.GetRawValue();
-        s.
-    }
-
-
-    printLog("%lu :: %d", i, v);
+   }
 };
 
 void Controller::initMuxKnobs(daisy::DaisySeed& hw) {

@@ -36,8 +36,8 @@ protected:
         delete _env;
     }
     
-    void doTriggerTest(double shift, double step, double start, int pointsCount, int maxRepeats = 0, int patterns = 1) {
-        double framesPerMeasure { 88200 };
+    void doTriggerTest(float shift, float step, float start, int pointsCount, int maxRepeats = 0, int patterns = 1) {
+        float framesPerMeasure { 88200 };
         int buffer { 512 };
         int numerator = 4;
         _trig->reset();
@@ -62,8 +62,8 @@ protected:
         long framesPerSlice = step * framesPerMeasure;
         EXPECT_CALL(*_gen, activateSlice(onset, pickupOffset, framesPerSlice, false)).Times(patterns * count);
         
-        double currentBeat { 0 };
-        double beatIncrement = 4 * buffer / framesPerMeasure;
+        float currentBeat { 0 };
+        float beatIncrement = 4 * buffer / framesPerMeasure;
         bool isLaunch = true;
         do {
             _trig->schedule(currentBeat, isLaunch);
@@ -76,8 +76,8 @@ protected:
     }
     
     void switchToTriplet8Playing() {
-        std::vector<double> p = { 0.000000, 0.166667, 0.333333, 0.500000, 0.666667, 0.833333, 1.000000, 1.166667, 1.333333, 1.500000, 1.666667, 1.833333, 2.000000, 2.166667, 2.333333, 2.500000, 2.666667, 2.833333, 3.000000, 3.166667, 3.333333, 3.500000, 3.666667, 3.833333 };
-        double bt = 1.75;
+        std::vector<float> p = { 0.000000, 0.166667, 0.333333, 0.500000, 0.666667, 0.833333, 1.000000, 1.166667, 1.333333, 1.500000, 1.666667, 1.833333, 2.000000, 2.166667, 2.333333, 2.500000, 2.666667, 2.833333, 3.000000, 3.166667, 3.333333, 3.500000, 3.666667, 3.833333 };
+        float bt = 1.75;
         int npi = 3;
         adjustNextIndex(p, npi, bt, false);
         
@@ -85,8 +85,8 @@ protected:
     }
     
     void switchToStraight4() {
-        std::vector<double> p = { 0.000000, 1.000000, 2.000000, 3.000000 };
-        double bt = 1.75;
+        std::vector<float> p = { 0.000000, 1.000000, 2.000000, 3.000000 };
+        float bt = 1.75;
         int npi = 3;
         adjustNextIndex(p, npi, bt, false);
         
@@ -94,8 +94,8 @@ protected:
     }
     
     void switchToStraight8Playing() {
-        std::vector<double> p = { 0.000000, 0.500000, 1.000000, 1.500000, 2.000000, 2.500000, 3.000000, 3.500000 };
-        double bt = 1.3;
+        std::vector<float> p = { 0.000000, 0.500000, 1.000000, 1.500000, 2.000000, 2.500000, 3.000000, 3.500000 };
+        float bt = 1.3;
         int npi = 2;
         adjustNextIndex(p, npi, bt, false);
         
@@ -103,8 +103,8 @@ protected:
     }
     
     void switchToStraight8Reset() {
-        std::vector<double> p = { 0.000000, 0.500000, 1.000000, 1.500000, 2.000000, 2.500000, 3.000000, 3.500000 };
-        double bt = 0;
+        std::vector<float> p = { 0.000000, 0.500000, 1.000000, 1.500000, 2.000000, 2.500000, 3.000000, 3.500000 };
+        float bt = 0;
         int npi = 2;
         adjustNextIndex(p, npi, bt, true);
         
@@ -112,8 +112,8 @@ protected:
     }
     
     void switchToPoint8Reset() {
-        std::vector<double> p = { 0.000000, 0.750000, 1.500000, 2.250000, 3.000000, 3.750000, 4.500000, 5.250000, 6.000000, 6.750000, 7.500000, 8.250000, 9.000000, 9.750000, 10.500000, 11.250000 };
-        double bt = 0;
+        std::vector<float> p = { 0.000000, 0.750000, 1.500000, 2.250000, 3.000000, 3.750000, 4.500000, 5.250000, 6.000000, 6.750000, 7.500000, 8.250000, 9.000000, 9.750000, 10.500000, 11.250000 };
+        float bt = 0;
         int npi = 0;
         adjustNextIndex(p, npi, bt, true);
         
@@ -121,8 +121,8 @@ protected:
     }
     
     void switchToWhole() {
-        std::vector<double> p = { 0.000000 };
-        double bt = 2.645720;
+        std::vector<float> p = { 0.000000 };
+        float bt = 2.645720;
         int npi = 3;
         adjustNextIndex(p, npi, bt, false);
         

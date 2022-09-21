@@ -13,8 +13,8 @@
 
 SliceBuffer::SliceBuffer() {
     _size = kSliceBufferLength;
-    _buffer[0] = Buffers::pull().sliceBuffer();
-    _buffer[1] = Buffers::pull().sliceBuffer();
+    _buffer[0] = Buffers::pool().sliceBuffer();
+    _buffer[1] = Buffers::pool().sliceBuffer();
 }
 
 void SliceBuffer::initialize() {

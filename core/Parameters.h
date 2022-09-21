@@ -14,7 +14,7 @@
 namespace vlly {
 namespace spotykach {
     
-    static constexpr double logVolume(double value) {
+    static constexpr float logVolume(float value) {
         return (pow(10.0, value) - 1) / 9.0;
     }
 
@@ -84,7 +84,7 @@ namespace spotykach {
     static const int kGrids_Count = 3;
 
     struct Step {
-        double value;
+        float value;
         const char* title;
     };
 
@@ -139,8 +139,8 @@ namespace spotykach {
     static constexpr int OddStepsCount                  = OddSteps.size();
     static constexpr int CWordsCount                    = CWords.size();
 
-    inline static double findNearestStepGridPosition(int newStepsCount, double oldPosition) {
-        double newStep = 1. / newStepsCount;
+    inline static float findNearestStepGridPosition(int newStepsCount, float oldPosition) {
+        float newStep = 1. / newStepsCount;
         return round(oldPosition / newStep) * newStep;
     }
     

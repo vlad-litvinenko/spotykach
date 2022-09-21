@@ -14,7 +14,7 @@ void Knob::charge(DaisySeed& hw, bool isLog = false) {
     _param.Init(_ctrl, 0.f, 1.f, isLog ? daisy::Parameter::Curve::LOGARITHMIC : daisy::Parameter::Curve::LINEAR);
 };
 
-double Knob::value() { 
+float Knob::value() { 
     _param.Process();
     return _param.Value(); 
 };

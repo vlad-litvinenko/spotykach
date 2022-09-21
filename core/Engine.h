@@ -20,25 +20,25 @@ namespace spotykach {
 
 struct PlaybackParameters {
     bool isPlaying;
-    double tempo;
+    float tempo;
     int numerator;
     int denominator;
-    double sampleRate;
+    float sampleRate;
     int bufferSize;
-    double currentBeat;
+    float currentBeat;
 };
 
 struct RawParameters {
-    double grid             = -1;
-    double shift            = -1;
-    double stepGridPosition = -1;
-    double slicePosition    = -1;
-    double sliceLength      = -1;
-    double direction        = -1;
-    double repeats          = -1;
-    double retrigger        = -1;
-    double retriggerChance  = -1;
-    double jitterAmount     = -1;
+    float grid             = -1;
+    float shift            = -1;
+    float stepGridPosition = -1;
+    float slicePosition    = -1;
+    float sliceLength      = -1;
+    float direction        = -1;
+    float repeats          = -1;
+    float retrigger        = -1;
+    float retriggerChance  = -1;
+    float jitterAmount     = -1;
     bool on                 = false;
     bool declick            = false;
     bool frozen             = false;
@@ -58,27 +58,27 @@ public:
     
     bool isLocking() { return _trigger.locking(); };
     
-    void setSlicePosition(double start);
-    void setSliceLength(double slice);
+    void setSlicePosition(float start);
+    void setSliceLength(float slice);
     
-    void setShift(double shift);
-    void setStepPosition(double stepPosition);
-    void setGrid(double grid);
+    void setShift(float shift);
+    void setStepPosition(float stepPosition);
+    void setGrid(float grid);
     
     int pointsCount();
     
-    void setRepeats(double repeats);
+    void setRepeats(float repeats);
     int repeats() { return _trigger.repeats(); };
     
-    void setRetrigger(double retrigger);
+    void setRetrigger(float retrigger);
     void setRetriggerChance(bool value);
     
-    void setJitterAmount(double value);
-    void setJitterRate(double value);
+    void setJitterAmount(float value);
+    void setJitterRate(float value);
     
     void setDeclick(bool declick);
     
-    void setDirection(double direction);
+    void setDirection(float direction);
     
     void preprocess(PlaybackParameters p);
     
@@ -100,14 +100,14 @@ private:
     bool _isOn;
     bool _isPlaying;
     
-    double _tempo;
+    float _tempo;
     
     Grid _grid;
     int _onsets;
-    double _step;
-    double _shift;
-    double _start;
-    double _slice;
+    float _step;
+    float _shift;
+    float _start;
+    float _slice;
     
     bool _invalidatePattern;
     bool _invalidateSlicePosition;

@@ -16,21 +16,21 @@ using namespace vlly;
 using namespace spotykach;
 
 Spotykach::Spotykach() {
-    //auto l = new LFO();
-    // for (int i = 0; i < enginesCount(); i++) {
-    //     auto e = new Envelope();
-        // auto s = new Source();
-        // auto g = new Generator(*s, *e);
-        // auto t = new Trigger(*g, *l);
-        // _engines[i] = new Engine(*t, *s, *e, *g, *l);
-        //setVolume(_raw.vol[i], i);
-        // setCascade(_raw.cascade[i], i);
-    // }
+    auto l = new LFO();
+    for (int i = 0; i < enginesCount(); i++) {
+        auto e = new Envelope();
+        auto s = new Source();
+        auto g = new Generator(*s, *e);
+        auto t = new Trigger(*g, *l);
+        _engines[i] = new Engine(*t, *s, *e, *g, *l);
+        setVolume(_raw.vol[i], i);
+        setCascade(_raw.cascade[i], i);
+    }
     
-    // setMutex(_raw.mutex);
-    // setMix(_raw.mix);
-    // setMainVolume(_raw.mainVol);
-    // setJitterRate(_raw.jitterRate);
+    setMutex(_raw.mutex);
+    setMix(_raw.mix);
+    setMainVolume(_raw.mainVol);
+    setJitterRate(_raw.jitterRate);
 }
 
 Engine& Spotykach::engineAt(int index) {
@@ -41,7 +41,7 @@ long Spotykach::enginesCount() {
     return kEnginesCount;
 }
 
-void Spotykach::setJitterRate(double normVal) {
+void Spotykach::setJitterRate(float normVal) {
     for (int i = 0; i < enginesCount(); i++) {
         engineAt(i).setJitterRate(normVal);
     }
@@ -56,17 +56,17 @@ void Spotykach::setMutex(int mutex) {
     }
 }
 
-void Spotykach::setMix(double normVal) {
+void Spotykach::setMix(float normVal) {
     _raw.mix = normVal;
     _mix = logVolume(normVal);
 }
 
-void Spotykach::setMainVolume(double normVal) {
+void Spotykach::setMainVolume(float normVal) {
     _raw.mainVol = normVal;
     _mainVol = logVolume(normVal);
 }
 
-void Spotykach::setVolume(double value, int index) {
+void Spotykach::setVolume(float value, int index) {
     _raw.vol[index] = value;
     _vol[index] = logVolume(value);
 }

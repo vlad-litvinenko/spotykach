@@ -13,11 +13,11 @@ static const float kCoef3  = 0.16666666666667;
 static const float kCoef5  = 0.00833333333333;
 static const float kCoef7  = 0.00019841269841;
 
-inline double sine(double x) {
+inline float sine(float x) {
     //x-3+5-7
-    double x3 = x * x * x;
-    double x5 = x3 * x * x;
-    double x7 = x5 * x * x;
+    float x3 = x * x * x;
+    float x5 = x3 * x * x;
+    float x7 = x5 * x * x;
     return x - kCoef3 * x3 + kCoef5 * x5 - kCoef7 * x7;
 }
 

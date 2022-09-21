@@ -17,10 +17,10 @@ namespace vlly {
 namespace spotykach {
 
 struct SpotykachRawParameters {
-    double vol[2]       = { 1.0, 0.0 };
-    double mix          = 1.0;
-    double mainVol      = 1.0;
-    double jitterRate   = 0.75;
+    float vol[2]       = { 1.0, 0.0 };
+    float mix          = 1.0;
+    float mainVol      = 1.0;
+    float jitterRate   = 0.75;
     int mutex           = 0;
     bool cascade[2]     = { false, false };
     bool ownBus[2]      = { false, false };
@@ -38,15 +38,15 @@ public:
     
     void setMutex(int mutex);
     
-    void setMix(double normVal);
+    void setMix(float normVal);
     
-    void setMainVolume(double normVal);
+    void setMainVolume(float normVal);
     
-    void setVolume(double value, int index);
+    void setVolume(float value, int index);
     
     void setCascade(bool value, int index);
     
-    void setJitterRate(double normVal);
+    void setJitterRate(float normVal);
     
     void sendToOwnBus(bool value, int index) { _raw.ownBus[index] = value; };
     
@@ -65,11 +65,11 @@ private:
     Engine* _engines[kEnginesCount];
     SpotykachRawParameters _raw;
     
-    double _vol[kEnginesCount];
+    float _vol[kEnginesCount];
       bool _cascade[kEnginesCount];
     
-    double _mix;
-    double _mainVol;
+    float _mix;
+    float _mainVol;
     Mutex _mutex;
 };
 }

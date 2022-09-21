@@ -11,7 +11,7 @@
 #include <algorithm>
 
 static const int kDefaultQuadrat        = 4;
-static const double kSecondsPerMinute   = 60.0;
+static const float kSecondsPerMinute   = 60.0;
 
 Trigger::Trigger(IGenerator& inGenerator, ILFO& inJitterLFO) :
     _generator(inGenerator),
@@ -37,7 +37,7 @@ Trigger::Trigger(IGenerator& inGenerator, ILFO& inJitterLFO) :
     _currentFrame(0) {
 }
 
-void Trigger::prepareCWordPattern(int onsets, double shift, int numerator, int denominator) {
+void Trigger::prepareCWordPattern(int onsets, float shift, int numerator, int denominator) {
     _step = 0.0625; // 1/16
     _numerator = numerator;
     _denominator = denominator;
@@ -77,10 +77,10 @@ void Trigger::prepareCWordPattern(int onsets, double shift, int numerator, int d
     _beatsPerPattern = _numerator;
     _pointsCount = 0;
     _triggerPoints.fill(0);
-    double beatShift = shift * _numerator;
+    float beatShift = shift * _numerator;
     for (size_t i = 0; i < pattern.size(); i++) {
         if (!pattern[i]) continue;
-        double point = static_cast<double>(i) / _numerator + beatShift;
+        float point = static_cast<float>(i) / _numerator + beatShift;
         if (point >= _beatsPerPattern) {
             point -= _beatsPerPattern;
         }
@@ -97,7 +97,8 @@ void Trigger::prepareCWordPattern(int onsets, double shift, int numerator, int d
     _needsAdjustIndexes = true;
 }
 
-void Trigger::prepareMeterPattern(double step, double shift, int numerator, int denominator) {
+void Trigger::prepareMeterPattern(float step, float shift, int numerator, int denominator) {
+
     _step = step;
     _numerator = numerator;
     _denominator = denominator;
@@ -105,7 +106,7 @@ void Trigger::prepareMeterPattern(double step, double shift, int numerator, int 
     bool keepRepeats = _repeats < _pointsCount;
     
     int steps { 0 };
-    double length;
+    float length;
     int castedLength;
     do {
         steps ++;
@@ -116,10 +117,10 @@ void Trigger::prepareMeterPattern(double step, double shift, int numerator, int 
     
     _beatsPerPattern = _numerator * steps * step;
     _pointsCount = 0;
-    double beatsPerStep = static_cast<double>(_beatsPerPattern) / steps;
-    double beatShift = shift * _numerator;
+    float beatsPerStep = static_cast<float>(_beatsPerPattern) / steps;
+    float beatShift = shift * _numerator;
     for (int i = 0; i < steps; i++) {
-        double point = static_cast<double>(i) * beatsPerStep + beatShift;
+        float point = static_cast<float>(i) * beatsPerStep + beatShift;
         if (point >= _beatsPerPattern) {
             point -= _beatsPerPattern;
         }
@@ -136,36 +137,36 @@ void Trigger::prepareMeterPattern(double step, double shift, int numerator, int 
     _needsAdjustIndexes = true;
 }
 
-void Trigger::setSlicePosition(double value) {
+void Trigger::setSlicePosition(float value) {
     _slicePosition = value;
     _slicePositionFrames = _framesPerBeat * _numerator * _slicePosition;
 }
 
-void Trigger::measure(double tempo, double sampleRate, int bufferSize) {
+void Trigger::measure(float tempo, float sampleRate, int bufferSize) {
     float beatsPerMeasure = kDefaultQuadrat * _numerator / _denominator;
     auto framesPerMeasure = static_cast<uint32_t>(kSecondsPerMinute * sampleRate * beatsPerMeasure / tempo);
     _framesPerBeat = framesPerMeasure / _numerator;
     _jitterLFO.setFramesPerMeasure(framesPerMeasure);
 }
 
-void Trigger::setSliceLength(double value, IEnvelope& envelope) {
+void Trigger::setSliceLength(float value, IEnvelope& envelope) {
     uint32_t framesPerMeasure = _framesPerBeat * _denominator;
     uint32_t framesPerStep { static_cast<uint32_t>(_step * framesPerMeasure) };
     _framesPerSlice = framesPerMeasure * value * 2 * _step;
     envelope.setFramesPerCrossfade(std::max(_framesPerSlice - framesPerStep, uint32_t(0)));
 }
 
-void Trigger::schedule(double currentBeat, bool isLaunch) {
-    double normalisedBeat { currentBeat - static_cast<int>(currentBeat / _beatsPerPattern) * _beatsPerPattern };
+void Trigger::schedule(float currentBeat, bool isLaunch) {
+    float normalisedBeat { currentBeat - static_cast<int>(currentBeat / _beatsPerPattern) * _beatsPerPattern };
     if (isLaunch || _needsAdjustIndexes) {
         adjustNextIndex(_triggerPoints.data(), _pointsCount, _nextPointIndex, normalisedBeat, isLaunch);
         _needsAdjustIndexes = false;
     }
-    double nextPoint = _triggerPoints[_nextPointIndex];
+    float nextPoint = _triggerPoints[_nextPointIndex];
     if (normalisedBeat > _latestPoint) {
         nextPoint += _beatsPerPattern;
     }
-    double distance { nextPoint >= normalisedBeat ? nextPoint - normalisedBeat : _beatsPerPattern };
+    float distance { nextPoint >= normalisedBeat ? nextPoint - normalisedBeat : _beatsPerPattern };
     _framesTillTrigger = distance * _framesPerBeat;
     if (_jitterLFO.amplitude() > 0) _jitterLFO.setCurrentBeat(currentBeat - static_cast<int>(currentBeat / _numerator) * _numerator);
     _currentFrame = 0;
@@ -178,7 +179,7 @@ void Trigger::next(bool engaged) {
         bool reset = false;
         if (_retrigger && _nextPointIndex % _retrigger == 0) {
             //at this point we're using _retriggerChance as binary switch
-            if (_retriggerChance == 1.0 || double(_retriggerDice()) / (_retriggerDice.max() - _retriggerDice.min()) > 0.5) {
+            if (_retriggerChance == 1.0 || float(_retriggerDice()) / (_retriggerDice.max() - _retriggerDice.min()) > 0.5) {
                 onset = _triggerPoints[_nextPointIndex] * _framesPerBeat;
                 reset = true;
             }
@@ -212,7 +213,7 @@ void Trigger::setRetrigger(int retrigger) {
     _retrigger = retrigger;
 }
 
-void Trigger::setRetriggerChance(double value) {
+void Trigger::setRetriggerChance(float value) {
     _retriggerChance = value;
 }
 

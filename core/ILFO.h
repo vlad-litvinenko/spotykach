@@ -10,10 +10,10 @@
 
 class ILFO {
 public:
-    virtual double amplitude() = 0;
-    virtual void setAmplitude(double amplitude) = 0;
-    virtual void setPeriod(double period) = 0;
-    virtual void setCurrentBeat(double beat) = 0;
+    virtual float amplitude() = 0;
+    virtual void setAmplitude(float amplitude) = 0;
+    virtual void setPeriod(float period) = 0;
+    virtual void setCurrentBeat(float beat) = 0;
     virtual void setFramesPerMeasure(long frames) = 0;
     virtual float triangleValueAt(int frame) = 0;
 };

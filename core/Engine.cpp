@@ -51,21 +51,21 @@ void Engine::setIsOn(bool on) {
     _isOn = on;
 };
 
-void Engine::setShift(double normVal) {
+void Engine::setShift(float normVal) {
     _raw.shift = normVal;
-    double shiftValue = normVal * 15 / 16;
+    float shiftValue = normVal * 15 / 16;
     if (shiftValue != _shift) {
         _shift = shiftValue;
         _invalidatePattern = true;
     }
 }
 
-void Engine::setStepPosition(double normVal) {
+void Engine::setStepPosition(float normVal) {
     _raw.stepGridPosition = normVal;
     int maxIndex;
     int valueIndex;
     int onsets = _onsets;
-    double step = _step;
+    float step = _step;
     switch (_grid) {
         case kGrid_Even: {
             maxIndex = EvenStepsCount - 1;
@@ -97,7 +97,7 @@ void Engine::setStepPosition(double normVal) {
     }
 }
 
-void Engine::setGrid(double normVal) {
+void Engine::setGrid(float normVal) {
     _raw.grid = normVal;
     Grid grid = spotykach::Grid(normVal * (kGrids_Count - 1));
     if (grid != _grid) {
@@ -107,18 +107,18 @@ void Engine::setGrid(double normVal) {
     }
 }
 
-void Engine::setSlicePosition(double normVal) {
+void Engine::setSlicePosition(float normVal) {
     _raw.slicePosition = normVal;
-    double start = std::min(normVal, 127./128.);
+    float start = std::min(normVal, 127./128.);
     if (start != _start) {
         _start = start;
         _invalidateSlicePosition = true;
     }
 }
 
-void Engine::setSliceLength(double normVal) {
+void Engine::setSliceLength(float normVal) {
     _raw.sliceLength = normVal;
-    double slice = fmax(normVal, 1./128.);
+    float slice = fmax(normVal, 1./128.);
     if (slice != _slice) {
         _slice = slice;
         _invalidateSliceLength = true;
@@ -129,12 +129,12 @@ int Engine::pointsCount() {
     return _trigger.pointsCount();
 }
 
-void Engine::setRepeats(double normVal) {
+void Engine::setRepeats(float normVal) {
     _raw.repeats = normVal;
     _trigger.setRepeats(round(normVal * pointsCount()));
 }
 
-void Engine::setRetrigger(double normVal) {
+void Engine::setRetrigger(float normVal) {
     _raw.retrigger = normVal;
     _trigger.setRetrigger(round(normVal * 16));
 }
@@ -144,12 +144,12 @@ void Engine::setRetriggerChance(bool value) {
     _trigger.setRetriggerChance(value);
 }
 
-void Engine::setJitterAmount(double value) {
+void Engine::setJitterAmount(float value) {
     _raw.jitterAmount = value;
     _jitterLFO.setAmplitude(value);
 }
 
-void Engine::setJitterRate(double value) {
+void Engine::setJitterRate(float value) {
     _jitterLFO.setPeriod(1. - value);
 }
 
@@ -158,7 +158,7 @@ void Engine::setDeclick(bool declick) {
     _envelope.setDeclick(declick);
 }
 
-void Engine::setDirection(double normVal) {
+void Engine::setDirection(float normVal) {
     _raw.direction = normVal;
     Direction direction = static_cast<Direction>(round(normVal * (kDirections_Count - 1)));
     _generator.setDirection(direction);

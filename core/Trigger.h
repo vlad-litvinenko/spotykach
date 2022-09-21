@@ -14,7 +14,7 @@
 #include "ILFO.h"
 #include <random>
 
-static inline void adjustNextIndex(double* points, uint32_t pointsCount, uint32_t& nextIndex, double beat, bool isLaunch) {
+static inline void adjustNextIndex(float* points, uint32_t pointsCount, uint32_t& nextIndex, float beat, bool isLaunch) {
     if (isLaunch) {
         nextIndex = 0;
         return;
@@ -37,20 +37,20 @@ public:
     
     uint32_t pointsCount() override { return _pointsCount; };
     uint32_t beatsPerPattern() override { return _beatsPerPattern; };
-    void measure(double, double, int) override;
-    void prepareMeterPattern(double, double, int, int) override;
-    void prepareCWordPattern(int, double, int, int) override;
-    void schedule(double, bool) override;
+    void measure(float, float, int) override;
+    void prepareMeterPattern(float, float, int, int) override;
+    void prepareCWordPattern(int, float, int, int) override;
+    void schedule(float, bool) override;
 
     void next(bool) override;
     
     void reset() override;
     
-    void setSlicePosition(double) override;
-    void setSliceLength(double, IEnvelope&) override;
+    void setSlicePosition(float) override;
+    void setSliceLength(float, IEnvelope&) override;
     
     void setRetrigger(int) override;
-    void setRetriggerChance(double) override;
+    void setRetriggerChance(float) override;
     
     uint32_t repeats() override { return _repeats; };
     void setRepeats(int) override;
@@ -61,15 +61,15 @@ private:
     IGenerator& _generator;
     ILFO& _jitterLFO;
 
-    double _step;
-    double _slicePosition;
+    float _step;
+    float _slicePosition;
     bool _needsAdjustIndexes;
     
     uint32_t _numerator;
     uint32_t _denominator;
     
-    std::array<double, 256> _triggerPoints;
-    double _latestPoint;
+    std::array<float, 256> _triggerPoints;
+    float _latestPoint;
     uint32_t _pointsCount;
     uint32_t _nextPointIndex;
     uint32_t _beatsPerPattern;
