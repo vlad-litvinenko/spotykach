@@ -10,7 +10,7 @@
         "-d",
         "${workspaceRoot}"
       ],
-      "executable": "${workspaceRoot}/build/that-simple.elf",
+      "executable": "${workspaceRoot}/build/that_simple.elf",
       "interface": "swd",
       "name": "Cortex Debug",
       "openOCDLaunchCommands": [
@@ -24,9 +24,8 @@
         "monitor reset"
       ],
       "request": "launch",
-      "runToMain": true,
       "servertype": "openocd",
-      "showDevDebugOutput": true,
+      "showDevDebugOutput": "vscode",
       "svdFile": "${workspaceRoot}/.vscode/STM32H750x.svd",
       "type": "cortex-debug"
     }
