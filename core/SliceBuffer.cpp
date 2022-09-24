@@ -11,13 +11,12 @@
 #include "SliceBuffer.h"
 #include "Buffers.h"
 
-SliceBuffer::SliceBuffer() {
-    _size = kSliceBufferLength;
-    _buffer[0] = Buffers::pool().sliceBuffer();
-    _buffer[1] = Buffers::pool().sliceBuffer();
+SliceBuffer::SliceBuffer(): _size { kSliceBufferLength } {
 }
 
 void SliceBuffer::initialize() {
+    _buffer[0] = Buffers::pool().sliceBuffer();
+    _buffer[1] = Buffers::pool().sliceBuffer();
     reset();
 }
 
@@ -42,7 +41,7 @@ bool SliceBuffer::isFull() {
 
 void SliceBuffer::reset() {
     rewind();
-    memset(_buffer[0], 0, _size * sizeof(float));
-    memset(_buffer[1], 0, _size * sizeof(float));
-    
+    int s = sizeof(float);
+    memset(_buffer[0], 0, _size * s);
+    memset(_buffer[1], 0, _size * s);
 }

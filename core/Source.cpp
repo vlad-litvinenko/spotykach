@@ -13,13 +13,11 @@
 #include "Buffers.h"
 
 Source::Source() :
-    _frozen(false),
-    _filled(false),
-    _writeHead(0),
-    _readHead(0) {
-        _bufferLength = kSourceBufferLength;
-        _buffer[0] = Buffers::pool().sourceBuffer();
-        _buffer[1] = Buffers::pool().sourceBuffer();
+    _frozen { false },
+    _filled { false },
+    _writeHead { 0 },
+    _readHead { 0 },
+    _bufferLength { kSourceBufferLength } {
 }
 
 void Source::setFrozen(bool frozen) {
@@ -31,6 +29,8 @@ unsigned long Source::readHead() {
 }
 
 void Source::initialize() {
+    _buffer[0] = Buffers::pool().sourceBuffer();
+    _buffer[1] = Buffers::pool().sourceBuffer();
     reset();
 }
 

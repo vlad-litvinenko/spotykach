@@ -66,7 +66,7 @@ private:
     SpotykachRawParameters _raw;
     
     float _vol[kEnginesCount];
-      bool _cascade[kEnginesCount];
+    bool _cascade[kEnginesCount];
     
     float _mix;
     float _mainVol;
