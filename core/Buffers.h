@@ -45,7 +45,7 @@ public:
 
     float* sliceBuffer() {
         assert(_providedSliceBufCount < _slcBufsCount);
-        return _srcBufs[_providedSliceBufCount++];
+        return _slcBufs[_providedSliceBufCount++];
     };
 
 private:
