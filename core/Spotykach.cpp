@@ -33,11 +33,11 @@ Spotykach::Spotykach() {
     setJitterRate(_raw.jitterRate);
 }
 
-Engine& Spotykach::engineAt(int index) {
+Engine& Spotykach::engineAt(int index) const {
     return *(_engines[index]);
 }
 
-long Spotykach::enginesCount() {
+long Spotykach::enginesCount() const {
     return kEnginesCount;
 }
 
@@ -81,15 +81,15 @@ void Spotykach::setCascade(bool value, int index) {
     e.reset();
 }
 
-void Spotykach::initialize() {
+void Spotykach::initialize() const {
     for (auto* e: _engines) e->initialize();
 }
 
-void Spotykach::preprocess(PlaybackParameters p) {
+void Spotykach::preprocess(PlaybackParameters p) const {
     for (auto* e: _engines) e->preprocess(p);
 }
 
-void Spotykach::process(const float* const* inBuf, bool inMono, float** outBuf[kEnginesCount], bool outMono, int numFrames) {
+void Spotykach::process(const float* const* inBuf, bool inMono, float** outBuf[kEnginesCount], bool outMono, int numFrames) const {
     for (int f = 0; f < numFrames; f++) {
         float in0Ext = inBuf[0][f];
         float in1Ext = inMono ? in0Ext : inBuf[1][f];

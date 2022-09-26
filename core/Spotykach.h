@@ -33,8 +33,8 @@ public:
     Spotykach();
     ~Spotykach() {};
     
-    Engine& engineAt(int index);
-    long enginesCount();
+    Engine& engineAt(int index) const;
+    long enginesCount() const;
     
     void setMutex(int mutex);
     
@@ -50,9 +50,9 @@ public:
     
     void sendToOwnBus(bool value, int index) { _raw.ownBus[index] = value; };
     
-    void initialize();
-    void preprocess(PlaybackParameters p);
-    void process(const float* const* inBuf, bool inMono, float** outBuf[kEnginesCount], bool outMono, int numFrames);
+    void initialize() const;
+    void preprocess(PlaybackParameters p) const;
+    void process(const float* const* inBuf, bool inMono, float** outBuf[kEnginesCount], bool outMono, int numFrames) const;
     
     SpotykachRawParameters rawParameters() { return _raw; }
     
