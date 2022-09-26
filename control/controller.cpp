@@ -24,7 +24,19 @@ void Controller::setPatrameters(Spotykach& core) {
    for (size_t i = 0; i < _muxKnobs.size(); i++) {
         auto mk = _muxKnobs[i];
         mk.Process();
-        auto v = mk.GetRawValue();
+        auto v = 1.f - mk.Value();
+        Engine& e = core.engineAt(0);
+        switch (i) {
+            case 0: e.setSlicePosition(v); break;
+            case 1: e.setSliceLength(v); break;
+            case 2: e.setRetrigger(v); break;
+            case 3: e.setJitterAmount(v); break;
+            case 4: e.setStepPosition(v); break;
+            case 5: core.setVolume(v, 0); break;
+            case 6: e.setShift(v); break;
+            //case 7: e.setRepeats(v); break;
+            default: continue;
+        }
    }
 };
 
