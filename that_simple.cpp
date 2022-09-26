@@ -37,11 +37,9 @@ void configurePlayback(Spotykach& core, size_t bufferSize) {
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size) {
 	configurePlayback(core, size);
 	controller.setPatrameters(core);
+	float** outBufs[4] = { out, nullptr, nullptr, nullptr };
+	core.process(in, false, outBufs, false, size);
 
-	for (size_t i = 0; i < size; i++) {
-		float** outBufs[4] = { out, nullptr, nullptr, nullptr };
-		core.process(in, false, outBufs, false, size);
-	}
 }
 
 int main(void) {
