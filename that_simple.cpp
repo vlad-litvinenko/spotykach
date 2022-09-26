@@ -28,16 +28,15 @@ void configurePlayback(Spotykach& core, size_t bufferSize) {
 	p.tempo = tempo;
 	p.numerator = num;
 	p.denominator = den;
-	p.currentBeat = currentBeat;
 	p.sampleRate = sampleRate;
 	p.bufferSize = bufferSize;
 	core.preprocess(p);
+	p.currentBeat += beatAdvance;
 }
 
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size) {
 	configurePlayback(core, size);
 	controller.setPatrameters(core);
-	p.currentBeat += beatAdvance;
 
 	for (size_t i = 0; i < size; i++) {
 		float** outBufs[4] = { out, nullptr, nullptr, nullptr };
