@@ -2,14 +2,15 @@
 
 #include "daisy_seed.h"
 #include "knob.h"
+#include "mux8.h"
 #include "Spotykach.h"
 
 class Controller {
 public:
-    Controller();
-    ~Controller() {};
+    Controller() = default;
+    ~Controller() = default;
 
-    void Init(daisy::DaisySeed& hw);
+    void initialize(daisy::DaisySeed& hw);
 
     void setPatrameters(vlly::spotykach::Spotykach& core);
 
@@ -18,6 +19,6 @@ private:
     std::array<Knob *, _knobsCount> _knobs;
     void initKnobs(daisy::DaisySeed& hw);
 
-    std::array<daisy::AnalogControl, 8> _muxKnobs;
-    void initMuxKnobs(daisy::DaisySeed& hw);
+    Mux8 _muxOne;
+    daisy::DaisySeed* _hw = nullptr;
 };

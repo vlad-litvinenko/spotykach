@@ -2,41 +2,41 @@
 
 #include "daisy_seed.h"
 
-class MuxKnob {
-
-using MuxChannel = int;
-
+struct MuxKnob {
 public:
-    enum class Usage {
-        Position,
-        Slice,
-        Retrigger,
-        Jitter,
-        Step,
-        Level,
-        Shift,
-        Repeats
-    };   
-
     MuxKnob() = default;
     ~MuxKnob() = default;
 
-    void init(MuxChannel muxChannel, daisy::DaisySeed hw);
-    MuxKnob::Usage usage() const { return _usages[_muxChannel]; };
-    float value() const;
+    using MuxChannel = uint8_t;
+
+    void initialize(MuxChannel muxChannel, daisy::DaisySeed& hw) {
+        const auto flip = true;
+        const auto sampleRate = hw.AudioCallbackRate();
+        _control.Init(hw.adc.GetMuxPtr(0, muxChannel), sampleRate, flip);
+    }
+
+    float smoothing() const { 
+        return _smooth_k; 
+    }
+
+    void setSmoothing(float s) {
+        if (s >= 0.5 && s <= 1.f) _smooth_k = s;
+    }
+
+    float value() {
+        _control.Process();
+        if (_val == 0) {
+            _val =  _control.Value();
+        }
+        else {
+            _val = _control.Value() * _smooth_k + (1 - _smooth_k) * _val;
+        }
+        
+        return _val;
+    }
 
 private: 
-    inline static MuxKnob::Usage _usages[8] = {
-        MuxKnob::Usage::Position,
-        MuxKnob::Usage::Slice,
-        MuxKnob::Usage::Retrigger,
-        MuxKnob::Usage::Jitter,
-        MuxKnob::Usage::Step,
-        MuxKnob::Usage::Level,
-        MuxKnob::Usage::Shift,
-        MuxKnob::Usage::Repeats
-    };
-
-    int _muxChannel;
+    float _val      = 0;
+    float _smooth_k = 0.75;
     daisy::AnalogControl _control;
 };

@@ -46,8 +46,8 @@ int main(void) {
 	hw.Configure();
 	hw.Init();
 	
-	controller.Init(hw);
 
+	controller.initialize(hw);
 	core.initialize();
 
 	hw.SetAudioBlockSize(bufferSize); // number of samples handled per callback

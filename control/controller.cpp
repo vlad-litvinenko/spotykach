@@ -4,11 +4,14 @@ using namespace daisy;
 using namespace vlly;
 using namespace spotykach;
 
-Controller::Controller() {};
-
-void Controller::Init(DaisySeed& hw) {
-    initMuxKnobs(hw);
+void Controller::initialize(DaisySeed& hw) {
+    AdcChannelConfig conf[1];
+    _muxOne.initialize(hw, conf[0], 15);
+    hw.adc.Init(conf, 1);
+    _muxOne.initKnobs(hw);
     hw.adc.Start();
+
+    _hw = &hw;
 }
 
 void Controller::initKnobs(DaisySeed& hw) {
@@ -20,33 +23,26 @@ void Controller::initKnobs(DaisySeed& hw) {
     for (auto k: _knobs) k->charge(hw, false);
 }
 
+
+using Target = Mux8::Target;
 void Controller::setPatrameters(Spotykach& core) {
-   for (size_t i = 0; i < _muxKnobs.size(); i++) {
-        auto mk = _muxKnobs[i];
-        mk.Process();
-        auto v = 1.f - mk.Value();
+   for (size_t i = 0; i < _muxOne.knobsCount(); i++) {
+        auto param = _muxOne.paramAt(i);
         Engine& e = core.engineAt(0);
-        switch (i) {
-            case 0: e.setSlicePosition(v); break;
-            case 1: e.setSliceLength(v); break;
-            case 2: e.setRetrigger(v); break;
-            case 3: e.setJitterAmount(v); break;
-            case 4: e.setStepPosition(v); break;
-            case 5: core.setVolume(v, 0); break;
-            case 6: e.setShift(v); break;
-            //case 7: e.setRepeats(v); break;
+        switch (param.target) {
+            case Target::Position: {
+                e.setSlicePosition(param.value); 
+                _hw->PrintLine("\rV%d: %d", i, static_cast<int>(roundf(param.value * 1024.f))); 
+                break;
+            }
+            case Target::Slice: e.setSliceLength(param.value); break;
+            case Target::Retrigger: e.setRetrigger(param.value); break;
+            case Target::Jitter: e.setJitterAmount(param.value); break;
+            case Target::Step: e.setStepPosition(param.value); break;
+            case Target::Level: core.setVolume(param.value, 0); break;
+            case Target::Shift: e.setShift(param.value); break;
+            case Target::Repeats: e.setRepeats(param.value); break;
             default: continue;
         }
    }
 };
-
-void Controller::initMuxKnobs(daisy::DaisySeed& hw) {
-    AdcChannelConfig conf[1];
-    conf[0].InitMux(hw.GetPin(15), 8, hw.GetPin(14), hw.GetPin(13), hw.GetPin(12));
-    hw.adc.Init(conf, 1);
-
-    for (size_t i = 0; i < _muxKnobs.size(); i++) {
-        _muxKnobs[i].Init(hw.adc.GetMuxPtr(0, i), hw.AudioCallbackRate());
-        _muxKnobs[i].SetSampleRate(hw.AudioCallbackRate());
-    }
-}
