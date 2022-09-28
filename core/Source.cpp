@@ -13,12 +13,12 @@
 #include "Buffers.h"
 
 Source::Source() :
+    _bufferLength { kSourceBufferLength },
     _frozen { false },
     _filled { false },
     _writeHead { 0 },
-    _readHead { 0 },
-    _bufferLength { kSourceBufferLength } {
-}
+    _readHead { 0 } 
+    {}
 
 void Source::setFrozen(bool frozen) {
     _frozen = frozen;
