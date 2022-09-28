@@ -19,6 +19,6 @@ private:
     std::array<Knob *, _knobsCount> _knobs;
     void initKnobs(daisy::DaisySeed& hw);
 
-    Mux8 _muxOne;
+    std::array<Mux8, 2> _muxs;
     daisy::DaisySeed* _hw = nullptr;
 };
