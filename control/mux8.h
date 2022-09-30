@@ -12,8 +12,8 @@ public:
         Jitter,
         Step,
         Level,
-        Shift,
-        Repeats
+        Repeats,
+        Shift
     };
 
     struct Param {
