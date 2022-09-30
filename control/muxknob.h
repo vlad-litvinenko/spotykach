@@ -29,7 +29,7 @@ public:
             _val =  _control.Value();
         }
         else {
-            _val = _control.Value() * _smooth_k + (1 - _smooth_k) * _val;
+            _val = roundf((_control.Value() * _smooth_k + (1 - _smooth_k) * _val) * 1024.f) / 1024.f;
         }
         
         return _val;
