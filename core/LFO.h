@@ -27,7 +27,7 @@ private:
     long _framesPerBeat { 0 };
     float _currentBeat { 0 };
     float _period { 0.25 }; // 1/4
-    float _amp { 1.0 }; // +1.0...-1.0
+    float _amp { 0 }; // +1.0...-1.0
  };
 
 #endif /* LFO_h */

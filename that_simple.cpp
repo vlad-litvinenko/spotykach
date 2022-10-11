@@ -2,6 +2,7 @@
 #include "daisysp.h"
 #include "core/Spotykach.h"
 #include "control/controller.h"
+#include "hid/midi.h"
 
 using namespace daisy;
 using namespace daisysp;
@@ -13,6 +14,7 @@ DaisySeed hw;
 Controller controller;
 Spotykach core;
 PlaybackParameters p;
+MidiUsbHandler midi;
 
 const float tempo { 120.f };
 const int sampleRate { 48000 };  
@@ -39,13 +41,18 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 	controller.setPatrameters(core);
 	float** outBufs[4] = { out, nullptr, nullptr, nullptr };
 	core.process(in, false, outBufs, false, size);
-
 }
 
 int main(void) {
 	hw.Configure();
 	hw.Init();
-	
+
+	hw.StartLog();
+
+	MidiUsbHandler::Config cfg;
+	cfg.transport_config.periph = MidiUsbTransport::Config::Periph::INTERNAL;
+	midi.Init(cfg);
+	midi.StartReceive();
 
 	controller.initialize(hw);
 	core.initialize();
@@ -55,6 +62,5 @@ int main(void) {
 	hw.StartAudio(AudioCallback);
 
 	while(1) {
-		
 	}
 }
