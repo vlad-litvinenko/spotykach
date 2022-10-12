@@ -46,8 +46,6 @@ private:
         return _switches[index].Pressed();
     }
 
-    
-
     using Pin = uint8_t;
     Pin pin(Target t, Channel ch) {
         auto ch1 { ch == Channel::One };
@@ -56,7 +54,7 @@ private:
             case Target::Reverse:   return ch1 ? 19 : 24;
             case Target::Declick:   return ch1 ? 20 : 25;
             case Target::Freeze:    return ch1 ? 21 : 26;
-            case Target::Chance:    return ch1 ? 12 : 27;
+            case Target::Chance:    return ch1 ? 22 : 27;
         };
     };
 
