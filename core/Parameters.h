@@ -65,8 +65,6 @@ namespace spotykach {
     };
 
     const int kMutexCount = 2;
-    
-    
 
     enum Direction {
         kDirection_Forward,
@@ -135,9 +133,9 @@ namespace spotykach {
         { 13, "13" }
     }};
 
-    static constexpr int EvenStepsCount                 = EvenSteps.size();
-    static constexpr int OddStepsCount                  = OddSteps.size();
-    static constexpr int CWordsCount                    = CWords.size();
+    static constexpr int EvenStepsCount = EvenSteps.size();
+    static constexpr int OddStepsCount = OddSteps.size();
+    static constexpr int CWordsCount = CWords.size();
 
     inline static float findNearestStepGridPosition(int newStepsCount, float oldPosition) {
         float newStep = 1. / newStepsCount;
