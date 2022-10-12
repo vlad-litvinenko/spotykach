@@ -39,13 +39,11 @@ Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
     setDirection(0);
     setRetrigger(0);
     setIsOn(true);
-    // setDeclick(false);
-    setDeclick(true);
+    setDeclick(false);
     setRetriggerChance(1);
     setJitterAmount(0);
     setJitterRate(0.75);
-    // setFrozen(false);
-    setFrozen(true);
+    setFrozen(false);
     _trigger.prepareMeterPattern(_step, 0, 4, 4);
 }
 
