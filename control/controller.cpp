@@ -60,11 +60,7 @@ void Controller::setPatrameters(Spotykach& core) {
             case ChTarget::Reverse: e.setDirection(isOn ? 1 : 0); break;
             case ChTarget::Declick: e.setDeclick(isOn); break;
             case ChTarget::Freeze: e.setFrozen(isOn); break;
-            case ChTarget::Chance: {
-                e.setRetriggerChance(isOn); 
-                _hw->PrintLine("Chance %d", isOn); 
-                break;
-            }
+            case ChTarget::Chance: e.setRetriggerChance(isOn); break;
         }
     }
 
