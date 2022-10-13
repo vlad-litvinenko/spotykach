@@ -47,12 +47,12 @@ int main(void) {
 	hw.Configure();
 	hw.Init();
 
-	hw.StartLog();
+	// hw.StartLog();
 
-	MidiUsbHandler::Config cfg;
-	cfg.transport_config.periph = MidiUsbTransport::Config::Periph::INTERNAL;
-	midi.Init(cfg);
-	midi.StartReceive();
+	// MidiUsbHandler::Config cfg;
+	// cfg.transport_config.periph = MidiUsbTransport::Config::Periph::INTERNAL;
+	// midi.Init(cfg);
+	// midi.StartReceive();
 
 	controller.initialize(hw);
 	core.initialize();
@@ -62,5 +62,7 @@ int main(void) {
 	hw.StartAudio(AudioCallback);
 
 	while(1) {
+		// controller.setPatrameters(core);
+		// System::Delay(10);
 	}
 }
