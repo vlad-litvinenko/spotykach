@@ -14,7 +14,7 @@ public:
 
     void initialize(daisy::DaisySeed hw) {
         for (size_t i = 0; i < kTargetsCount; i++) {
-            _switches[i].Init(hw.GetPin(pin(_targets[i]).pin), 1000);
+            _switches[i].Init(hw.GetPin(pin(_targets[i])), 1000);
         }
     }
 
@@ -33,10 +33,11 @@ private:
         return _switches[index].Pressed();
     }
 
-    daisy::Pin pin(Target t) {
+    using Pin = int;
+    Pin pin(Target t) {
         switch (t) {
-            case Target::Mutex:     return daisy::seed::D28;
-            case Target::Cascade:   return daisy::seed::D29;
+            case Target::Mutex:     return 28;
+            case Target::Cascade:   return 29;
         };
     };
 
