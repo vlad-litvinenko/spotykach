@@ -11,6 +11,7 @@
 #include "Engine.h"
 #include "Parameters.h"
 #include <array>
+#include <memory>
 
 
 namespace vlly {
@@ -62,7 +63,7 @@ public:
     }
     
 private:
-    Engine* _engines[kEnginesCount];
+    std::array<std::shared_ptr<Engine>, kEnginesCount> _engines;
     SpotykachRawParameters _raw;
     
     float _vol[kEnginesCount];
@@ -71,6 +72,8 @@ private:
     float _mix;
     float _mainVol;
     Mutex _mutex;
+
+    std::array<std::shared_ptr<void>, 10> _autoreleasePull;
 };
 }
 }

@@ -16,15 +16,22 @@ using namespace vlly;
 using namespace spotykach;
 
 Spotykach::Spotykach() {
-    auto l = new LFO();
+    static int j = 0;
+    auto l = std::make_shared<LFO>();
+    _autoreleasePull[j++] = l;
     for (int i = 0; i < enginesCount(); i++) {
-        auto e = new Envelope();
-        auto s = new Source();
-        auto g = new Generator(*s, *e);
-        auto t = new Trigger(*g, *l);
-        _engines[i] = new Engine(*t, *s, *e, *g, *l);
+        auto e = std::make_shared<Envelope>();
+        auto s = std::make_shared<Source>();
+        auto g = std::make_shared<Generator>(s.get(), e.get());
+        auto t = std::make_shared<Trigger>(g.get(), l.get());
+        _engines[i] = std::make_shared<Engine>(t.get(), s.get(), e.get(), g.get(), l.get());
         setVolume(_raw.vol[i], i);
         setCascade(_raw.cascade[i], i);
+
+        _autoreleasePull[j++] = e;
+        _autoreleasePull[j++] = s;
+        _autoreleasePull[j++] = g;
+        _autoreleasePull[j++] = t;
     }
     
     setMutex(_raw.mutex);
@@ -82,11 +89,11 @@ void Spotykach::setCascade(bool value, int index) {
 }
 
 void Spotykach::initialize() const {
-    for (auto* e: _engines) e->initialize();
+    for (auto e: _engines) e->initialize();
 }
 
 void Spotykach::preprocess(PlaybackParameters p) const {
-    for (auto* e: _engines) e->preprocess(p);
+    for (auto e: _engines) e->preprocess(p);
 }
 
 void Spotykach::process(const float* const* inBuf, bool inMono, float** outBuf[kEnginesCount], bool outMono, int numFrames) const {
