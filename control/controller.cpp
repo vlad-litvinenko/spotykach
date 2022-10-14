@@ -1,12 +1,10 @@
 #include "controller.h"
 
 using namespace daisy;
-using namespace vlly;
-using namespace spotykach;
 
 void Controller::initialize(DaisySeed& hw) {
     AdcChannelConfig conf[1];
-    _muxs[0].initialize(hw, conf[0], 15);
+    _muxs[0].initialize(hw, conf[0], seed::A0);
     hw.adc.Init(conf, 1);
     _muxs[0].initKnobs(hw);
 
@@ -32,8 +30,8 @@ void Controller::initToggles(DaisySeed& hw) {
     _globalToggles.initialize(hw);
 }
 
-void Controller::setPatrameters(Spotykach& core) {
-    Engine& e = core.engineAt(0);
+void Controller::setPatrameters(vlly::spotykach::Spotykach& core) {
+    auto& e = core.engineAt(0);
     Mux8 m = _muxs[0];
     using MuxTarget = Mux8::Target;
     for (size_t i = 0; i < m.knobsCount(); i++) {
