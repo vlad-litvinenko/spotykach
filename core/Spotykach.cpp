@@ -16,22 +16,21 @@ using namespace vlly;
 using namespace spotykach;
 
 Spotykach::Spotykach() {
-    static int j = 0;
     auto l = std::make_shared<LFO>();
-    _autoreleasePull[j++] = l;
+    _releasePull.emplace_back(l);
     for (int i = 0; i < enginesCount(); i++) {
         auto e = std::make_shared<Envelope>();
         auto s = std::make_shared<Source>();
-        auto g = std::make_shared<Generator>(s.get(), e.get());
-        auto t = std::make_shared<Trigger>(g.get(), l.get());
-        _engines[i] = std::make_shared<Engine>(t.get(), s.get(), e.get(), g.get(), l.get());
+        auto g = std::make_shared<Generator>(*s, *e);
+        auto t = std::make_shared<Trigger>(*g, *l);
+        _engines[i] = std::make_shared<Engine>(*t, *s, *e, *g, *l);
         setVolume(_raw.vol[i], i);
         setCascade(_raw.cascade[i], i);
 
-        _autoreleasePull[j++] = e;
-        _autoreleasePull[j++] = s;
-        _autoreleasePull[j++] = g;
-        _autoreleasePull[j++] = t;
+        _releasePull.emplace_back(e);
+        _releasePull.emplace_back(s);
+        _releasePull.emplace_back(g);
+        _releasePull.emplace_back(t);
     }
     
     setMutex(_raw.mutex);

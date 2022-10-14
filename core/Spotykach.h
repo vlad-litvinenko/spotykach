@@ -11,6 +11,7 @@
 #include "Engine.h"
 #include "Parameters.h"
 #include <array>
+#include <vector>
 #include <memory>
 
 
@@ -73,7 +74,7 @@ private:
     float _mainVol;
     Mutex _mutex;
 
-    std::array<std::shared_ptr<void>, 10> _autoreleasePull;
+    std::vector<std::shared_ptr<void>> _releasePull;
 };
 }
 }
