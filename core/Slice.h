@@ -16,7 +16,7 @@
 class Slice {
 public:
     Slice(ISource& inSource, ISliceBuffer& inBuffer, IEnvelope& inEnvelope);
-    ~Slice();
+    ~Slice() = default;
     
     
     bool isActive() { return _active; };
