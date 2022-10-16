@@ -29,7 +29,9 @@ public:
             _val =  _control.Value();
         }
         else {
-            _val = roundf((_control.Value() * _smooth_k + (1 - _smooth_k) * _val) * 1024.f) / 1024.f;
+            auto smth = _control.Value() * _smooth_k + (1 - _smooth_k) * _val;
+            auto qntz = roundf(smth * 1024.f) / 1024.f;
+            _val = floorf(qntz * 1000.f) / 1000.f;
         }
         
         return _val;
