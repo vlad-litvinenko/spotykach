@@ -8,7 +8,6 @@
 
 #include "Generator.h"
 #include "Parameters.h"
-#include "SliceBuffer.h"
 
 using namespace vlly;
 using namespace spotykach;
@@ -20,8 +19,7 @@ Generator::Generator(ISource& inSource, IEnvelope& inEnvelope) :
     _offset(0),
     _direction(kDirection_Forward) {
     for (auto i = 0; i < kSlicesCount; i++) {
-        auto buffer = new SliceBuffer();
-        _slices[i] = new Slice(_source, *buffer ,_envelope);
+        _slices[i] = std::make_shared<Slice>(_source, _buffers[i] ,_envelope);
     }
     reset();
 }
