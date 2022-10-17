@@ -1,36 +1,35 @@
 #pragma once
 
 #include "daisy_seed.h"
+#include "smoother.h"
 
 class Knob {
 public:
-    enum class Usage {
-        JitterRate,
-        
+    enum class Target {
+        JitterRate
     };
 
-    Knob(daisy::AdcChannelConfig& conf, daisy::DaisySeed& hw, int channel);
-    ~Knob();
+    Knob() = default;
+    ~Knob() = default;
 
+    void initialize(daisy::AdcChannelConfig& conf, daisy::DaisySeed& hw, int channel);
     void charge(daisy::DaisySeed& hw, bool isLog);
-    Knob::Usage usage() const { return _usages[_channel]; };
+    Knob::Target target() const { return _usages[_channel]; };
     float value();
 
 private:
     daisy::Parameter _param;
     daisy::AnalogControl _ctrl;
-
-    inline static Knob::Usage _usages[4] = { 
-        Knob::Usage::JitterRate
+    Smoother _smoother;
+    int _channel;
+    constexpr static Knob::Target _usages[4] = { 
+        Knob::Target::JitterRate
     };
     
-    int _channel;
-
-    int pin(Knob::Usage usage) {
+    daisy::Pin pin(Knob::Target usage) const {
         switch (usage) {
-            case Knob::Usage::JitterRate: return 16;
+            case Knob::Target::JitterRate: return daisy::seed::D16;
 
         }
-        return 0;
     }
 };

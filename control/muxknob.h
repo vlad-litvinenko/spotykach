@@ -1,6 +1,7 @@
 #pragma once
 
 #include "daisy_seed.h"
+#include "smoother.h"
 
 struct MuxKnob {
 public:
@@ -16,29 +17,19 @@ public:
     }
 
     float smoothing() const { 
-        return _smooth_k; 
+        return _smoother.smoothing();
     }
 
     void setSmoothing(float s) {
-        if (s >= 0.5 && s <= 1.f) _smooth_k = s;
+        _smoother.setSmoothing(s);
     }
 
     float value() {
         _control.Process();
-        if (_val == 0) {
-            _val =  _control.Value();
-        }
-        else {
-            auto smth = _control.Value() * _smooth_k + (1 - _smooth_k) * _val;
-            auto qntz = roundf(smth * 1024.f) / 1024.f;
-            _val = floorf(qntz * 1000.f) / 1000.f;
-        }
-        
-        return _val;
+        return _smoother.smoothed(_control.Value());
     }
 
 private: 
-    float _val      = 0;
-    float _smooth_k = 0.75;
+    Smoother _smoother;
     daisy::AnalogControl _control;
 };

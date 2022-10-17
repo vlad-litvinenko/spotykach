@@ -2,11 +2,11 @@
 
 using namespace daisy;
 
-Knob::Knob(AdcChannelConfig& conf, DaisySeed& hw, int channel): _channel(channel) {
+void Knob::initialize(AdcChannelConfig& conf, DaisySeed& hw, int channel) {
     _channel = channel;
     auto usage = _usages[channel];
-    conf.InitSingle(hw.GetPin(pin(usage)));
-};
+    conf.InitSingle(pin(usage));
+}
 
 void Knob::charge(DaisySeed& hw, bool isLog = false) {
     float sr = hw.AudioSampleRate() / hw.AudioBlockSize();
@@ -16,5 +16,5 @@ void Knob::charge(DaisySeed& hw, bool isLog = false) {
 
 float Knob::value() { 
     _param.Process();
-    return _param.Value(); 
+    return _smoother.smoothed(_param.Value()); 
 };
