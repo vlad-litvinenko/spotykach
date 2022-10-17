@@ -17,11 +17,11 @@ public:
     void setPatrameters(vlly::spotykach::Spotykach& core);
 
 private:
-    static const int _knobsCount    = 4;
-    std::array<Knob *, _knobsCount> _knobs;
+    void initMuxs(daisy::DaisySeed& hw); 
     void initKnobs(daisy::DaisySeed& hw);
     void initToggles(daisy::DaisySeed& hw);
 
+    std::array<Knob, 1> _knobs;
     std::array<Mux8, 2> _muxs;
     std::array<ChannelToggles, 2> _channelToggles;
     GlobalToggles _globalToggles;

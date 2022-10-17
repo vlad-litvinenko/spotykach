@@ -3,11 +3,8 @@
 using namespace daisy;
 
 void Controller::initialize(DaisySeed& hw) {
-    AdcChannelConfig conf[1];
-    _muxs[0].initialize(hw, conf[0], seed::A0);
-    hw.adc.Init(conf, 1);
-    _muxs[0].initKnobs(hw);
-
+    initMuxs(hw);
+    initKnobs(hw);
     initToggles(hw);
 
     hw.adc.Start();
@@ -15,14 +12,22 @@ void Controller::initialize(DaisySeed& hw) {
     _hw = &hw;
 }
 
-// void Controller::initKnobs(DaisySeed& hw) {
-//     AdcChannelConfig conf[_knobsCount];
-//     for (int i = 0; i < _knobsCount; i++) 
-//         _knobs[i] = new Knob(conf[i], hw, i);
+void Controller::initMuxs(DaisySeed& hw) {
+    AdcChannelConfig conf[1];
+    _muxs[0].initialize(hw, conf[0], seed::A0);
+    hw.adc.Init(conf, 1);
+    _muxs[0].initKnobs(hw);
+}
+
+void Controller::initKnobs(DaisySeed& hw) {
+    auto count = _knobs.size();
+    AdcChannelConfig conf[count];
+    for (size_t i = 0; i < count; i++) 
+        _knobs[i].initialize(conf[i], hw, i);
         
-//     hw.adc.Init(conf, _knobsCount);
-//     for (auto k: _knobs) k->charge(hw, false);
-// }
+    hw.adc.Init(conf, count);
+    for (auto k: _knobs) k.charge(hw, false);
+}
 
 void Controller::initToggles(DaisySeed& hw) {
     _channelToggles[0].initialize(hw, ChannelToggles::Channel::One);
