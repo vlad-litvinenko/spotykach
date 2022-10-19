@@ -4,7 +4,7 @@ using namespace daisy;
 
 void Knob::initialize(AdcChannelConfig& conf, DaisySeed& hw, int channel) {
     _channel = channel;
-    auto usage = _usages[channel];
+    auto usage = _targets[channel];
     conf.InitSingle(pin(usage));
 }
 

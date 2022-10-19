@@ -14,7 +14,7 @@ public:
 
     void initialize(daisy::AdcChannelConfig& conf, daisy::DaisySeed& hw, int channel);
     void charge(daisy::DaisySeed& hw, bool isLog);
-    Knob::Target target() const { return _usages[_channel]; };
+    Knob::Target target() const { return _targets[_channel]; };
     float value();
 
 private:
@@ -22,7 +22,7 @@ private:
     daisy::AnalogControl _ctrl;
     Smoother _smoother;
     int _channel;
-    constexpr static Knob::Target _usages[4] = { 
+    constexpr static  std::array<Target, 1> _targets = { 
         Knob::Target::JitterRate
     };
     
