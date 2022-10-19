@@ -17,7 +17,7 @@ using namespace spotykach;
 
 Spotykach::Spotykach() {
     auto l = std::make_shared<LFO>();
-    _releasePull.emplace_back(l);
+    _releasePool.emplace_back(l);
     for (int i = 0; i < enginesCount(); i++) {
         auto e = std::make_shared<Envelope>();
         auto s = std::make_shared<Source>();
@@ -27,10 +27,10 @@ Spotykach::Spotykach() {
         setVolume(_raw.vol[i], i);
         setCascade(_raw.cascade[i], i);
 
-        _releasePull.emplace_back(e);
-        _releasePull.emplace_back(s);
-        _releasePull.emplace_back(g);
-        _releasePull.emplace_back(t);
+        _releasePool.emplace_back(e);
+        _releasePool.emplace_back(s);
+        _releasePool.emplace_back(g);
+        _releasePool.emplace_back(t);
     }
     
     setMutex(_raw.mutex);

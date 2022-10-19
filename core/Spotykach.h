@@ -74,7 +74,7 @@ private:
     float _mainVol;
     Mutex _mutex;
 
-    std::vector<std::shared_ptr<void>> _releasePull;
+    std::vector<std::shared_ptr<void>> _releasePool;
 };
 }
 }
