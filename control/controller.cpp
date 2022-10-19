@@ -36,8 +36,17 @@ void Controller::initToggles(DaisySeed& hw) {
 }
 
 void Controller::setPatrameters(vlly::spotykach::Spotykach& core) {
-    auto& e = core.engineAt(0);
-    Mux8 m = _muxs[0];
+    auto& e = core.engineAt(0);    
+    setMuxParameters(e, core, _muxs[0]);
+    setChannelToggles(e, _channelToggles[0]);
+    
+    setKnobParameters(core, _knobs);
+    setGlobalToggles(core, _globalToggles);
+};
+
+using namespace vlly;
+using namespace spotykach;
+void Controller::setMuxParameters(Engine& e,  Spotykach& s, Mux8& m) {
     using MuxTarget = Mux8::Target;
     for (size_t i = 0; i < m.knobsCount(); i++) {
         auto p = m.paramAt(i);
@@ -47,12 +56,25 @@ void Controller::setPatrameters(vlly::spotykach::Spotykach& core) {
             case MuxTarget::Retrigger: e.setRetrigger(p.value); break;
             case MuxTarget::Jitter: e.setJitterAmount(p.value <= 0.001 ? 0 : p.value); break;
             case MuxTarget::Step: e.setStepPosition(p.value); break;
-            case MuxTarget::Level: core.setVolume(p.value, 0); break;
+            case MuxTarget::Level: s.setVolume(p.value, 0); break;
             case MuxTarget::Shift: e.setShift(p.value); break; 
             case MuxTarget::Repeats: e.setRepeats(p.value); break;
         }
     }
+}
 
+void Controller::setKnobParameters(vlly::spotykach::Spotykach &s, std::array<Knob, 1>& k) {
+    for (size_t i = 0; i < _knobs.size(); i++) {
+        auto k = _knobs[i];
+        auto t = k.target();
+        auto v = k.value();
+        switch (t) {
+            case Knob::Target::JitterRate: s.setJitterRate(v); break;
+        }
+    }   
+}
+
+void Controller::setChannelToggles(vlly::spotykach::Engine& e, ChannelToggles& ct) {
     for (size_t i = 0; i < _channelToggles[0].count(); i++) {
         auto toggle = _channelToggles[0].at(i);
         auto target = std::get<0>(toggle);
@@ -66,15 +88,17 @@ void Controller::setPatrameters(vlly::spotykach::Spotykach& core) {
             case ChTarget::Chance: e.setRetriggerChance(isOn); break;
         }
     }
+}
 
+void Controller::setGlobalToggles(vlly::spotykach::Spotykach &s, GlobalToggles& gt) {
     for (size_t i = 0; i < _globalToggles.count(); i++) {
         auto toggle = _globalToggles.at(i); break;
         auto target = std::get<0>(toggle); break;
         auto isOn = std::get<1>(toggle); break;
         using GTarget = GlobalToggles::Target;
         switch (target) {
-            case GTarget::Mutex: core.setMutex(isOn); break;
-            case GTarget::Cascade: core.setCascade(isOn, 1); break;
-        }    
+            case GTarget::Mutex: s.setMutex(isOn); break;
+            case GTarget::Cascade: s.setCascade(isOn, 1); break;
+        }
     }
-};
+}
