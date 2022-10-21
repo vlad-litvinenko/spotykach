@@ -12,13 +12,12 @@ public:
     Knob() = default;
     ~Knob() = default;
 
-    void initialize(daisy::AdcChannelConfig& conf, daisy::DaisySeed& hw, int channel);
-    void charge(daisy::DaisySeed& hw, bool isLog);
+    void initialize(daisy::AdcChannelConfig& conf, int channel);
+    void configure(daisy::DaisySeed& hw);
     Knob::Target target() const { return _targets[_channel]; };
     float value();
 
 private:
-    daisy::Parameter _param;
     daisy::AnalogControl _ctrl;
     Smoother _smoother;
     int _channel;
@@ -28,8 +27,7 @@ private:
     
     daisy::Pin pin(Knob::Target usage) const {
         switch (usage) {
-            case Knob::Target::JitterRate: return daisy::seed::D16;
-
+            case Knob::Target::JitterRate: return daisy::seed::A1;
         }
-    }
+    };
 };

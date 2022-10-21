@@ -2,19 +2,18 @@
 
 using namespace daisy;
 
-void Knob::initialize(AdcChannelConfig& conf, DaisySeed& hw, int channel) {
+void Knob::initialize(AdcChannelConfig& conf, int channel) {
     _channel = channel;
-    auto usage = _targets[channel];
-    conf.InitSingle(pin(usage));
+    auto target = _targets[0];
+    conf.InitSingle(pin(target));
 }
 
-void Knob::charge(DaisySeed& hw, bool isLog = false) {
-    float sr = hw.AudioSampleRate() / hw.AudioBlockSize();
-    _ctrl.Init(hw.adc.GetPtr(_channel), sr);
-    _param.Init(_ctrl, 0.f, 1.f, isLog ? daisy::Parameter::Curve::LOGARITHMIC : daisy::Parameter::Curve::LINEAR);
+void Knob::configure(DaisySeed& hw) {
+    const auto flip = true;
+    _ctrl.Init(hw.adc.GetPtr(_channel), 6000, flip);
 };
 
 float Knob::value() { 
-    _param.Process();
-    return _smoother.smoothed(_param.Value()); 
+    _ctrl.Process();
+    return _smoother.smoothed(_ctrl.Value()); 
 };
