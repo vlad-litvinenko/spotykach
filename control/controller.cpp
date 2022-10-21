@@ -3,7 +3,6 @@
 using namespace daisy;
 
 void Controller::initialize(DaisySeed& hw) {
-    initMuxs(hw);
     initKnobs(hw);
     initToggles(hw);
 
@@ -12,21 +11,20 @@ void Controller::initialize(DaisySeed& hw) {
     _hw = &hw;
 }
 
-void Controller::initMuxs(DaisySeed& hw) {
-    AdcChannelConfig conf[1];
-    _muxs[0].initialize(hw, conf[0], seed::A0);
-    hw.adc.Init(conf, 1);
-    _muxs[0].initKnobs(hw);
-}
-
 void Controller::initKnobs(DaisySeed& hw) {
-    auto count = _knobs.size();
+    size_t muxCount = _muxs.size(); 
+    size_t knobsCount = _knobs.size();
+    size_t count = muxCount + knobsCount;
+    
     AdcChannelConfig conf[count];
-    for (size_t i = 0; i < count; i++) 
-        _knobs[i].initialize(conf[i], hw, i);
+    
+    for (size_t i = 0; i < muxCount; i++) _muxs[i].initialize(hw, conf[i], i);
+    for (size_t j = 0; j < knobsCount; j++) _knobs[j].initialize(conf[j + muxCount], j);
         
     hw.adc.Init(conf, count);
-    for (auto k: _knobs) k.charge(hw, false);
+    
+    for (size_t i = 0; i < muxCount; i++) _muxs[i].initKnobs(hw);
+    for (size_t j = 0; j < knobsCount; j++) _knobs[j].configure(hw);
 }
 
 void Controller::initToggles(DaisySeed& hw) {
@@ -36,12 +34,12 @@ void Controller::initToggles(DaisySeed& hw) {
 }
 
 void Controller::setPatrameters(vlly::spotykach::Spotykach& core) {
-    auto& e = core.engineAt(0);    
+    auto& e = core.engineAt(0);
     setMuxParameters(e, core, _muxs[0]);
     setChannelToggles(e, _channelToggles[0]);
     
-    setKnobParameters(core, _knobs);
-    setGlobalToggles(core, _globalToggles);
+    setKnobParameters(core);
+    setGlobalToggles(core);
 };
 
 using namespace vlly;
@@ -51,7 +49,7 @@ void Controller::setMuxParameters(Engine& e,  Spotykach& s, Mux8& m) {
     for (size_t i = 0; i < m.knobsCount(); i++) {
         auto p = m.paramAt(i);
         switch (p.target) {
-            case MuxTarget::Position: e.setSlicePosition(p.value); break;
+            case MuxTarget::Position: e.setSlicePosition(p.value); _hw->PrintLine("Position %d", int(p.value * 1000)); break;
             case MuxTarget::Slice: e.setSliceLength(p.value); break;
             case MuxTarget::Retrigger: e.setRetrigger(p.value); break;
             case MuxTarget::Jitter: e.setJitterAmount(p.value <= 0.001 ? 0 : p.value); break;
@@ -63,11 +61,10 @@ void Controller::setMuxParameters(Engine& e,  Spotykach& s, Mux8& m) {
     }
 }
 
-void Controller::setKnobParameters(vlly::spotykach::Spotykach &s, std::array<Knob, 1>& k) {
+void Controller::setKnobParameters(vlly::spotykach::Spotykach &s) {
     for (size_t i = 0; i < _knobs.size(); i++) {
-        auto k = _knobs[i];
-        auto t = k.target();
-        auto v = k.value();
+        auto t = _knobs[i].target();
+        auto v = _knobs[i].value();
         switch (t) {
             case Knob::Target::JitterRate: s.setJitterRate(v); break;
         }
@@ -90,7 +87,7 @@ void Controller::setChannelToggles(vlly::spotykach::Engine& e, ChannelToggles& c
     }
 }
 
-void Controller::setGlobalToggles(vlly::spotykach::Spotykach &s, GlobalToggles& gt) {
+void Controller::setGlobalToggles(vlly::spotykach::Spotykach &s) {
     for (size_t i = 0; i < _globalToggles.count(); i++) {
         auto toggle = _globalToggles.at(i); break;
         auto target = std::get<0>(toggle); break;
