@@ -1,6 +1,7 @@
 #pragma once
 
 #include "daisy_seed.h"
+#include "channel.h"
 
 struct ChannelToggles {
 public:
@@ -14,13 +15,8 @@ public:
 
     ChannelToggles() = default;
     ~ChannelToggles() = default;
-
-    enum class Channel {
-        One,
-        Two
-    };
     
-    void initialize(daisy::DaisySeed hw, Channel ch);
+    void initialize(daisy::DaisySeed hw, vlly::spotykach::Channel ch);
 
     size_t count() { return kTargetsCount; }
 
@@ -30,7 +26,7 @@ public:
 private:
     bool isOnAt(int index);
 
-    daisy::Pin pin(Target t, Channel ch);
+    daisy::Pin pin(Target t, vlly::spotykach::Channel ch);
 
     static const int kTargetsCount { 5 };
     constexpr static std::array<Target, kTargetsCount> _targets = {

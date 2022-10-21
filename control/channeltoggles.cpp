@@ -2,7 +2,7 @@
 
 using namespace daisy;
 
-void ChannelToggles::initialize(DaisySeed hw, Channel ch) {
+void ChannelToggles::initialize(DaisySeed hw, vlly::spotykach::Channel ch) {
     for (size_t i = 0; i < kTargetsCount; i++) {
         _switches[i].Init(
             pin(_targets[i], ch),
@@ -18,9 +18,9 @@ bool ChannelToggles::isOnAt(int index) {
     return _switches[index].Pressed();
 }
 
-Pin ChannelToggles::pin(Target t, Channel ch) {
+Pin ChannelToggles::pin(Target t, vlly::spotykach::Channel ch) {
     using namespace seed;
-    auto ch1 { ch == Channel::One };
+    auto ch1 { ch == vlly::spotykach::ChannelOne };
     switch (t) {
         case Target::Grid:      return ch1 ? D18 : D23;
         case Target::Reverse:   return ch1 ? D19 : D24;
