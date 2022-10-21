@@ -21,7 +21,7 @@ void Controller::initKnobs(DaisySeed& hw) {
     AdcChannelConfig conf[count];
     
     _muxs[ChannelOne.index].initialize(hw, conf[ChannelOne.index], ChannelOne);
-    // _muxs[1].initialize(hw, conf[1], Channel::Two);
+    //_muxs[ChannelTwo.index].initialize(hw, conf[ChannelTwo.index], ChannelTwo);
     for (size_t j = 0; j < knobsCount; j++) _knobs[j].initialize(conf[j + muxCount], j);
         
     hw.adc.Init(conf, count);
