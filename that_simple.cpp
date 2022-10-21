@@ -18,7 +18,7 @@ MidiUsbHandler midi;
 
 const float tempo { 120.f };
 const int sampleRate { 48000 };  
-const int bufferSize = 4;
+const int bufferSize = 48;
 const float currentBeat = 0;
 const int num = 4;
 const int den = 4;
@@ -38,8 +38,11 @@ void configurePlayback(Spotykach& core, size_t bufferSize) {
 
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size) {
 	configurePlayback(core, size);
+	controller.setPatrameters(core);
 	float** outBufs[4] = { out, nullptr, nullptr, nullptr };
 	core.process(in, false, outBufs, false, size);
+	// memcpy(out[0], in[0], size * sizeof(float));
+	// memcpy(out[1], in[1], size * sizeof(float));
 }
 
 int main(void) {
@@ -61,7 +64,5 @@ int main(void) {
 	hw.StartAudio(AudioCallback);
 
 	while(1) {
-		controller.setPatrameters(core);
-		System::Delay(10);
 	}
 }
