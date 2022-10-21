@@ -10,7 +10,7 @@ void Knob::initialize(AdcChannelConfig& conf, int channel) {
 
 void Knob::configure(DaisySeed& hw) {
     const auto flip = true;
-    _ctrl.Init(hw.adc.GetPtr(_channel), 6000, flip);
+    _ctrl.Init(hw.adc.GetPtr(_channel), hw.AudioCallbackRate(), flip);
 };
 
 float Knob::value() { 
