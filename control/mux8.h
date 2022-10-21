@@ -24,7 +24,8 @@ public:
     Mux8() = default;
     ~Mux8() = default;
 
-    void initialize(daisy::DaisySeed& hw, daisy::AdcChannelConfig& conf, daisy::Pin pin);
+    using Channel = int;
+    void initialize(daisy::DaisySeed& hw, daisy::AdcChannelConfig& conf, Channel ch);
 
     void initKnobs(daisy::DaisySeed& hw);
 
@@ -44,5 +45,9 @@ private:
         Target::Level,
         Target::Shift,
         Target::Repeats
+    };
+
+    daisy::Pin pin(int ch) const {
+        return ch==1 ? daisy::seed::A2 : daisy::seed::A0;
     };
 };

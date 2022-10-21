@@ -3,9 +3,9 @@
 using namespace daisy;
 
 
-void Mux8::initialize(DaisySeed& hw, AdcChannelConfig& conf, Pin pin) {
+void Mux8::initialize(DaisySeed& hw, AdcChannelConfig& conf, Channel ch) {
     using namespace seed;
-    conf.InitMux(pin, 8, D14, D13, D12);
+    conf.InitMux(pin(ch), 8, D14, D13, D12);
 }   
 
 void Mux8::initKnobs(daisy::DaisySeed& hw) {
