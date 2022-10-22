@@ -14,12 +14,8 @@ public:
 
     ChannelToggles() = default;
     ~ChannelToggles() = default;
-
-    enum class Channel {
-        One,
-        Two
-    };
     
+    using Channel = int;
     void initialize(daisy::DaisySeed hw, Channel ch);
 
     size_t count() { return kTargetsCount; }

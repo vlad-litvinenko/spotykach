@@ -20,7 +20,7 @@ bool ChannelToggles::isOnAt(int index) {
 
 Pin ChannelToggles::pin(Target t, Channel ch) {
     using namespace seed;
-    auto ch1 { ch == Channel::One };
+    auto ch1 { ch == 0 };
     switch (t) {
         case Target::Grid:      return ch1 ? D18 : D23;
         case Target::Reverse:   return ch1 ? D19 : D24;

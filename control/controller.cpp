@@ -17,7 +17,7 @@ void Controller::initKnobs(DaisySeed& hw) {
     size_t count = muxCount + knobsCount;
     
     AdcChannelConfig conf[count];
-    
+
     for (size_t i = 0; i < muxCount; i++) _muxs[i].initialize(hw, conf[i], i);
     for (size_t j = 0; j < knobsCount; j++) _knobs[j].initialize(conf[j + muxCount], j);
         
@@ -28,8 +28,8 @@ void Controller::initKnobs(DaisySeed& hw) {
 }
 
 void Controller::initToggles(DaisySeed& hw) {
-    _channelToggles[0].initialize(hw, ChannelToggles::Channel::One);
-    _channelToggles[1].initialize(hw, ChannelToggles::Channel::Two);
+    _channelToggles[0].initialize(hw, 0);
+    _channelToggles[1].initialize(hw, 1);
     _globalToggles.initialize(hw);
 }
 
@@ -49,7 +49,7 @@ void Controller::setMuxParameters(Engine& e,  Spotykach& s, Mux8& m) {
     for (size_t i = 0; i < m.knobsCount(); i++) {
         auto p = m.paramAt(i);
         switch (p.target) {
-            case MuxTarget::Position: e.setSlicePosition(p.value); _hw->PrintLine("Position %d", int(p.value * 1000)); break;
+            case MuxTarget::Position: e.setSlicePosition(p.value); break;
             case MuxTarget::Slice: e.setSliceLength(p.value); break;
             case MuxTarget::Retrigger: e.setRetrigger(p.value); break;
             case MuxTarget::Jitter: e.setJitterAmount(p.value <= 0.001 ? 0 : p.value); break;
@@ -72,8 +72,8 @@ void Controller::setKnobParameters(vlly::spotykach::Spotykach &s) {
 }
 
 void Controller::setChannelToggles(vlly::spotykach::Engine& e, ChannelToggles& ct) {
-    for (size_t i = 0; i < _channelToggles[0].count(); i++) {
-        auto toggle = _channelToggles[0].at(i);
+    for (size_t i = 0; i < ct.count(); i++) {
+        auto toggle = ct.at(i);
         auto target = std::get<0>(toggle);
         auto isOn = std::get<1>(toggle);
         using ChTarget = ChannelToggles::Target;
