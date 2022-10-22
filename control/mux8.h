@@ -2,7 +2,6 @@
 
 #include "daisy_seed.h"
 #include "muxknob.h"
-#include "channel.h"
 
 struct Mux8 {
 public: 
@@ -25,7 +24,8 @@ public:
     Mux8() = default;
     ~Mux8() = default;
 
-    void initialize(daisy::DaisySeed& hw, daisy::AdcChannelConfig& conf, vlly::spotykach::Channel ch);
+    using Channel = int;
+    void initialize(daisy::DaisySeed& hw, daisy::AdcChannelConfig& conf, Channel ch);
 
     void initKnobs(daisy::DaisySeed& hw);
 
@@ -47,8 +47,7 @@ private:
         Target::Repeats
     };
 
-    daisy::Pin pin(vlly::spotykach::Channel ch) const {
-        if (ch == vlly::spotykach::ChannelTwo) return daisy::seed::A2;
-        return daisy::seed::A0;
+    daisy::Pin pin(int ch) const {
+        return ch==1 ? daisy::seed::A2 : daisy::seed::A0;
     };
 };

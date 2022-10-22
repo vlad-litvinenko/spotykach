@@ -1,8 +1,6 @@
 #include "controller.h"
 
 using namespace daisy;
-using namespace vlly;
-using namespace spotykach;
 
 void Controller::initialize(DaisySeed& hw) {
     initKnobs(hw);
@@ -20,8 +18,7 @@ void Controller::initKnobs(DaisySeed& hw) {
     
     AdcChannelConfig conf[count];
     
-    _muxs[ChannelOne.index].initialize(hw, conf[ChannelOne.index], ChannelOne);
-    //_muxs[ChannelTwo.index].initialize(hw, conf[ChannelTwo.index], ChannelTwo);
+    for (size_t i = 0; i < muxCount; i++) _muxs[i].initialize(hw, conf[i], i);
     for (size_t j = 0; j < knobsCount; j++) _knobs[j].initialize(conf[j + muxCount], j);
         
     hw.adc.Init(conf, count);
@@ -31,15 +28,15 @@ void Controller::initKnobs(DaisySeed& hw) {
 }
 
 void Controller::initToggles(DaisySeed& hw) {
-    _channelToggles[ChannelOne.index].initialize(hw, ChannelOne);
-    _channelToggles[ChannelTwo.index].initialize(hw, ChannelTwo);
+    _channelToggles[0].initialize(hw, ChannelToggles::Channel::One);
+    _channelToggles[1].initialize(hw, ChannelToggles::Channel::Two);
     _globalToggles.initialize(hw);
 }
 
 void Controller::setPatrameters(vlly::spotykach::Spotykach& core) {
     auto& e = core.engineAt(0);
-    setMuxParameters(e, core, _muxs[ChannelOne.index]);
-    setChannelToggles(e, _channelToggles[ChannelOne.index]);
+    setMuxParameters(e, core, _muxs[0]);
+    setChannelToggles(e, _channelToggles[0]);
     
     setKnobParameters(core);
     setGlobalToggles(core);

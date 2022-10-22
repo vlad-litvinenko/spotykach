@@ -3,7 +3,7 @@
 using namespace daisy;
 
 
-void Mux8::initialize(DaisySeed& hw, AdcChannelConfig& conf, vlly::spotykach::Channel ch) {
+void Mux8::initialize(DaisySeed& hw, AdcChannelConfig& conf, Channel ch) {
     using namespace seed;
     conf.InitMux(pin(ch), 8, D14, D13, D12);
 }   
