@@ -41,7 +41,4 @@ bool SliceBuffer::isFull() {
 
 void SliceBuffer::reset() {
     rewind();
-    int s = sizeof(float);
-    memset(_buffer[0], 0, _size * s);
-    memset(_buffer[1], 0, _size * s);
 }
