@@ -15,5 +15,5 @@ void Knob::configure(DaisySeed& hw) {
 
 float Knob::value() { 
     _ctrl.Process();
-    return  _smoother.smoothed(_ctrl.Value()); 
+    return _smoother.smoothed(_ctrl.Value()); 
 }
