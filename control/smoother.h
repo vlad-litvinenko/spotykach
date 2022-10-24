@@ -21,10 +21,9 @@ public:
         }
         else {
             auto smth = rough * _smooth_k + (1 - _smooth_k) * _val;
-            auto qntz = roundf(smth * 1024.f) / 1024.f;
-            _val = floorf(qntz * 1000.f) / 1000.f;
+            _val = floorf(smth * 1000.f) / 1000.f;
         }
-        
+
         return _val;
     }
 
