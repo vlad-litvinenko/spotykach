@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include "Engine.h"
+#include "../control/fcomp.h"
 
 using namespace vlly;
 using namespace spotykach;
@@ -62,6 +63,7 @@ void Engine::setShift(float normVal) {
 }
 
 void Engine::setStepPosition(float normVal) {
+    if (fcomp(normVal, _raw.stepGridPosition)) return;
     _raw.stepGridPosition = normVal;
     int maxIndex;
     int valueIndex;
@@ -88,7 +90,7 @@ void Engine::setStepPosition(float normVal) {
         }
     }
     
-    if (step != _step) {
+    if (!fcomp(step, _step)) {
         _step = step;
         _invalidatePattern = true;
     }
@@ -99,6 +101,7 @@ void Engine::setStepPosition(float normVal) {
 }
 
 void Engine::setGrid(float normVal) {
+    if (fcomp(_raw.grid, normVal)) return;
     _raw.grid = normVal;
     Grid grid = spotykach::Grid(normVal * (kGrids_Count - 1));
     if (grid != _grid) {
@@ -109,6 +112,7 @@ void Engine::setGrid(float normVal) {
 }
 
 void Engine::setSlicePosition(float normVal) {
+    if (fcomp(_raw.slicePosition, normVal)) return;
     _raw.slicePosition = normVal;
     float start = std::min(normVal, 127.f/128.f);
     if (start != _start) {
@@ -118,6 +122,7 @@ void Engine::setSlicePosition(float normVal) {
 }
 
 void Engine::setSliceLength(float normVal) {
+    if (fcomp(_raw.sliceLength, normVal)) return;
     _raw.sliceLength = normVal;
     float slice = fmax(normVal, 1./128.);
     if (slice != _slice) {
@@ -183,7 +188,7 @@ void Engine::preprocess(PlaybackParameters p) {
         reset(true);
     }
     
-    if (p.tempo != _tempo) {
+    if (!fcomp(p.tempo, _tempo)) {
         _tempo = p.tempo;
         _trigger.measure(p.tempo, p.sampleRate, p.bufferSize);
     }
