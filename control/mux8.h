@@ -24,8 +24,9 @@ public:
     Mux8() = default;
     ~Mux8() = default;
 
-    using Channel = int;
-    void initialize(daisy::DaisySeed& hw, daisy::AdcChannelConfig& conf, Channel ch);
+    using ConfigChannelOffset = int16_t;
+    using Index = int16_t;
+    void initialize(daisy::DaisySeed& hw, daisy::AdcChannelConfig& conf, Index i, ConfigChannelOffset ch);
 
     void initKnobs(daisy::DaisySeed& hw);
 
@@ -34,6 +35,7 @@ public:
     size_t knobsCount() const { return _knobs.size(); }
 
 private:
+    int16_t _channel;
     static const int _knobsCount { 8 };
     std::array<MuxKnob, _knobsCount> _knobs;
     constexpr static std::array<Target, _knobsCount> _targets = {
@@ -48,6 +50,6 @@ private:
     };
 
     daisy::Pin pin(int ch) const {
-        return ch==1 ? daisy::seed::A2 : daisy::seed::A0;
+        return ch==0 ? daisy::seed::A0 : daisy::seed::A2;
     };
 };

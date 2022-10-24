@@ -9,11 +9,11 @@ public:
     ~MuxKnob() = default;
 
     using MuxChannel = uint8_t;
-
-    void initialize(MuxChannel muxChannel, daisy::DaisySeed& hw) {
+    using ADCCHannel = int;
+    void initialize(ADCCHannel adcChannel, MuxChannel muxChannel, daisy::DaisySeed& hw) {
         const auto flip = true;
         const auto sampleRate = hw.AudioCallbackRate();
-        _control.Init(hw.adc.GetMuxPtr(0, muxChannel), sampleRate, flip);
+        _control.Init(hw.adc.GetMuxPtr(adcChannel, muxChannel), sampleRate, flip);
     }
 
     float smoothing() const { 

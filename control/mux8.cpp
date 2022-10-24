@@ -3,14 +3,15 @@
 using namespace daisy;
 
 
-void Mux8::initialize(DaisySeed& hw, AdcChannelConfig& conf, Channel ch) {
+void Mux8::initialize(DaisySeed& hw, AdcChannelConfig& conf, Index i, ConfigChannelOffset co) {
     using namespace seed;
-    conf.InitMux(pin(ch), 8, D14, D13, D12);
+    _channel = i + co;
+    conf.InitMux(pin(i), 8, D14, D13, D12);
 }   
 
 void Mux8::initKnobs(daisy::DaisySeed& hw) {
     for (size_t i = 0; i < _knobs.size(); i++) {
-        _knobs[i].initialize(i, hw);
+        _knobs[i].initialize(_channel, i, hw);
     }
 }
 

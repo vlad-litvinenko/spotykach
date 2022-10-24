@@ -12,19 +12,20 @@ void Controller::initialize(DaisySeed& hw) {
 }
 
 void Controller::initKnobs(DaisySeed& hw) {
-    size_t muxCount = _muxs.size(); 
     size_t knobsCount = _knobs.size();
-    size_t count = muxCount + knobsCount;
+    size_t muxCount = _muxs.size();
+    size_t count = knobsCount + muxCount;
     
     AdcChannelConfig conf[count];
-
-    for (size_t i = 0; i < muxCount; i++) _muxs[i].initialize(hw, conf[i], i);
-    for (size_t j = 0; j < knobsCount; j++) _knobs[j].initialize(conf[j + muxCount], j);
+    
+    size_t i;
+    for (i = 0; i < knobsCount; i++) _knobs[i].initialize(conf[i], i);
+    for (i = 0; i < muxCount; i++) _muxs[i].initialize(hw, conf[i + knobsCount], i, knobsCount);
         
     hw.adc.Init(conf, count);
     
-    for (size_t i = 0; i < muxCount; i++) _muxs[i].initKnobs(hw);
-    for (size_t j = 0; j < knobsCount; j++) _knobs[j].configure(hw);
+    for (i = 0; i < knobsCount; i++) _knobs[i].configure(hw);
+    for (i = 0; i < muxCount; i++) _muxs[i].initKnobs(hw);
 }
 
 void Controller::initToggles(DaisySeed& hw) {
