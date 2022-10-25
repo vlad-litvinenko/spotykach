@@ -8,8 +8,8 @@ static const int kSliceBufferSeconds { 3 };
 static const int kSourceBufferSeconds { 10 };
 static const int kSampleRate { 48000 };
 
-static const int kSourceBufferLength = kSourceBufferSeconds * kSampleRate;
-static const int kSliceBufferLength = kSliceBufferSeconds * kSampleRate;
+static const size_t kSourceBufferLength = kSourceBufferSeconds * kSampleRate;
+static const size_t kSliceBufferLength = kSliceBufferSeconds * kSampleRate;
 
 static float DSY_SDRAM_BSS _srcBuf1L[kSourceBufferLength];
 static float DSY_SDRAM_BSS _srcBuf1R[kSourceBufferLength];
@@ -49,7 +49,17 @@ public:
     };
 
 private:
-    Buffers() {};
+    Buffers() {
+        auto srcbs = kSourceBufferLength * sizeof(float);
+        for (size_t i = 0; i < _srcBufsCount; i++) {
+            memset(_srcBufs[i], 0, srcbs);
+        }
+
+        auto slcbs = kSliceBufferLength * sizeof(float);
+        for (size_t i = 0; i < _slcBufsCount; i++) {
+            memset(_slcBufs[i], 0, slcbs);
+        }
+    };
 
     int _providedSourceBufCount { 0 };
     static const int _srcBufsCount { 4 };
