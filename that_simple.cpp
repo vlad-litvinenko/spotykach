@@ -48,7 +48,6 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 
 	auto cc = DWT->CYCCNT;
     if (cc > 390000) {
-        auto bb = DWT->CYCCNT;
         hw.SetLed(true);
 	}
 	else {
