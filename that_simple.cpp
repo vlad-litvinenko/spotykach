@@ -21,41 +21,45 @@ MidiUsbHandler midi;
 
 const float tempo { 120.f };
 const int sampleRate { 48000 };  
-const int bufferSize = 48;
+const int bufferSize = 4;
 const float currentBeat = 0;
 const int num = 4;
 const int den = 4;
 
 const float beatAdvance = (bufferSize * tempo) / (sampleRate * 60.f);
 
-void configurePlayback(Spotykach& core, size_t bufferSize) {
+void configurePlayback() {
 	p.isPlaying = true;
 	p.tempo = tempo;
 	p.numerator = num;
 	p.denominator = den;
 	p.sampleRate = sampleRate;
 	p.bufferSize = bufferSize;
-	core.preprocess(p);
-	p.currentBeat += beatAdvance;
 }
 
+static int configCounter = 0;
+
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size) {
-	configurePlayback(core, size);
-	controller.setPatrameters(core);
+	if (configCounter == 0) {
+		configCounter = 480;
+		configurePlayback();
+		controller.setPatrameters(core);
+	}
+	configCounter --;
+	
+	core.preprocess(p);
+	p.currentBeat += beatAdvance;
+	
 	float** outBufs[4] = { out, nullptr, nullptr, nullptr };
 	DWT->CYCCNT = 0;
 	core.process(in, false, outBufs, false, size);
 
-	auto cc = DWT->CYCCNT;
-    if (cc > 390000) {
+    if (DWT->CYCCNT > 390000) {
         hw.SetLed(true);
 	}
 	else {
 		hw.SetLed(false);
 	}
-	// memcpy(out[0], in[0], size * sizeof(float));
-	// memcpy(out[1], in[1], size * sizeof(float));
-	
 }
 
 int main(void) {
