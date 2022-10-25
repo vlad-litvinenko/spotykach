@@ -63,7 +63,6 @@ void Engine::setShift(float normVal) {
 }
 
 void Engine::setStepPosition(float normVal) {
-    if (fcomp(normVal, _raw.stepGridPosition)) return;
     _raw.stepGridPosition = normVal;
     int maxIndex;
     int valueIndex;
@@ -101,7 +100,6 @@ void Engine::setStepPosition(float normVal) {
 }
 
 void Engine::setGrid(float normVal) {
-    if (fcomp(_raw.grid, normVal)) return;
     _raw.grid = normVal;
     Grid grid = spotykach::Grid(normVal * (kGrids_Count - 1));
     if (grid != _grid) {
