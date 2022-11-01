@@ -47,6 +47,7 @@ public:
     void reset() override;
     
     void setSlicePosition(float) override;
+    uint32_t slicePositionFrames() override { return _slicePositionFrames; }
     void setSliceLength(float, IEnvelope&) override;
     
     void setRetrigger(int) override;
