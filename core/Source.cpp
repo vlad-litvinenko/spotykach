@@ -24,6 +24,10 @@ void Source::setFrozen(bool frozen) {
     _frozen = frozen;
 }
 
+void Source::setWriteHead(uint32_t position) {
+    if (position < _bufferLength) _writeHead = position;
+}
+
 unsigned long Source::readHead() {
     return _readHead;
 }

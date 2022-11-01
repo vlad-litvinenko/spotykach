@@ -18,6 +18,8 @@ public:
     void setFrozen(bool) override;
     bool isFrozen() override { return _frozen; }
     
+    void setWriteHead(uint32_t position) override;
+
     void initialize() override;
     
     void write(float, float) override;
