@@ -171,6 +171,9 @@ void Engine::setDirection(float normVal) {
 void Engine::setFrozen(bool frozen) {
     _raw.frozen = frozen;
     _source.setFrozen(frozen);
+    if (!frozen) {
+        _source.setWriteHead(_trigger.slicePositionFrames());
+    }
 }
 
 void Engine::initialize() {
