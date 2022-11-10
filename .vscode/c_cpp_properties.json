@@ -11,8 +11,8 @@
             ],
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/../DaisyExamples//libDaisy//**",
-                "${workspaceFolder}/../DaisyExamples//DaisySP//**",
+                "${workspaceFolder}/../libDaisy//**",
+                "${workspaceFolder}/../DaisySP//**",
                 "/Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/**"
             ],
             "name": "macOS",
