@@ -9,16 +9,31 @@ public:
     //This code relies on tweak in usb_midi.cpp, namely
     //removing filtering of 0xF at line 119
     void handleEvent(daisy::MidiEvent e) {
-        if (e.type == daisy::MidiMessageType::SystemRealTime 
-            && e.srt_type == daisy::SystemRealTimeType::TimingClock) {
-                tick();
-            }
+        if (e.type != daisy::MidiMessageType::SystemRealTime) {
+            return;
+        }
+
+        switch (e.srt_type) {
+            case daisy::SystemRealTimeType::TimingClock: tick(); break;
+            case daisy::SystemRealTimeType::Start: start(); break;
+            case daisy::SystemRealTimeType::Continue: resume(); break;
+            case daisy::SystemRealTimeType::Stop: stop(); break;
+            default: {};
+        }
     }
 
-    uint32_t tempo() {
+    bool isPlaying() {
+        return _isPlaying;
+    }
+
+    float tempo() {
         return _tempo;
     }
 
+    float beat() {
+        return _beat;
+    }
+    
     void reset() {
         _ptime = 0;
         _wndw.fill(0);
@@ -35,12 +50,36 @@ private:
     uint8_t _dev_cnt = 0; //deviations count
     uint8_t _dev_cnt_thres = 3; //deviations until reset
     uint32_t _dev_thres = 3; //min deviation to consider
+    uint32_t _tick_cnt { 0 };
+    uint32_t _beat_cnt { 0 };
     
     float _avg = 20.83;
-    uint32_t _tempo = 120;
+    float _tempo = 120;
+    float _beat = 0;
+    bool _isPlaying = false;
     
+    void start() {
+        _isPlaying = true;
+        _tick_cnt = 0;
+        _beat_cnt = 0;
+    }
+
+    void stop() {
+        _isPlaying = false;
+    }
+
+    void resume() {
+        _isPlaying = true;
+    }
 
     void tick() {
+        _tick_cnt++;
+        if (_tick_cnt == 24) {
+            _tick_cnt = 0;
+            _beat_cnt ++;
+        }
+        _beat = static_cast<float>(_beat_cnt) + static_cast<float>(_tick_cnt) / 24.f;
+
         auto t = daisy::System::GetNow();
         auto delta = t - _ptime;
         if (_ptime > 0) push(delta);
@@ -64,8 +103,8 @@ private:
         return _avg;
     }
 
-    uint32_t tempo(float tick) {
-        return static_cast<uint32_t>(roundf(2500.f / tick));
+    float tempo(float tick) {
+        return roundf(2500.f / tick);
     }
 
     void checkDeviation(uint32_t delta) {
