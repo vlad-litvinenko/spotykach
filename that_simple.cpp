@@ -63,7 +63,7 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 	core.preprocess(p);
 	p.currentBeat += _beat_kof * midisync.tempo();
 	auto delta = abs(_sync_beat - p.currentBeat);
-  	if (delta < tick && delta > _sync_delta) {
+  	if (delta < tick && delta > _sync_delta || midisync.readAndResetEnqueued()) {
 		p.currentBeat = midisync.beat();
 		_sync_delta = num;
 		_sync_beat += _sync_delta;

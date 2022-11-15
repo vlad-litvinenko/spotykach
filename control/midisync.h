@@ -53,6 +53,12 @@ public:
         return _beat;
     }
     
+    bool readAndResetEnqueued() {
+        auto r = _isEnqueued;
+        _isEnqueued = false;
+        return r;
+    }
+
     void reset() {
         _ptime = 0;
         _wndw.fill(0);
@@ -76,6 +82,7 @@ private:
     float _tempo = 120;
     float _beat = 0;
     bool _isPlaying = false;
+    bool _isEnqueued = false;
     
     void start() {
         _isPlaying = true;
@@ -96,7 +103,7 @@ private:
         _beat_cnt = beat / 4;
         _tick_cnt = (beat - _beat_cnt * 4) * 6;
         _beat = calculatedBeat(_beat_cnt, _tick_cnt);
-        return;
+        _isEnqueued = true;
     }
 
     void tick() {
