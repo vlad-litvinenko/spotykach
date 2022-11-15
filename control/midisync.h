@@ -1,6 +1,18 @@
 #include "daisy_seed.h"
 #include <thread>
 
+inline uint16_t combinedBytes(uint8_t bytes[2]) {
+   uint16_t _14bit;
+   _14bit = (uint16_t)bytes[1];
+   _14bit <<= 7;
+   _14bit |= (uint16_t)bytes[0];
+   return _14bit;
+}
+
+inline float calculatedBeat(uint32_t beat, uint32_t tick) {
+    return static_cast<float>(beat) + static_cast<float>(tick) / 24.f;
+}
+
 class MIDISync {
 public:
     MIDISync() = default;
@@ -9,16 +21,23 @@ public:
     //This code relies on tweak in usb_midi.cpp, namely
     //removing filtering of 0xF at line 119
     void handleEvent(daisy::MidiEvent e) {
-        if (e.type != daisy::MidiMessageType::SystemRealTime) {
+        if (e.type == daisy::SystemCommon) {
+            switch (e.sc_type) {
+                case daisy::SystemCommonType::SongPositionPointer: queue(e.data); break;
+                default: {};
+            }
             return;
         }
 
-        switch (e.srt_type) {
-            case daisy::SystemRealTimeType::TimingClock: tick(); break;
-            case daisy::SystemRealTimeType::Start: start(); break;
-            case daisy::SystemRealTimeType::Continue: resume(); break;
-            case daisy::SystemRealTimeType::Stop: stop(); break;
-            default: {};
+        if (e.type == daisy::MidiMessageType::SystemRealTime) {
+            switch (e.srt_type) {
+                case daisy::SystemRealTimeType::TimingClock: tick(); break;
+                case daisy::SystemRealTimeType::Start: start(); break;
+                case daisy::SystemRealTimeType::Continue: resume(); break;
+                case daisy::SystemRealTimeType::Stop: stop(); break;
+                default: {};
+            }
+            return;
         }
     }
 
@@ -72,13 +91,21 @@ private:
         _isPlaying = true;
     }
 
+    void queue(uint8_t bytes[2]) {
+        auto beat = combinedBytes(bytes);
+        _beat_cnt = beat / 4;
+        _tick_cnt = (beat - _beat_cnt * 4) * 6;
+        _beat = calculatedBeat(_beat_cnt, _tick_cnt);
+        return;
+    }
+
     void tick() {
         _tick_cnt++;
         if (_tick_cnt == 24) {
             _tick_cnt = 0;
             _beat_cnt ++;
         }
-        _beat = static_cast<float>(_beat_cnt) + static_cast<float>(_tick_cnt) / 24.f;
+        _beat = calculatedBeat(_beat_cnt, _tick_cnt);
 
         auto t = daisy::System::GetNow();
         auto delta = t - _ptime;
