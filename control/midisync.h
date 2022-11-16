@@ -23,7 +23,7 @@ public:
     void handleEvent(daisy::MidiEvent e) {
         if (e.type == daisy::SystemCommon) {
             switch (e.sc_type) {
-                case daisy::SystemCommonType::SongPositionPointer: queue(e.data); break;
+                case daisy::SystemCommonType::SongPositionPointer: seek(e.data); break;
                 default: {};
             }
             return;
@@ -53,9 +53,9 @@ public:
         return _beat;
     }
     
-    bool readAndResetEnqueued() {
-        auto r = _isEnqueued;
-        _isEnqueued = false;
+    bool readAndResetSPPChanged() {
+        auto r = _isSPPChanged;
+        _isSPPChanged = false;
         return r;
     }
 
@@ -82,7 +82,7 @@ private:
     float _tempo = 120;
     float _beat = 0;
     bool _isPlaying = false;
-    bool _isEnqueued = false;
+    bool _isSPPChanged = false;
     
     void start() {
         _isPlaying = true;
@@ -98,12 +98,12 @@ private:
         _isPlaying = true;
     }
 
-    void queue(uint8_t bytes[2]) {
+    void seek(uint8_t bytes[2]) {
         auto beat = combinedBytes(bytes);
         _beat_cnt = beat / 4;
         _tick_cnt = (beat - _beat_cnt * 4) * 6;
         _beat = calculatedBeat(_beat_cnt, _tick_cnt);
-        _isEnqueued = true;
+        _isSPPChanged = true;
     }
 
     void tick() {
