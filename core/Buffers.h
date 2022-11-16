@@ -29,6 +29,12 @@ static float DSY_SDRAM_BSS _slcBuf3R[kSliceBufferLength];
 static float DSY_SDRAM_BSS _slcBuf4L[kSliceBufferLength];
 static float DSY_SDRAM_BSS _slcBuf4R[kSliceBufferLength];
 
+static float DSY_SDRAM_BSS _slcBuf5L[kSliceBufferLength];
+static float DSY_SDRAM_BSS _slcBuf5R[kSliceBufferLength];
+
+static float DSY_SDRAM_BSS _slcBuf6L[kSliceBufferLength];
+static float DSY_SDRAM_BSS _slcBuf6R[kSliceBufferLength];
+
 class Buffers {
 public:
     static Buffers& pool() {
@@ -71,7 +77,7 @@ private:
     };
 
     int _providedSliceBufCount { 0 };
-    static const int _slcBufsCount { 8 };
+    static const int _slcBufsCount { 12 };
     float* _slcBufs[_slcBufsCount] = {
         _slcBuf1L,
         _slcBuf1R,
@@ -80,6 +86,10 @@ private:
         _slcBuf3L,
         _slcBuf3R,
         _slcBuf4L,
-        _slcBuf4R
+        _slcBuf4R,
+        _slcBuf5L,
+        _slcBuf5R,
+        _slcBuf6L,
+        _slcBuf6R
     };
 };

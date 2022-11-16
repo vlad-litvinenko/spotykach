@@ -18,7 +18,7 @@
 #include <array>
 #include <memory>
 
-static const int kSlicesCount = 2;
+static const int kSlicesCount = 3;
 
 class Generator: public IGenerator {
 public:
