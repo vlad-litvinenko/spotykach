@@ -26,10 +26,12 @@ Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
     _envelope {e},
     _generator {g},
     _jitterLFO {l},
+    _isPlaying { false },
     _tempo {0},
     _grid {kGrid_CWord},
     _onsets {7},
-    _step {0}
+    _step {0},
+    _shift { 0 }
 {
     setSlicePosition(0);
     setShift(0);
@@ -55,7 +57,7 @@ void Engine::setIsOn(bool on) {
 
 void Engine::setShift(float normVal) {
     _raw.shift = normVal;
-    float shiftValue = normVal * 15 / 16;
+    float shiftValue = round(normVal * 15.f) / 16.f;
     if (!fcomp(shiftValue, _shift)) {
         _shift = shiftValue;
         _invalidatePattern = true;
