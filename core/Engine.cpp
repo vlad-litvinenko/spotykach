@@ -169,10 +169,12 @@ void Engine::setDirection(float normVal) {
 }
 
 void Engine::setFrozen(bool frozen) {
+    auto isTurningOff = _raw.frozen && !frozen;
     _raw.frozen = frozen;
     _source.setFrozen(frozen);
-    if (!frozen) {
-        _source.setWriteHead(_trigger.slicePositionFrames());
+    if (isTurningOff) {
+        _source.setCycleStart(_trigger.slicePositionFrames());
+        _generator.setNeedsResetSlices();
     }
 }
 
