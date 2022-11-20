@@ -18,7 +18,7 @@ public:
     void setFrozen(bool) override;
     bool isFrozen() override { return _frozen; }
     
-    void setWriteHead(uint32_t position) override;
+    void setCycleStart(uint32_t) override;
 
     void initialize() override;
     
@@ -38,6 +38,7 @@ private:
     bool _filled;
     uint32_t _writeHead;
     uint32_t _readHead;
+    uint32_t _sycleStart;
 };
 
 #endif

@@ -17,15 +17,18 @@ Source::Source() :
     _frozen { false },
     _filled { false },
     _writeHead { 0 },
-    _readHead { 0 } 
+    _readHead { 0 },
+    _sycleStart { 0 }
     {}
 
 void Source::setFrozen(bool frozen) {
     _frozen = frozen;
 }
 
-void Source::setWriteHead(uint32_t position) {
-    if (position < _bufferLength) _writeHead = position;
+void Source::setCycleStart(uint32_t start) {
+    if (start >= _bufferLength) return;
+    _writeHead = start;
+    _sycleStart = start;
 }
 
 unsigned long Source::readHead() {
@@ -48,10 +51,10 @@ void Source::write(float in0, float in1) {
     if (!_frozen || !_filled) {
         _buffer[0][_writeHead] = in0;
         _buffer[1][_writeHead] = in1;
+        _readHead = _writeHead;
+        ++_writeHead %= _bufferLength;
     }
-    _readHead = _writeHead;
-    ++_writeHead %= _bufferLength;
-    if (_writeHead == 0) _filled = true;
+    if (_writeHead == _sycleStart) _filled = true;
 }
 
 void Source::reset() {
@@ -59,5 +62,6 @@ void Source::reset() {
     memset(_buffer[1], 0, _bufferLength * sizeof(float));
     _writeHead = 0;
     _readHead = 0;
+    _sycleStart = 0;
     _filled = false;
 }

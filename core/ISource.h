@@ -15,7 +15,7 @@ public:
     virtual void setFrozen(bool frozen) = 0;
     virtual bool isFrozen() = 0;
     
-    virtual void setWriteHead(uint32_t position) = 0;
+    virtual void setCycleStart(uint32_t start) = 0;
 
     virtual void initialize() = 0;
     
