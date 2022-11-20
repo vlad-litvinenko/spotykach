@@ -31,7 +31,7 @@ public:
     
     void setDirection(vlly::spotykach::Direction) override;
     
-    void setNeedsResetSlices();
+    void setNeedsResetSlices() override;
 
 private:
     ISource& _source;

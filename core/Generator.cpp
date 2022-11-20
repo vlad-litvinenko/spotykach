@@ -38,12 +38,13 @@ void Generator::generate(float* out0, float* out1) {
     float sliceOut0 = 0;
     float sliceOut1 = 0;
     
-    for (auto s: _slices) {
-        if (s->isActive()) {
-            s->synthesize(&sliceOut0, &sliceOut1);
-            out0Val += sliceOut0;
-            out1Val += sliceOut1;
-        }
+    for (size_t i = 0; i < _slices.size(); i ++) {
+        auto s = _slices[i];
+        if (s->isInactive()) continue;
+        
+        s->synthesize(&sliceOut0, &sliceOut1);
+        out0Val += sliceOut0;
+        out1Val += sliceOut1;
     }
     *out0 = out0Val;
     *out1 = out1Val;
@@ -59,20 +60,20 @@ void Generator::activateSlice(uint32_t onset, uint32_t offset, uint32_t length, 
     
     if (!_source.isFilled() && _source.readHead() < _onset + _offset) return;
     
-    for (auto s: _slices) {
-        if (s->isInactive()) {
-            if (reset) {
-                _fwd = true;
-            }
-            else {
-                bool bnf = _direction == kDirection_Pendulum;
-                bool rev = _direction == kDirection_Reverse;
-                _fwd = bnf ? !_fwd : !rev;
-            }
-            int direction = _fwd ? 1 : -1;
-            s->activate(_onset + _offset, length, direction);
-            break;
+    for (size_t i = 0; i < _slices.size(); i ++) {
+        auto s = _slices[i];
+        if (s->isActive()) continue;
+        if (reset) {
+            _fwd = true;
         }
+        else {
+            bool bnf = _direction == kDirection_Pendulum;
+            bool rev = _direction == kDirection_Reverse;
+            _fwd = bnf ? !_fwd : !rev;
+        }
+        int direction = _fwd ? 1 : -1;
+        s->activate(_onset + _offset, length, direction);
+        break;
     }
 }
 
