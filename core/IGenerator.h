@@ -17,6 +17,7 @@ public:
     virtual void activateSlice(uint32_t onset, uint32_t offset, uint32_t length, bool reset) = 0;
     virtual void generate(float* out0, float* out1) = 0;
     virtual void setDirection(vlly::spotykach::Direction direction) = 0;
+    virtual void setNeedsResetSlices() = 0;
     virtual void reset() = 0;
     
     virtual ~IGenerator() {};

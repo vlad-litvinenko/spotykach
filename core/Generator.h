@@ -31,6 +31,8 @@ public:
     
     void setDirection(vlly::spotykach::Direction) override;
     
+    void setNeedsResetSlices();
+
 private:
     ISource& _source;
     IEnvelope& _envelope;
@@ -42,8 +44,6 @@ private:
     uint32_t _offset;
     bool _fwd;
     vlly::spotykach::Direction _direction;
-    
-    void setNeedsResetSlices();
 };
 
 #endif /* defined(__Spotykach__Synth__) */
