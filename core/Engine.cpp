@@ -56,7 +56,7 @@ void Engine::setIsOn(bool on) {
 void Engine::setShift(float normVal) {
     _raw.shift = normVal;
     float shiftValue = normVal * 15 / 16;
-    if (shiftValue != _shift) {
+    if (!fcomp(shiftValue, _shift)) {
         _shift = shiftValue;
         _invalidatePattern = true;
     }
