@@ -80,8 +80,8 @@ void Trigger::prepareCWordPattern(int onsets, float shift, int numerator, int de
     float beatShift = shift * _numerator;
     for (size_t i = 0; i < pattern.size(); i++) {
         if (!pattern[i]) continue;
-        float point = static_cast<float>(i) / _numerator + beatShift;
-        if (point >= _beatsPerPattern) {
+        auto point = static_cast<float>(i) / _numerator + beatShift;
+        if (int(point) >= int(_beatsPerPattern)) {
             point -= _beatsPerPattern;
         }
         else {
@@ -186,11 +186,11 @@ void Trigger::next(bool engaged) {
         }
         if (engaged && _nextPointIndex < _repeats) {
             auto sliceOffset = _slicePositionFrames;
-            if (_jitterLFO.amplitude() > 0) {
+            if (_jitterLFO.amplitude() > 0.01) {
                 auto lfoOffset = _jitterLFO.triangleValueAt(static_cast<int>(_currentFrame));
                 sliceOffset += lfoOffset * _framesPerBeat * _numerator;
                 if (sliceOffset < 0) sliceOffset = 0;
-                if (sliceOffset >= _framesPerBeat * _numerator) sliceOffset = _framesPerBeat * _numerator - 1;
+                if (sliceOffset >= 480000) sliceOffset = 480000 - 1;
                 reset = true;
             }
             _generator.activateSlice(onset, sliceOffset, _framesPerSlice, reset);
