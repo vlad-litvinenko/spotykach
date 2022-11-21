@@ -196,6 +196,7 @@ void Engine::preprocess(PlaybackParameters p) {
     if (!fcomp(p.tempo, _tempo)) {
         _tempo = p.tempo;
         _trigger.measure(p.tempo, p.sampleRate, p.bufferSize);
+        _invalidateSliceLength = true;
     }
     
     if (_invalidatePattern) {
