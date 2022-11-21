@@ -21,7 +21,7 @@ void SliceBuffer::initialize() {
 }
 
 float SliceBuffer::read(int channel, uint32_t frame) {
-    if (frame >= _size) return 0;
+    if (frame >= _writeHead) return 0;
     return _buffer[channel][frame];
 }
 
