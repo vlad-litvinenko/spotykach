@@ -108,7 +108,7 @@ void MIDISync::push(uint32_t interval) {
 
 float MIDISync::avg() {
     float s = 0;
-    auto l = _filled ? _wndw.size() : _iterator + 1;
+    auto l = _filled ? _wndw.size() : _iterator;
     for (size_t i = 0; i < l; i++) s += _wndw[i];
     _avg = s / l;
     return _avg;
