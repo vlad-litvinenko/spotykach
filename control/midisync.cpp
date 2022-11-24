@@ -36,7 +36,7 @@ void MIDISync::handleEvent(daisy::MidiEvent e) {
 }
 
 bool MIDISync::isPlaying() {
-    return _isPlaying;
+    return _is_playing;
 }
 
 float MIDISync::tempo() {
@@ -48,8 +48,8 @@ float MIDISync::beat() {
 }
     
 bool MIDISync::readAndResetSPPChanged() {
-    auto r = _isSPPChanged;
-    _isSPPChanged = false;
+    auto r = _is_spp_changed;
+    _is_spp_changed = false;
     return r;
 }
 
@@ -62,17 +62,17 @@ void MIDISync::reset() {
 }
 
 void MIDISync::start() {
-    _isPlaying = true;
+    _is_about_to_play = true;
     _tick_cnt = 0;
     _beat_cnt = 0;
 }
 
 void MIDISync::stop() {
-    _isPlaying = false;
+    _is_playing = false;
 }
 
 void MIDISync::resume() {
-    _isPlaying = true;
+    _is_about_to_play = true;
 }
 
 void MIDISync::seek(uint8_t bytes[2]) {
@@ -80,30 +80,40 @@ void MIDISync::seek(uint8_t bytes[2]) {
     _beat_cnt = beat / 4;
     _tick_cnt = (beat - _beat_cnt * 4) * 6;
     _beat = calculatedBeat(_beat_cnt, _tick_cnt);
-    _isSPPChanged = true;
+     _is_spp_changed = true;
 }
 
 void MIDISync::tick() {
+    if (_is_about_to_play) {
+        _is_playing = true;
+        _is_about_to_play = false;
+    }
+
+    auto t = daisy::System::GetNow();
+    auto delta = t - _ptime;
+    if (_ptime > 0) {
+        push(delta);
+        _tempo = tempo(avg());
+        checkDeviation(delta);
+    }
+    _ptime = t;
+
+    if (!_is_playing) return;
     _tick_cnt++;
     if (_tick_cnt == 24) {
         _tick_cnt = 0;
         _beat_cnt ++;
     }
     _beat = calculatedBeat(_beat_cnt, _tick_cnt);
-
-    auto t = daisy::System::GetNow();
-    auto delta = t - _ptime;
-    if (_ptime > 0) push(delta);
-    _ptime = t;
-    _tempo = tempo(avg());
-    checkDeviation(delta);
 }
 
 void MIDISync::push(uint32_t interval) {
     _wndw[_iterator] = interval;
     _iterator ++;
     _iterator %= _wndw.size(); 
-    if (_iterator == 0) _filled = true;
+    if (_iterator == 0) {
+        _filled = true;
+    }
 }
 
 float MIDISync::avg() {
@@ -115,7 +125,7 @@ float MIDISync::avg() {
 }
 
 float MIDISync::tempo(float tick) {
-    return roundf(2500.f / tick);
+    return round(2500.f / tick);
 }
 
 void MIDISync::checkDeviation(uint32_t delta) {

@@ -6,8 +6,9 @@ public:
     MIDISync() = default;
     ~MIDISync() = default;   
 
-    //This code relies on tweak in usb_midi.cpp, namely
-    //removing filtering of 0xF at line 119
+    // This code relies on tweak in libDaisy 
+    // usb_midi.cpp, namely removing filtering 
+    // of 0xF at line 119
     void handleEvent(daisy::MidiEvent e);
     bool isPlaying();
     float tempo();
@@ -19,7 +20,7 @@ private:
     bool _filled = false;
     uint32_t _ptime = 0;
     std::size_t _iterator = 0;
-    std::array<uint32_t, 96> _wndw;
+    std::array<uint32_t, 96> _wndw; //24 ticks * 4 beats = 1 measure
     uint8_t _dev_cnt = 0; //deviations count
     uint8_t _dev_cnt_thres = 3; //deviations until reset
     uint32_t _dev_thres = 3; //min deviation to consider
@@ -29,8 +30,9 @@ private:
     float _avg = 20.83;
     float _tempo = 120;
     float _beat = 0;
-    bool _isPlaying = false;
-    bool _isSPPChanged = false;
+    bool _is_playing = false;
+    bool _is_about_to_play = false;
+    bool _is_spp_changed = false;
     
     void start();
     void stop();

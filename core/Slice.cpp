@@ -49,11 +49,10 @@ void Slice::synthesize(float *out0, float* out1) {
     }
     else if (_iterator > _length - _envelope.decayLength()) {
         attenuation = _envelope.decayAttenuation(_iterator - _length + _envelope.decayLength());
-        
     }
     
-    *out0 = out0Val * attenuation;
-    *out1 = out1Val * attenuation;
+    *out0 = out0Val;// * attenuation;
+    *out1 = out1Val;// * attenuation;
     
     next();
 }
