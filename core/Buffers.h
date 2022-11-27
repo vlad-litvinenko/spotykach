@@ -4,7 +4,7 @@
 #include "dev/sdram.h"
 
 
-static const int kSliceBufferSeconds { 3 };
+static const int kSliceBufferSeconds { 2 };
 static const int kSourceBufferSeconds { 10 };
 static const int kSampleRate { 48000 };
 
