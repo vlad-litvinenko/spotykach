@@ -9,6 +9,10 @@ void Mux8::initialize(DaisySeed& hw, AdcChannelConfig& conf, Index i, ConfigChan
     conf.InitMux(pin(i), 8, D14, D13, D12);
 }   
 
+daisy::Pin Mux8::pin(int ch) const {
+    return ch == 0 ? daisy::seed::A0 : daisy::seed::A2;
+};
+
 void Mux8::initKnobs(daisy::DaisySeed& hw) {
     for (size_t i = 0; i < _knobs.size(); i++) {
         _knobs[i].initialize(_channel, i, hw);

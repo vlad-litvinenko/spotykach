@@ -48,8 +48,5 @@ private:
         Target::Shift,
         Target::Repeats
     };
-
-    daisy::Pin pin(int ch) const {
-        return ch==0 ? daisy::seed::A0 : daisy::seed::A2;
-    };
+    daisy::Pin pin(int ch) const;
 };
