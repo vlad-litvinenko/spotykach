@@ -35,9 +35,11 @@ void Controller::initToggles(DaisySeed& hw) {
 }
 
 void Controller::setPatrameters(vlly::spotykach::Spotykach& core) {
-    auto& e = core.engineAt(0);
-    setMuxParameters(e, core, _muxs[0]);
-    setChannelToggles(e, _channelToggles[0]);
+    for (int i = 0; i < core.enginesCount(); i++) {
+        auto& e = core.engineAt(i);
+        setMuxParameters(e, core, _muxs[i]);
+        setChannelToggles(e, _channelToggles[i]);
+    }
     
     setKnobParameters(core);
     setGlobalToggles(core);
