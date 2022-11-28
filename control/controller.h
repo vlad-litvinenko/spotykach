@@ -26,7 +26,7 @@ private:
     void setGlobalToggles(vlly::spotykach::Spotykach &s);
 
     std::array<Knob, 1> _knobs;
-    std::array<Mux8, 1> _muxs;
+    std::array<Mux8, 2> _muxs;
     std::array<ChannelToggles, 2> _channelToggles;
     GlobalToggles _globalToggles;
     
