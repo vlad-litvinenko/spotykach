@@ -1,5 +1,8 @@
 #include "controller.h"
 
+using namespace vlly;
+using namespace spotykach;
+
 using namespace daisy;
 
 void Controller::initialize(DaisySeed& hw) {
@@ -55,9 +58,9 @@ void Controller::setMuxParameters(Engine& e,  Spotykach& s, Mux8& m) {
             case MuxTarget::Position: e.setSlicePosition(p.value); break;
             case MuxTarget::Slice: e.setSliceLength(p.value); break;
             case MuxTarget::Retrigger: e.setRetrigger(p.value); break;
-            case MuxTarget::Jitter: e.setJitterAmount(p.value <= 0.001 ? 0 : p.value); break;
+            case MuxTarget::Jitter: e.setJitterAmount(p.value < 0.001 ? 0 : p.value); break;
             case MuxTarget::Step: e.setStepPosition(p.value); break;
-            case MuxTarget::Level: s.setVolume(p.value, 0); break;
+            case MuxTarget::Level: s.setVolume(p.value < 0.005 ? 0 : p.value, 0); break;
             case MuxTarget::Shift: e.setShift(p.value); break; 
             case MuxTarget::Repeats: e.setRepeats(p.value); break;
         }
@@ -91,11 +94,12 @@ void Controller::setChannelToggles(vlly::spotykach::Engine& e, ChannelToggles& c
 }
 
 void Controller::setGlobalToggles(vlly::spotykach::Spotykach &s) {
-    for (size_t i = 0; i < _globalToggles.count(); i++) {
-        auto toggle = _globalToggles.at(i); break;
-        auto target = std::get<0>(toggle); break;
-        auto isOn = std::get<1>(toggle); break;
-        using GTarget = GlobalToggles::Target;
+    using GTarget = GlobalToggles::Target;
+    auto cnt = _globalToggles.count();
+    for (size_t i = 0; i < cnt; i++) {
+        auto toggle = _globalToggles.at(i);
+        auto target = std::get<0>(toggle);
+        auto isOn = std::get<1>(toggle);
         switch (target) {
             case GTarget::Mutex: s.setMutex(isOn); break;
             case GTarget::Cascade: s.setCascade(isOn, 1); break;

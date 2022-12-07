@@ -7,6 +7,9 @@
 #include "channeltoggles.h"
 #include "Spotykach.h"
 
+namespace vlly {
+namespace spotykach {
+
 class Controller {
 public:
     Controller() = default;
@@ -14,16 +17,16 @@ public:
 
     void initialize(daisy::DaisySeed& hw);
 
-    void setPatrameters(vlly::spotykach::Spotykach& core);
+    void setPatrameters(Spotykach& core);
 
 private:
     void initKnobs(daisy::DaisySeed& hw);
     void initToggles(daisy::DaisySeed& hw);
 
-    void setMuxParameters(vlly::spotykach::Engine& e, vlly::spotykach::Spotykach &s, Mux8& m);
-    void setKnobParameters(vlly::spotykach::Spotykach &s);
-    void setChannelToggles(vlly::spotykach::Engine& e, ChannelToggles& ct);
-    void setGlobalToggles(vlly::spotykach::Spotykach &s);
+    void setMuxParameters(Engine& e, Spotykach &s, Mux8& m);
+    void setKnobParameters(Spotykach &s);
+    void setChannelToggles(Engine& e, ChannelToggles& ct);
+    void setGlobalToggles(Spotykach &s);
 
     std::array<Knob, 1> _knobs;
     std::array<Mux8, 2> _muxs;
@@ -32,3 +35,6 @@ private:
     
     daisy::DaisySeed* _hw = nullptr;
 };
+
+}
+}
