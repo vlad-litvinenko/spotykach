@@ -4,7 +4,12 @@ using namespace daisy;
 
 void GlobalToggles::initialize(DaisySeed hw) {
     for (size_t i = 0; i < kTargetsCount; i++) {
-        _switches[i].Init(pin(_targets[i]), 1000);
+        _switches[i].Init(
+            pin(_targets[i]), 
+            0, 
+            Switch::Type::TYPE_TOGGLE,
+            Switch::Polarity::POLARITY_NORMAL,
+            Switch::Pull::PULL_UP);
     }
 }
 
