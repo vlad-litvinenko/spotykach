@@ -152,7 +152,7 @@ void Engine::setRetriggerChance(bool value) {
 
 void Engine::setJitterAmount(float value) {
     _raw.jitterAmount = value;
-    _jitterLFO.setAmplitude(value);
+    _trigger.setPositionJitterAmount(value);
 }
 
 void Engine::setJitterRate(float value) {
