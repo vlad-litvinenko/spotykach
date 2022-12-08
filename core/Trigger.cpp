@@ -18,6 +18,7 @@ Trigger::Trigger(IGenerator& inGenerator, ILFO& inJitterLFO) :
     _jitterLFO(inJitterLFO),
     _step(0),
     _slicePosition(0),
+    _slicePositionJitterAmount(0),
     _needsAdjustIndexes(true),
     _numerator(0),
     _denominator(0),
@@ -142,6 +143,10 @@ void Trigger::setSlicePosition(float value) {
     _slicePositionFrames = _framesPerBeat * _numerator * _slicePosition;
 }
 
+void Trigger::setPositionJitterAmount(float value) {
+    _slicePositionJitterAmount = value;
+}
+
 void Trigger::measure(float tempo, float sampleRate, int bufferSize) {
     float beatsPerMeasure = kDefaultQuadrat * _numerator / _denominator;
     auto framesPerMeasure = static_cast<uint32_t>(kSecondsPerMinute * sampleRate * beatsPerMeasure / tempo);
@@ -186,8 +191,8 @@ void Trigger::next(bool engaged) {
         }
         if (engaged && _nextPointIndex < _repeats) {
             auto sliceOffset = _slicePositionFrames;
-            if (_jitterLFO.amplitude() > 0.01) {
-                auto lfoOffset = _jitterLFO.triangleValueAt(static_cast<int>(_currentFrame));
+            if (_slicePositionJitterAmount > 0) {
+                auto lfoOffset = _jitterLFO.triangleValueAt(static_cast<int>(_currentFrame)) * _slicePositionJitterAmount;
                 sliceOffset += lfoOffset * _framesPerBeat * _numerator;
                 if (sliceOffset < 0) sliceOffset = 0;
                 if (sliceOffset >= 480000) sliceOffset = 480000 - 1;

@@ -47,6 +47,7 @@ public:
     void reset() override;
     
     void setSlicePosition(float) override;
+    void setPositionJitterAmount(float value) override;
     uint32_t slicePositionFrames() override { return _slicePositionFrames; }
     void setSliceLength(float, IEnvelope&) override;
     
@@ -64,6 +65,7 @@ private:
 
     float _step;
     float _slicePosition;
+    float _slicePositionJitterAmount;
     bool _needsAdjustIndexes;
     
     uint32_t _numerator;

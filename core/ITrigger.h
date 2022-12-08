@@ -25,6 +25,7 @@ public:
     virtual void reset() = 0;
     
     virtual void setSlicePosition(float position) = 0;
+    virtual void setPositionJitterAmount(float value) = 0;
     virtual uint32_t slicePositionFrames() = 0;
     virtual void setSliceLength(float, IEnvelope&) = 0;
     virtual void setRetrigger(int) = 0;

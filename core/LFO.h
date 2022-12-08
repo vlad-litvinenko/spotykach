@@ -14,8 +14,6 @@ class LFO: public ILFO {
 public:
     LFO();
     
-    float amplitude() override { return _amp; }
-    void setAmplitude(float) override;
     void setPeriod(float) override;
     void setCurrentBeat(float) override;
     void setFramesPerMeasure(long) override;
@@ -27,7 +25,6 @@ private:
     long _framesPerBeat { 0 };
     float _currentBeat { 0 };
     float _period { 0.25 }; // 1/4
-    float _amp { 0 }; // +1.0...-1.0
  };
 
 #endif /* LFO_h */
