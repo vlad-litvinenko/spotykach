@@ -39,8 +39,8 @@ void Controller::initToggles(DaisySeed& hw) {
 
 void Controller::setPatrameters(vlly::spotykach::Spotykach& core) {
     for (int i = 0; i < core.enginesCount(); i++) {
-        auto& e = core.engineAt(i);
-        setMuxParameters(e, core, _muxs[i]);
+        Engine& e = core.engineAt(i);
+        setMuxParameters(e, core, _muxs[i], i);
         setChannelToggles(e, _channelToggles[i]);
     }
     
@@ -50,7 +50,7 @@ void Controller::setPatrameters(vlly::spotykach::Spotykach& core) {
 
 using namespace vlly;
 using namespace spotykach;
-void Controller::setMuxParameters(Engine& e,  Spotykach& s, Mux8& m) {
+void Controller::setMuxParameters(Engine& e,  Spotykach& s, Mux8& m, int i) {
     using MuxTarget = Mux8::Target;
     for (size_t i = 0; i < m.knobsCount(); i++) {
         auto p = m.paramAt(i);
@@ -58,9 +58,9 @@ void Controller::setMuxParameters(Engine& e,  Spotykach& s, Mux8& m) {
             case MuxTarget::Position: e.setSlicePosition(p.value); break;
             case MuxTarget::Slice: e.setSliceLength(p.value); break;
             case MuxTarget::Retrigger: e.setRetrigger(p.value); break;
-            case MuxTarget::Jitter: e.setJitterAmount(p.value < 0.001 ? 0 : p.value); break;
+            case MuxTarget::Jitter: e.setJitterAmount(p.value < 0.005 ? 0 : p.value); break;
             case MuxTarget::Step: e.setStepPosition(p.value); break;
-            case MuxTarget::Level: s.setVolume(p.value < 0.005 ? 0 : p.value, 0); break;
+            case MuxTarget::Level: s.setVolume(p.value < 0.005 ? 0 : p.value, i); break;
             case MuxTarget::Shift: e.setShift(p.value); break; 
             case MuxTarget::Repeats: e.setRepeats(p.value); break;
         }

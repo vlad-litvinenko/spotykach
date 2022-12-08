@@ -23,7 +23,7 @@ private:
     void initKnobs(daisy::DaisySeed& hw);
     void initToggles(daisy::DaisySeed& hw);
 
-    void setMuxParameters(Engine& e, Spotykach &s, Mux8& m);
+    void setMuxParameters(Engine& e, Spotykach &s, Mux8& m, int i);
     void setKnobParameters(Spotykach &s);
     void setChannelToggles(Engine& e, ChannelToggles& ct);
     void setGlobalToggles(Spotykach &s);
