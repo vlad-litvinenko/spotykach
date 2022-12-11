@@ -173,7 +173,7 @@ void Trigger::schedule(float currentBeat, bool isLaunch) {
     }
     float distance { nextPoint >= normalisedBeat ? nextPoint - normalisedBeat : _beatsPerPattern };
     _framesTillTrigger = distance * _framesPerBeat;
-    if (_jitterLFO.amplitude() > 0) _jitterLFO.setCurrentBeat(currentBeat - static_cast<int>(currentBeat / _numerator) * _numerator);
+    if (_slicePositionJitterAmount > 0) _jitterLFO.setCurrentBeat(currentBeat - static_cast<int>(currentBeat / _numerator) * _numerator);
     _currentFrame = 0;
     _scheduled = true;
 }
