@@ -58,12 +58,6 @@ namespace spotykach {
         kP_JitterRate = 75
     };
 
-    enum class Mutex {
-        off,
-        cascade,
-        any
-    };
-
     const int kMutexCount = 2;
 
     enum Direction {

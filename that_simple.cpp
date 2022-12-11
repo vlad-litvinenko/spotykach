@@ -74,9 +74,8 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 		_sync_delta = delta;
 	}
 
-	float** outBufs[4] = { out, nullptr, nullptr, nullptr }; 
 	DWT->CYCCNT = 0;
-	core.process(in, false, outBufs, false, size);
+	core.process(in, out, size);
 
     if (DWT->CYCCNT > 390000) {
         hw.SetLed(true);

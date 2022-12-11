@@ -18,16 +18,6 @@
 namespace vlly {
 namespace spotykach {
 
-struct SpotykachRawParameters {
-    float vol[2]       = { 1.0, 0.0 };
-    float mix          = 1.0;
-    float mainVol      = 1.0;
-    float jitterRate   = 0.75;
-    int mutex           = 0;
-    bool cascade[2]     = { false, false };
-    bool ownBus[2]      = { false, false };
-};
-
 static const int kEnginesCount = 2;
 
 class Spotykach {
@@ -38,7 +28,7 @@ public:
     Engine& engineAt(int index) const;
     long enginesCount() const;
     
-    void setMutex(int mutex);
+    void setMutex(bool mutex);
     
     void setMix(float normVal);
     
@@ -46,33 +36,26 @@ public:
     
     void setVolume(float value, int index);
     
-    void setCascade(bool value, int index);
+    void setCascade(bool value);
     
     void setJitterRate(float normVal);
     
-    void sendToOwnBus(bool value, int index) { _raw.ownBus[index] = value; };
-    
     void initialize() const;
     void preprocess(PlaybackParameters p) const;
-    void process(const float* const* inBuf, bool inMono, float** outBuf[kEnginesCount], bool outMono, int numFrames) const;
+    void process(const float* const* inBuf, float** outBuf, int numFrames) const;
     
-    SpotykachRawParameters rawParameters() { return _raw; }
-    
-    void resetCascadeOf(int index) {
-        int nextIndex = index + 1;
-        if (_cascade[nextIndex]) engineAt(nextIndex).reset(false);
+    void resetCascadingEngine() {
+        if (_cascade) engineAt(1).reset(false);
     }
     
 private:
     std::array<std::shared_ptr<Engine>, kEnginesCount> _engines;
-    SpotykachRawParameters _raw;
     
     float _vol[kEnginesCount];
-    bool _cascade[kEnginesCount];
-    
     float _mix;
     float _mainVol;
-    Mutex _mutex;
+    bool _mutex;
+    bool _cascade;
 
     std::vector<std::shared_ptr<void>> _releasePool;
 };

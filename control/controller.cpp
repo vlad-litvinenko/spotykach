@@ -102,7 +102,7 @@ void Controller::setGlobalToggles(vlly::spotykach::Spotykach &s) {
         auto isOn = std::get<1>(toggle);
         switch (target) {
             case GTarget::Mutex: s.setMutex(isOn); break;
-            case GTarget::Cascade: s.setCascade(isOn, 1); break;
+            case GTarget::Cascade: s.setCascade(isOn); break;
         }
     }
 }
