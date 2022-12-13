@@ -74,28 +74,28 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 		_sync_delta = delta;
 	}
 
-	DWT->CYCCNT = 0;
+	//DWT->CYCCNT = 0;
 	core.process(in, out, size);
 
-    if (DWT->CYCCNT > 390000) {
-        hw.SetLed(true);
-	}
-	else {
-		hw.SetLed(false);
-	}
+    // if (DWT->CYCCNT > 390000) {
+    //     hw.SetLed(true);
+	// }
+	// else {
+	// 	hw.SetLed(false);
+	// }
 }
 
 int main(void) {
 	hw.Configure();
 	hw.Init();
 
-	HW::hw().setHW(&hw);
-	HW::hw().setLed(false);
+	// HW::hw().setHW(&hw);
+	// HW::hw().setLed(false);
 
-	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
-	DWT->LAR = 0xC5ACCE55;
-	DWT->CYCCNT = 0;
-	DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
+	// CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+	// DWT->LAR = 0xC5ACCE55;
+	// DWT->CYCCNT = 0;
+	// DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
 
 	// hw.StartLog();
 
