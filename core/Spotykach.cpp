@@ -94,10 +94,10 @@ void Spotykach::process(const float* const* inBuf, float** outBuf, int numFrames
 
     float out0 = 0;
     float out1 = 0;
-    float out0Summ = 0;
-    float out1Summ = 0;
 
     for (int f = 0; f < numFrames; f++) {
+        float out0Summ = 0;
+        float out1Summ = 0;
         float in0Ext = inBuf[0][f];
         float in1Ext = inBuf[1][f];
 
@@ -106,7 +106,7 @@ void Spotykach::process(const float* const* inBuf, float** outBuf, int numFrames
         out1Summ += out1 * e1_vol;
 
         float e2_in0 = _cascade ? out0 : in0Ext;
-        float e2_in1 = _cascade ? out1 : in0Ext;
+        float e2_in1 = _cascade ? out1 : in1Ext;
         bool engaged = !_cascade || !e1.isLocking();
         e2.process(e2_in0, e2_in1, &out0, &out1, engaged);
         out0Summ += out0 * e2_vol;
