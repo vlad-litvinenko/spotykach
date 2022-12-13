@@ -50,7 +50,7 @@ void Controller::setPatrameters(vlly::spotykach::Spotykach& core) {
 
 using namespace vlly;
 using namespace spotykach;
-void Controller::setMuxParameters(Engine& e,  Spotykach& s, Mux8& m, int i) {
+void Controller::setMuxParameters(Engine& e,  Spotykach& s, Mux8& m, int ei) {
     using MuxTarget = Mux8::Target;
     for (size_t i = 0; i < m.knobsCount(); i++) {
         auto p = m.paramAt(i);
@@ -60,7 +60,7 @@ void Controller::setMuxParameters(Engine& e,  Spotykach& s, Mux8& m, int i) {
             case MuxTarget::Retrigger: e.setRetrigger(p.value); break;
             case MuxTarget::Jitter: e.setJitterAmount(p.value < 0.005 ? 0 : p.value); break;
             case MuxTarget::Step: e.setStepPosition(p.value); break;
-            case MuxTarget::Level: s.setVolume(p.value < 0.005 ? 0 : p.value, i); break;
+            case MuxTarget::Level: s.setVolume(p.value < 0.005 ? 0 : p.value, ei); break;
             case MuxTarget::Shift: e.setShift(p.value); break; 
             case MuxTarget::Repeats: e.setRepeats(p.value); break;
         }
