@@ -17,6 +17,8 @@ public:
     Source();
     void setFrozen(bool) override;
     bool isFrozen() override { return _frozen; }
+
+    void setAntifreeze(bool) override;
     
     void setCycleStart(uint32_t) override;
 
@@ -35,6 +37,7 @@ private:
     float* _buffer[2];
     uint32_t _bufferLength;
     bool _frozen;
+    bool _antifreeze;
     bool _filled;
     uint32_t _writeHead;
     uint32_t _readHead;

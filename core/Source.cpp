@@ -22,7 +22,12 @@ Source::Source() :
     {}
 
 void Source::setFrozen(bool frozen) {
-    _frozen = frozen;
+    _frozen = _antifreeze ? false : frozen;
+}
+
+void Source::setAntifreeze(bool value) {
+    _antifreeze = value;
+    if (_antifreeze) setFrozen(false);
 }
 
 void Source::setCycleStart(uint32_t start) {
