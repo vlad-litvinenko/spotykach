@@ -62,20 +62,20 @@ void Spotykach::setMix(float normVal) {
 }
 
 void Spotykach::setMainVolume(float normVal) {
-    _mainVol = logVolume(normVal);
+    _mainVol = logVolume(normVal * 1.7);
 }
 
 void Spotykach::setVolume(float value, int index) {
-    _vol[index] = logVolume(value);
+    _vol[index] = logVolume(value * 1.7);
 }
 
 void Spotykach::setCascade(bool value) {
+    auto needsReset = !_cascade && value;
     _cascade = value;
-    if (!value) return;
-
     Engine& e = engineAt(1);
-    e.setFrozen(false);
-    e.reset();
+    e.setAntifreeze(value);
+    
+    if (needsReset) e.reset();
 }
 
 void Spotykach::initialize() const {
@@ -107,8 +107,8 @@ void Spotykach::process(const float* const* inBuf, float** outBuf, int numFrames
 
         float e2_in0 = _cascade ? out0 : in0Ext;
         float e2_in1 = _cascade ? out1 : in1Ext;
-        bool engaged = !_cascade || !e1.isLocking();
-        e2.process(e2_in0, e2_in1, &out0, &out1, engaged);
+        bool engaged = !e1.isLocking();
+        e2.process(e2_in0, e2_in1, &out0, &out1, true);
         out0Summ += out0 * e2_vol;
         out1Summ += out1 * e2_vol;
         
