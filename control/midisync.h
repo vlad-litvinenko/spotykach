@@ -11,6 +11,8 @@ public:
     // of 0xF at line 119
     void handleEvent(daisy::MidiEvent e);
     bool isPlaying();
+    bool isAboutToStop();
+    void countDownToStop();
     float tempo();
     float beat();
     bool readAndResetSPPChanged();
@@ -32,6 +34,8 @@ private:
     float _beat = 0;
     bool _is_playing = false;
     bool _is_about_to_play = false;
+    bool _is_about_to_stop = false;
+    int _countdown_to_stop = 5;
     bool _is_spp_changed = false;
     
     void start();

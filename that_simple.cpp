@@ -60,6 +60,10 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 		return;
 	}
 
+	if (midisync.isAboutToStop()) {
+		midisync.countDownToStop();
+	}
+
 	core.preprocess(p);
 
  	p.currentBeat += _beat_kof * midisync.tempo();

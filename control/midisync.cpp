@@ -39,6 +39,16 @@ bool MIDISync::isPlaying() {
     return _is_playing;
 }
 
+bool MIDISync::isAboutToStop() {
+    return _is_about_to_stop;
+}
+
+void MIDISync::countDownToStop() {
+    if (--_countdown_to_stop == 0) {
+        _is_playing = false;
+    }
+}
+
 float MIDISync::tempo() {
     return _tempo;
 }
@@ -63,16 +73,20 @@ void MIDISync::reset() {
 
 void MIDISync::start() {
     _is_about_to_play = true;
+    _is_about_to_stop = false;
     _tick_cnt = 0;
     _beat_cnt = 0;
 }
 
 void MIDISync::stop() {
-    _is_playing = false;
+    _countdown_to_stop = 5;
+    _is_about_to_stop = true;
+    _is_about_to_play = false;
 }
 
 void MIDISync::resume() {
     _is_about_to_play = true;
+    _is_about_to_stop = false;
 }
 
 void MIDISync::seek(uint8_t bytes[2]) {
