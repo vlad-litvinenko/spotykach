@@ -180,6 +180,10 @@ void Engine::setFrozen(bool frozen) {
     }
 }
 
+void Engine::setAntifreeze(bool value) {
+    _source.setAntifreeze(value);
+}
+
 void Engine::initialize() {
     _source.initialize();
     _generator.initialize();

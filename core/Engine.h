@@ -83,6 +83,7 @@ public:
     void preprocess(PlaybackParameters p);
     
     void setFrozen(bool frozen);
+    void setAntifreeze(bool value);
     
     void process(float in0, float in1, float* out0, float* out1, bool engaged);
     
