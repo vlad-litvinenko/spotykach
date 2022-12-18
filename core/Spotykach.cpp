@@ -25,7 +25,6 @@ Spotykach::Spotykach() {
         auto t = std::make_shared<Trigger>(*g, *l);
         _engines[i] = std::make_shared<Engine>(*t, *s, *e, *g, *l);
         setVolume(0, i);
-        setCascade(false);
 
         _releasePool.emplace_back(e);
         _releasePool.emplace_back(s);
@@ -34,6 +33,7 @@ Spotykach::Spotykach() {
     }
     
     setMutex(false);
+    setCascade(false);
     setMix(1);
     setMainVolume(1);
     setJitterRate(0);
