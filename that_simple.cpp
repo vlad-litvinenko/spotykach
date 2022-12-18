@@ -54,7 +54,6 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 		memset(out[0], 0, size * sizeof(float));
 		memset(out[1], 0, size * sizeof(float));
 		p.currentBeat = midisync.beat();
-		_sync_beat = floor(p.currentBeat + 1);
 		return;
 	}
 
@@ -69,8 +68,8 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 	auto delta = abs(_sync_beat - p.currentBeat);
   	if (delta < tick || midisync.readAndResetSPPChanged()) {
 		p.currentBeat = midisync.beat();
-		_sync_beat += num;
-	} 
+		_sync_beat = floor(p.currentBeat + num);
+	}
 
 	//DWT->CYCCNT = 0;
 	core.process(in, out, size);
