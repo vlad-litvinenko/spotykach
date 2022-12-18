@@ -15,6 +15,7 @@
 Source::Source() :
     _bufferLength { kSourceBufferLength },
     _frozen { false },
+    _antifreeze { false },
     _filled { false },
     _writeHead { 0 },
     _readHead { 0 },
