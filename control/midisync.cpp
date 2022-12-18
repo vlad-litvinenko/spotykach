@@ -113,12 +113,12 @@ void MIDISync::tick() {
     _ptime = t;
 
     if (!_is_playing) return;
+    _beat = calculatedBeat(_beat_cnt, _tick_cnt);
     _tick_cnt++;
     if (_tick_cnt == 24) {
         _tick_cnt = 0;
         _beat_cnt ++;
     }
-    _beat = calculatedBeat(_beat_cnt, _tick_cnt);
 }
 
 void MIDISync::push(uint32_t interval) {
