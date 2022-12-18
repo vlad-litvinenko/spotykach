@@ -52,7 +52,7 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 	
 	if (!p.isPlaying) { 
 		memset(out[0], 0, size * sizeof(float));
-		memset(out[1], 0, size * sizeof(float));
+		memset(out[1], 0, size * sizeof(float)); 
 		p.currentBeat = midisync.beat();
 		return;
 	}
@@ -66,11 +66,11 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
  	p.currentBeat += _beat_kof * midisync.tempo();
 	
 	auto delta = abs(_sync_beat - p.currentBeat);
-  	if (delta < tick || midisync.readAndResetSPPChanged()) {
+	if (delta < tick || midisync.readAndResetSPPChanged()) {
 		p.currentBeat = midisync.beat();
-		_sync_beat = floor(p.currentBeat + num);
+ 		_sync_beat = floor(p.currentBeat + num); 
 	}
-
+ 
 	//DWT->CYCCNT = 0;
 	core.process(in, out, size);
 
@@ -94,7 +94,7 @@ int main(void) {
 	// DWT->CYCCNT = 0;
 	// DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
 
-	// hw.StartLog();
+	//hw.StartLog();
 
 	MidiUsbHandler::Config cfg;
 	cfg.transport_config.periph = MidiUsbTransport::Config::Periph::INTERNAL;
@@ -115,5 +115,7 @@ int main(void) {
 		while (midi.HasEvents()) {
 			midisync.handleEvent(midi.PopEvent());
 		}
+		// controller.setPatrameters(core);
+		// System::Delay(50);
 	}
 }
