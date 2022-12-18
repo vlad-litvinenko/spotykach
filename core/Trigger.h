@@ -72,6 +72,7 @@ private:
     uint32_t _denominator;
     
     std::array<float, 256> _triggerPoints;
+    float _latestBeat;
     float _latestPoint;
     uint32_t _pointsCount;
     uint32_t _nextPointIndex;

@@ -22,6 +22,7 @@ Trigger::Trigger(IGenerator& inGenerator, ILFO& inJitterLFO) :
     _needsAdjustIndexes(true),
     _numerator(0),
     _denominator(0),
+    _latestBeat(0),
     _latestPoint(0),
     _pointsCount(0),
     _nextPointIndex(0),
@@ -158,13 +159,13 @@ void Trigger::measure(float tempo, float sampleRate, int bufferSize) {
 void Trigger::setSliceLength(float value, IEnvelope& envelope) {
     uint32_t framesPerMeasure = _framesPerBeat * _denominator;
     uint32_t framesPerStep { static_cast<uint32_t>(_step * framesPerMeasure) };
-    _framesPerSlice = framesPerMeasure * value * 2 * _step;
+    _framesPerSlice = 2 * framesPerMeasure * value * _step;
     envelope.setFramesPerCrossfade(std::max(_framesPerSlice - framesPerStep, uint32_t(0)));
 }
 
 void Trigger::schedule(float currentBeat, bool isLaunch) {
     float normalisedBeat { currentBeat - static_cast<int>(currentBeat / _beatsPerPattern) * _beatsPerPattern };
-    if (isLaunch || _needsAdjustIndexes) {
+    if (isLaunch || _needsAdjustIndexes || currentBeat < _latestBeat) {
         adjustNextIndex(_triggerPoints.data(), _pointsCount, _nextPointIndex, normalisedBeat, isLaunch);
         _needsAdjustIndexes = false;
     }
@@ -176,21 +177,14 @@ void Trigger::schedule(float currentBeat, bool isLaunch) {
     _framesTillTrigger = distance * _framesPerBeat;
     if (_slicePositionJitterAmount > 0) _jitterLFO.setCurrentBeat(currentBeat - static_cast<int>(currentBeat / _numerator) * _numerator);
     _currentFrame = 0;
+    _latestBeat = currentBeat;
     _scheduled = true;
 }
 
 void Trigger::next(bool engaged) {
     if (_scheduled && (_framesTillTrigger--) <= 0) {
-        long onset = 0;
-        bool reset = false;
-        if (_retrigger && _nextPointIndex % _retrigger == 0) {
-            //at this point we're using _retriggerChance as binary switch
-            if (_retriggerChance == 1.0 || float(_retriggerDice()) / (_retriggerDice.max() - _retriggerDice.min()) > 0.5) {
-                onset = _triggerPoints[_nextPointIndex] * _framesPerBeat;
-                reset = true;
-            }
-        }
         if (engaged && _nextPointIndex < _repeats) {
+            bool reset = false;
             auto sliceOffset = _slicePositionFrames;
             if (_slicePositionJitterAmount > 0) {
                 auto lfoOffset = _jitterLFO.triangleValueAt(static_cast<int>(_currentFrame)) * _slicePositionJitterAmount;
@@ -198,6 +192,14 @@ void Trigger::next(bool engaged) {
                 if (sliceOffset < 0) sliceOffset = 0;
                 if (sliceOffset >= 480000) sliceOffset = 480000 - 1;
                 reset = true;
+            }
+            long onset = 0;
+            if (_retrigger && _nextPointIndex % _retrigger == 0) {
+                //at this point we're using _retriggerChance as binary switch
+                if (_retriggerChance || float(_retriggerDice()) / (_retriggerDice.max() - _retriggerDice.min()) > 0.5) {
+                    onset = _triggerPoints[_nextPointIndex] * _framesPerBeat;
+                    reset = true;
+                }
             }
             _generator.activateSlice(onset, sliceOffset, _framesPerSlice, reset);
             _framesTillUnlock = 0.015625 * _framesPerBeat * _numerator;
