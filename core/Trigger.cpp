@@ -65,9 +65,10 @@ void Trigger::prepareCWordPattern(int onsets, float shift, int numerator, int de
     }
 
     pattern[i] = 0;
+    i++;
 
-    if (pattern.size() < size) {
-        const auto offset = pattern.size();
+    if (i < size) {
+        const auto offset = i;
         i = 0;
         while (i + offset < size) {
             pattern[i + offset] = pattern[i];
