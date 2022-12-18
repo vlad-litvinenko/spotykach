@@ -32,8 +32,6 @@ public:
     
     void setMix(float normVal);
     
-    void setMainVolume(float normVal);
-    
     void setVolume(float value, int index);
     
     void setCascade(bool value);
@@ -44,16 +42,11 @@ public:
     void preprocess(PlaybackParameters p) const;
     void process(const float* const* inBuf, float** outBuf, int numFrames) const;
     
-    void resetCascadingEngine() {
-        if (_cascade) engineAt(1).reset(false);
-    }
-    
 private:
     std::array<std::shared_ptr<Engine>, kEnginesCount> _engines;
     
     float _vol[kEnginesCount];
     float _mix;
-    float _mainVol;
     bool _mutex;
     bool _cascade;
 

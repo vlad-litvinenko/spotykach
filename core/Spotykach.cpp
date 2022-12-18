@@ -35,7 +35,6 @@ Spotykach::Spotykach() {
     setMutex(false);
     setCascade(false);
     setMix(1);
-    setMainVolume(1);
     setJitterRate(0);
 }
 
@@ -59,10 +58,6 @@ void Spotykach::setMutex(bool mutex) {
 
 void Spotykach::setMix(float normVal) {
     _mix = logVolume(normVal);
-}
-
-void Spotykach::setMainVolume(float normVal) {
-    _mainVol = logVolume(normVal * 1.7);
 }
 
 void Spotykach::setVolume(float value, int index) {
@@ -107,12 +102,12 @@ void Spotykach::process(const float* const* inBuf, float** outBuf, int numFrames
 
         float e2_in0 = _cascade ? out0 : in0Ext;
         float e2_in1 = _cascade ? out1 : in1Ext;
-        bool engaged = !e1.isLocking();
-        e2.process(e2_in0, e2_in1, &out0, &out1, true);
+        bool engaged = !(_mutex && e1.isLocking());
+        e2.process(e2_in0, e2_in1, &out0, &out1, engaged);
         out0Summ += out0 * e2_vol;
         out1Summ += out1 * e2_vol;
         
-        outBuf[0][f] = (out0Summ * _mix + in0Ext * (1 - _mix)) * _mainVol;
-        outBuf[1][f] = (out1Summ * _mix + in1Ext * (1 - _mix)) * _mainVol;
+        outBuf[0][f] = (out0Summ * _mix + in0Ext * (1 - _mix));
+        outBuf[1][f] = (out1Summ * _mix + in1Ext * (1 - _mix));
     }
 }
