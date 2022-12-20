@@ -41,7 +41,7 @@ void Controller::setPatrameters(vlly::spotykach::Spotykach& core) {
     for (int i = 0; i < core.enginesCount(); i++) {
         Engine& e = core.engineAt(i);
         setMuxParameters(e, core, _muxs[i], i);
-        setChannelToggles(e, _channelToggles[i]);
+        setChannelToggles(e, core, _channelToggles[i], i);
     }
     
     setKnobParameters(core);
@@ -77,7 +77,7 @@ void Controller::setKnobParameters(vlly::spotykach::Spotykach &s) {
     }   
 }
 
-void Controller::setChannelToggles(vlly::spotykach::Engine& e, ChannelToggles& ct) {
+void Controller::setChannelToggles(vlly::spotykach::Engine& e, Spotykach& s, ChannelToggles& ct, int ei) {
     for (size_t i = 0; i < ct.count(); i++) {
         auto toggle = ct.at(i);
         auto target = std::get<0>(toggle);
@@ -88,7 +88,7 @@ void Controller::setChannelToggles(vlly::spotykach::Engine& e, ChannelToggles& c
             case ChTarget::Reverse: e.setDirection(isOn ? 1 : 0); break;
             case ChTarget::Declick: e.setDeclick(isOn); break;
             case ChTarget::Freeze: e.setFrozen(isOn); break;
-            case ChTarget::Chance: e.setRetriggerChance(isOn); break;
+            case ChTarget::Mute: s.setMute(!isOn, ei); break;
         }
     }
 }

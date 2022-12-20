@@ -52,7 +52,6 @@ public:
     void setSliceLength(float, IEnvelope&) override;
     
     void setRetrigger(int) override;
-    void setRetriggerChance(float) override;
     
     uint32_t repeats() override { return _repeats; };
     void setRepeats(int) override;
@@ -82,8 +81,6 @@ private:
     
     uint32_t _repeats;
     uint32_t _retrigger;
-    float _retriggerChance;
-    std::minstd_rand _retriggerDice;
     
     uint32_t _slicePositionFrames;
     uint32_t _framesPerSlice;

@@ -37,7 +37,6 @@ struct RawParameters {
     float direction        = -1;
     float repeats          = -1;
     float retrigger        = -1;
-    float retriggerChance  = -1;
     float jitterAmount     = -1;
     bool on                 = false;
     bool declick            = false;
@@ -71,7 +70,6 @@ public:
     int repeats() { return _trigger.repeats(); };
     
     void setRetrigger(float retrigger);
-    void setRetriggerChance(bool value);
     
     void setJitterAmount(float value);
     void setJitterRate(float value);

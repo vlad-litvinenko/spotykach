@@ -29,7 +29,6 @@ public:
     virtual uint32_t slicePositionFrames() = 0;
     virtual void setSliceLength(float, IEnvelope&) = 0;
     virtual void setRetrigger(int) = 0;
-    virtual void setRetriggerChance(float) = 0;
     
     virtual uint32_t repeats() = 0;
     virtual void setRepeats(int) = 0;

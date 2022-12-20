@@ -34,6 +34,8 @@ public:
     
     void setVolume(float value, int index);
     
+    void setMute(bool value, int index);
+
     void setCascade(bool value);
     
     void setJitterRate(float normVal);
@@ -46,6 +48,7 @@ private:
     std::array<std::shared_ptr<Engine>, kEnginesCount> _engines;
     
     float _vol[kEnginesCount];
+    bool _mute[kEnginesCount];
     float _mix;
     bool _mutex;
     bool _cascade;

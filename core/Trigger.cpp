@@ -30,8 +30,6 @@ Trigger::Trigger(IGenerator& inGenerator, ILFO& inJitterLFO) :
     _scheduled(false),
     _repeats(INT32_MAX),
     _retrigger(0),
-    _retriggerChance(1),
-    _retriggerDice(0),
     _slicePositionFrames(0),
     _framesPerSlice(0),
     _framesPerBeat(0),
@@ -195,11 +193,8 @@ void Trigger::next(bool engaged) {
             }
             long onset = 0;
             if (_retrigger && _nextPointIndex % _retrigger == 0) {
-                //at this point we're using _retriggerChance as binary switch
-                if (_retriggerChance || float(_retriggerDice()) / (_retriggerDice.max() - _retriggerDice.min()) > 0.5) {
-                    onset = _triggerPoints[_nextPointIndex] * _framesPerBeat;
-                    reset = true;
-                }
+                onset = _triggerPoints[_nextPointIndex] * _framesPerBeat;
+                reset = true;
             }
             _generator.activateSlice(onset, sliceOffset, _framesPerSlice, reset);
             _framesTillUnlock = 0.015625 * _framesPerBeat * _numerator;
@@ -219,10 +214,6 @@ void Trigger::reset() {
 
 void Trigger::setRetrigger(int retrigger) {
     _retrigger = retrigger;
-}
-
-void Trigger::setRetriggerChance(float value) {
-    _retriggerChance = value;
 }
 
 void Trigger::setRepeats(int repeats) {

@@ -25,7 +25,7 @@ private:
 
     void setMuxParameters(Engine& e, Spotykach &s, Mux8& m, int i);
     void setKnobParameters(Spotykach &s);
-    void setChannelToggles(Engine& e, ChannelToggles& ct);
+    void setChannelToggles(Engine& e, Spotykach &s, ChannelToggles& ct, int i);
     void setGlobalToggles(Spotykach &s);
 
     std::array<Knob, 1> _knobs;

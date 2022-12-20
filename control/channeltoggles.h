@@ -9,7 +9,7 @@ public:
         Reverse,
         Declick,
         Freeze,
-        Chance
+        Mute
     };
 
     ChannelToggles() = default;
@@ -34,7 +34,7 @@ private:
         Target::Reverse,
         Target::Declick,
         Target::Freeze,
-        Target::Chance
+        Target::Mute
     };
 
     std::array<daisy::Switch, kTargetsCount> _switches;

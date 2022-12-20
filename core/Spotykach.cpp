@@ -64,6 +64,10 @@ void Spotykach::setVolume(float value, int index) {
     _vol[index] = logVolume(value * 1.7);
 }
 
+void Spotykach::setMute(bool value, int index) {
+    _mute[index] = value;
+}
+
 void Spotykach::setCascade(bool value) {
     auto needsReset = !_cascade && value;
     _cascade = value;
@@ -84,8 +88,8 @@ void Spotykach::preprocess(PlaybackParameters p) const {
 void Spotykach::process(const float* const* inBuf, float** outBuf, int numFrames) const {
     auto& e1 = engineAt(0);
     auto& e2 = engineAt(1);
-    auto e1_vol = _vol[0];
-    auto e2_vol = _vol[1];
+    auto e1_vol = _mute[0] ? 0 : _vol[0];
+    auto e2_vol = _mute[1] ? 0 : _vol[1];
 
     float out0 = 0;
     float out1 = 0;

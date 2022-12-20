@@ -43,7 +43,6 @@ Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
     setRetrigger(0);
     setIsOn(true);
     setDeclick(false);
-    setRetriggerChance(1);
     setJitterAmount(0);
     setJitterRate(0.75);
     setFrozen(false);
@@ -143,11 +142,6 @@ void Engine::setRepeats(float normVal) {
 void Engine::setRetrigger(float normVal) {
     _raw.retrigger = normVal;
     _trigger.setRetrigger(round(normVal * 16));
-}
-
-void Engine::setRetriggerChance(bool value) {
-    _raw.retriggerChance = value;
-    _trigger.setRetriggerChance(value);
 }
 
 void Engine::setJitterAmount(float value) {
