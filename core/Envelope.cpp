@@ -8,13 +8,20 @@
 
 #include "Envelope.h"
 
+static const float kP      = 3.1415926535898;
 static const float kP_2    = 1.5707963267949;
 static const float kCoef3  = 0.16666666666667;
 static const float kCoef5  = 0.00833333333333;
 static const float kCoef7  = 0.00019841269841;
 
+inline float normalize(float x) {
+    if (x <= kP) return x;
+    auto times = int32_t(x / kP);
+    return x - (times * kP);
+}
+
 inline float sine(float x) {
-    //x-3+5-7
+    x = normalize(x);
     float x3 = x * x * x;
     float x5 = x3 * x * x;
     float x7 = x5 * x * x;
@@ -39,13 +46,13 @@ void Envelope::measure() {
     }
     else {
         _attackLength = _decayLength = _declick ? 512 : 0;
-    }\
+    }
 }
 
 float Envelope::attackAttenuation(long currentFrame) {
-    return _attackLength ? sine(kP_2 * currentFrame / _attackLength) : 1;
+    return _attackLength > 0 ? sine(kP_2 * currentFrame / _attackLength) : 1;
 }
 
 float Envelope::decayAttenuation(long currentFrame) {
-    return _decayLength ? sine(kP_2 + kP_2 * currentFrame / _decayLength) : 1;
+    return _decayLength > 0 ? sine(kP_2 + kP_2 * currentFrame / _decayLength) : 1;
 }
