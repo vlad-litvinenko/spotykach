@@ -6,7 +6,7 @@ using namespace daisy;
 void Mux8::initialize(DaisySeed& hw, AdcChannelConfig& conf, Index i, ConfigChannelOffset co) {
     using namespace seed;
     _channel = i + co;
-    conf.InitMux(pin(i), 8, D14, D13, D12);
+    conf.InitMux(pin(i), 8, D12, D11, D10);
 }   
 
 daisy::Pin Mux8::pin(int ch) const {
