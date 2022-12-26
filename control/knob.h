@@ -28,6 +28,7 @@ private:
     daisy::Pin pin(Knob::Target usage) const {
         switch (usage) {
             case Knob::Target::JitterRate: return daisy::seed::A1;
+            default: return {};
         }
     };
 };

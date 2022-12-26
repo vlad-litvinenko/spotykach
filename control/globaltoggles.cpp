@@ -27,5 +27,6 @@ Pin GlobalToggles::pin(Target t) {
     switch (t) {
         case Target::Mutex:     return D28;
         case Target::Cascade:   return D29;
+        default: return {};
     };
 };
