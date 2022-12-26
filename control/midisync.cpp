@@ -12,6 +12,26 @@ inline float calculatedBeat(uint32_t beat, uint32_t tick) {
     return static_cast<float>(beat) + static_cast<float>(tick) / 24.f;
 }
 
+void MIDISync::run() {
+    // daisy::MidiUsbHandler::Config cfg;
+	// cfg.transport_config.periph = daisy::MidiUsbTransport::Config::Periph::INTERNAL;
+    reset();
+	daisy::MidiUartHandler::Config cfg;
+	_midi.Init(cfg);
+	_midi.StartReceive();
+}
+
+void MIDISync::pull() {
+    _midi.Listen();
+
+    while (_midi.HasEvents()) {
+        handleEvent(_midi.PopEvent());
+    }   
+}
+
+// This code relies on tweak in libDaisy 
+// usb_midi.cpp, namely removing filtering 
+// of 0xF at line 119
 void MIDISync::handleEvent(daisy::MidiEvent e) {
     using namespace daisy; 
 

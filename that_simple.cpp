@@ -3,7 +3,6 @@
 #include "core/Spotykach.h"
 #include "control/controller.h"
 #include "control/midisync.h"
-#include "hid/midi.h"
 
 #include "core_cm7.h"
 #include "control/deb.h"
@@ -18,7 +17,6 @@ DaisySeed hw;
 Controller controller;
 Spotykach core;
 PlaybackParameters p;
-MidiUsbHandler midi;
 MIDISync midisync;
 
 const float tempo { 120 };
@@ -96,11 +94,7 @@ int main(void) {
 
 	//hw.StartLog();
 
-	MidiUsbHandler::Config cfg;
-	cfg.transport_config.periph = MidiUsbTransport::Config::Periph::INTERNAL;
-	midi.Init(cfg);
-	midi.StartReceive();
-	midisync.reset();
+	midisync.run();
 
 	controller.initialize(hw);
 	core.initialize();
@@ -110,11 +104,7 @@ int main(void) {
 	hw.StartAudio(AudioCallback);
 
 	while(1) {
-		midi.Listen();
-
-		while (midi.HasEvents()) {
-			midisync.handleEvent(midi.PopEvent());
-		}
+		midisync.pull();
 		// controller.setPatrameters(core);
 		// System::Delay(50);
 	}

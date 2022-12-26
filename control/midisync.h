@@ -1,4 +1,5 @@
 #include "daisy_seed.h"
+#include "hid/midi.h"
 #include <thread>
 
 class MIDISync {
@@ -6,19 +7,17 @@ public:
     MIDISync() = default;
     ~MIDISync() = default;   
 
-    // This code relies on tweak in libDaisy 
-    // usb_midi.cpp, namely removing filtering 
-    // of 0xF at line 119
-    void handleEvent(daisy::MidiEvent e);
+    void run();
+    void pull();
     bool isPlaying();
     bool isAboutToStop();
     void countDownToStop();
     float tempo();
     float beat();
     bool readAndResetSPPChanged();
-    void reset();
 
 private:
+    daisy::MidiUartHandler _midi;
     bool _filled = false;
     uint32_t _ptime = 0;
     std::size_t _iterator = 0;
@@ -38,6 +37,7 @@ private:
     int _countdown_to_stop = 5;
     bool _is_spp_changed = false;
     
+    void handleEvent(daisy::MidiEvent e);
     void start();
     void stop();
     void resume();
@@ -47,4 +47,5 @@ private:
     float avg();
     float tempo(float tick);
     void checkDeviation(uint32_t delta);
+    void reset();
 };
