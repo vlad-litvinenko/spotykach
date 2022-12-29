@@ -55,18 +55,15 @@ void MIDISync::handleEvent(daisy::MidiEvent e) {
     }
 }
 
-bool MIDISync::isPlaying() {
-    return _is_playing;
-}
-
-bool MIDISync::isAboutToStop() {
-    return _is_about_to_stop;
-}
-
-void MIDISync::countDownToStop() {
+void MIDISync::tickTheClock() {
+    if (!_is_about_to_stop) return;
     if (--_countdown_to_stop == 0) {
         _is_playing = false;
     }
+}
+
+bool MIDISync::isPlaying() {
+    return _is_playing;
 }
 
 float MIDISync::tempo() {

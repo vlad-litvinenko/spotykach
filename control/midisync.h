@@ -10,11 +10,10 @@ public:
     void run();
     void pull();
     bool isPlaying();
-    bool isAboutToStop();
-    void countDownToStop();
     float tempo();
     float beat();
     bool readAndResetSPPChanged();
+    void tickTheClock();
 
 private:
     daisy::MidiUartHandler _midi;
