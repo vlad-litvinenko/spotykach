@@ -6,7 +6,8 @@ struct GlobalToggles {
 public:
     enum class Target {
         Mutex,
-        Cascade
+        Cascade,
+        Run
     };
 
     GlobalToggles() = default;
@@ -27,7 +28,8 @@ private:
     static const int kTargetsCount { 2 };
     constexpr static std::array<Target, kTargetsCount> _targets = {
         Target::Mutex,
-        Target::Cascade
+        Target::Cascade,
+        Target::Run
     };
 
     std::array<daisy::Switch, kTargetsCount> _switches;
