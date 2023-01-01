@@ -9,6 +9,8 @@ public:
 
     void run();
     void pull();
+    void start();
+    void stop();
     bool isPlaying();
     float tempo();
     float beat();
@@ -37,8 +39,6 @@ private:
     bool _is_spp_changed = false;
     
     void handleEvent(daisy::MidiEvent e);
-    void start();
-    void stop();
     void resume();
     void seek(uint8_t bytes[2]);
     void tick();

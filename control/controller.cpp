@@ -37,7 +37,7 @@ void Controller::initToggles(DaisySeed& hw) {
     _globalToggles.initialize(hw);
 }
 
-void Controller::setPatrameters(vlly::spotykach::Spotykach& core) {
+void Controller::setPatrameters(Spotykach& core, MIDISync& midi) {
     for (int i = 0; i < core.enginesCount(); i++) {
         Engine& e = core.engineAt(i);
         setMuxParameters(e, core, _muxs[i], i);
@@ -45,7 +45,7 @@ void Controller::setPatrameters(vlly::spotykach::Spotykach& core) {
     }
     
     setKnobParameters(core);
-    setGlobalToggles(core);
+    setGlobalToggles(core, midi);
 };
 
 using namespace vlly;
@@ -93,7 +93,7 @@ void Controller::setChannelToggles(vlly::spotykach::Engine& e, Spotykach& s, Cha
     }
 }
 
-void Controller::setGlobalToggles(vlly::spotykach::Spotykach &s) {
+void Controller::setGlobalToggles(Spotykach& s, MIDISync& m) {
     using GTarget = GlobalToggles::Target;
     auto cnt = _globalToggles.count();
     for (size_t i = 0; i < cnt; i++) {
@@ -103,6 +103,17 @@ void Controller::setGlobalToggles(vlly::spotykach::Spotykach &s) {
         switch (target) {
             case GTarget::Mutex: s.setMutex(isOn); break;
             case GTarget::Cascade: s.setCascade(isOn); break;
+            case GTarget::Run: {
+                static bool runState = false;
+                if (isOn != runState) {
+                    runState = isOn;
+                    if (runState) 
+                        m.start();
+                    else 
+                        m.stop();
+                }
+                break;
+            }
         }
     }
 }
