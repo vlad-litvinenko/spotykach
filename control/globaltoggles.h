@@ -25,7 +25,7 @@ private:
 
     daisy::Pin pin(Target t);
 
-    static const int kTargetsCount { 2 };
+    static const int kTargetsCount { 3 };
     constexpr static std::array<Target, kTargetsCount> _targets = {
         Target::Mutex,
         Target::Cascade,
