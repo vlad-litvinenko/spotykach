@@ -43,7 +43,7 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 	if (_cnfg_cnt == 0) {
 		_cnfg_cnt = 40;
 		configurePlayback();
-		controller.setPatrameters(core);
+		controller.setPatrameters(core, midisync);
 	}
 	
 	_cnfg_cnt --;
