@@ -1,3 +1,5 @@
+#pragma once
+
 #include "daisy_seed.h"
 #include "hid/midi.h"
 #include <thread>
