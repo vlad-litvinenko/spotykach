@@ -28,6 +28,8 @@ public:
     Engine& engineAt(int index) const;
     long enginesCount() const;
     
+    void advanceTimeline();
+
     void setMutex(bool mutex);
     
     void setMix(float normVal);

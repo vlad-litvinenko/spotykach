@@ -2,14 +2,14 @@
 
 #include "daisy_seed.h"
 #include "hid/midi.h"
-#include <thread>
+#include "Spotykach.h"
 
 class MIDISync {
 public:
     MIDISync() = default;
     ~MIDISync() = default;   
 
-    void run();
+    void run(vlly::spotykach::Spotykach& core);
     void pull();
     void start();
     void stop();
@@ -20,6 +20,7 @@ public:
     void tickTheClock();
 
 private:
+    vlly::spotykach::Spotykach* _core;
     daisy::MidiUartHandler _midi;
     bool _filled = false;
     uint32_t _ptime = 0;

@@ -12,9 +12,10 @@ inline float calculatedBeat(uint32_t beat, uint32_t tick) {
     return static_cast<float>(beat) + static_cast<float>(tick) / 24.f;
 }
 
-void MIDISync::run() {
+void MIDISync::run(vlly::spotykach::Spotykach& core) {
     // daisy::MidiUsbHandler::Config cfg;
 	// cfg.transport_config.periph = daisy::MidiUsbTransport::Config::Periph::INTERNAL;
+    _core = &core;
     reset();
 	daisy::MidiUartHandler::Config cfg;
 	_midi.Init(cfg);
@@ -136,6 +137,7 @@ void MIDISync::tick() {
         _tick_cnt = 0;
         _beat_cnt ++;
     }
+    _core->advanceTimeline();
 }
 
 void MIDISync::push(uint32_t interval) {

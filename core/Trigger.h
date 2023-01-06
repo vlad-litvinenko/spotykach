@@ -14,17 +14,13 @@
 #include "ILFO.h"
 #include <random>
 
-static inline void adjustNextIndex(float* points, uint32_t pointsCount, uint32_t& nextIndex, float beat, bool isLaunch) {
-    if (isLaunch) {
-        nextIndex = 0;
-        return;
-    }
+static inline void adjustNextIndex(uint32_t* points, uint32_t pointsCount, uint32_t iterator, uint32_t& nextIndex) {
     int newNextIndex = 0;
     float nextDiff = INT32_MAX;
     for (uint32_t i = 0; i < pointsCount; i++) {
         auto point = points[i];
-        if (!isLaunch && point >= beat && point - beat < nextDiff) {
-            nextDiff = point - beat;
+        if (point >= iterator && point - iterator < nextDiff) {
+            nextDiff = point - iterator;
             newNextIndex = i;
         }
     }
@@ -56,11 +52,15 @@ public:
     uint32_t repeats() override { return _repeats; };
     void setRepeats(int) override;
     
-    bool locking() override { return _framesTillUnlock > 0; };
+    bool locking() override { return _ticksTillUnlock > 0; };
     
 private:
     IGenerator& _generator;
     ILFO& _jitterLFO;
+
+    uint32_t _iterator;
+    std::array<uint32_t, 256> _triggerTicks;
+    uint32_t _ticksTillUnlock;
 
     float _step;
     float _slicePosition;
@@ -76,8 +76,6 @@ private:
     uint32_t _pointsCount;
     uint32_t _nextPointIndex;
     uint32_t _beatsPerPattern;
-
-    bool _scheduled;
     
     uint32_t _repeats;
     uint32_t _retrigger;
@@ -85,9 +83,6 @@ private:
     uint32_t _slicePositionFrames;
     uint32_t _framesPerSlice;
     uint32_t _framesPerBeat;
-    uint32_t _framesTillTrigger;
-    uint32_t _framesTillUnlock;
-    uint32_t _currentFrame;
 };
 
 #endif

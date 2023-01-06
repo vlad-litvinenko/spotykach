@@ -223,8 +223,12 @@ void Engine::preprocess(PlaybackParameters p) {
     }
 }
 
+void Engine::advanceTimeline() {
+    _trigger.next(true);
+}
+
 void Engine::process(float in0, float in1, float* out0, float* out1, bool engaged) {
-    _trigger.next(_isOn && engaged);
+    //_trigger.next(_isOn && engaged);
     _source.write(in0, in1);
     _generator.generate(out0, out1);
 }

@@ -10,31 +10,27 @@
 #include <cmath>
 #include <algorithm>
 
-static const int kDefaultQuadrat        = 4;
-static const float kSecondsPerMinute   = 60.0;
+static const int kBeatsPerMeasure       = 4;
+static const float kSecondsPerMinute    = 60.0;
+static const int kTicksPerBeat          = 24;
 
 Trigger::Trigger(IGenerator& inGenerator, ILFO& inJitterLFO) :
-    _generator(inGenerator),
-    _jitterLFO(inJitterLFO),
-    _step(0),
-    _slicePosition(0),
-    _slicePositionJitterAmount(0),
-    _needsAdjustIndexes(true),
-    _numerator(0),
-    _denominator(0),
-    _latestBeat(0),
-    _latestPoint(0),
-    _pointsCount(0),
-    _nextPointIndex(0),
-    _beatsPerPattern(0),
-    _scheduled(false),
-    _repeats(INT32_MAX),
-    _retrigger(0),
-    _slicePositionFrames(0),
-    _framesPerSlice(0),
-    _framesPerBeat(0),
-    _framesTillTrigger(0),
-    _currentFrame(0) {
+    _generator { inGenerator },
+    _jitterLFO { inJitterLFO },
+    _iterator { 0 },
+    _step { 0 },
+    _slicePosition { 0 },
+    _slicePositionJitterAmount { 0 },
+    _numerator { 0 },
+    _denominator { 0 },
+    _pointsCount { 0 },
+    _nextPointIndex { 0 },
+    _beatsPerPattern { 0 },
+    _repeats { INT32_MAX },
+    _retrigger { 0 },
+    _slicePositionFrames { 0 },
+    _framesPerSlice { 0 },
+    _framesPerBeat (0) {
 }
 
 void Trigger::prepareCWordPattern(int onsets, float shift, int numerator, int denominator) {
@@ -78,6 +74,7 @@ void Trigger::prepareCWordPattern(int onsets, float shift, int numerator, int de
     _beatsPerPattern = _numerator;
     _pointsCount = 0;
     _triggerPoints.fill(0);
+    _triggerTicks.fill(0);
     float beatShift = shift * _numerator;
     for (size_t i = 0; i < pattern.size(); i++) {
         if (!pattern[i]) continue;
@@ -89,6 +86,7 @@ void Trigger::prepareCWordPattern(int onsets, float shift, int numerator, int de
             _latestPoint = point;
         }
         _triggerPoints[_pointsCount] = point;
+        _triggerTicks[_pointsCount] = static_cast<uint32_t>(round(point * kTicksPerBeat));
         _pointsCount ++;
     }
     
@@ -129,6 +127,7 @@ void Trigger::prepareMeterPattern(float step, float shift, int numerator, int de
             _latestPoint = point;
         }
         _triggerPoints[_pointsCount] = point;
+        _triggerTicks[_pointsCount] = static_cast<uint32_t>(round(point * kTicksPerBeat));
         _pointsCount++;
     }
     
@@ -148,7 +147,7 @@ void Trigger::setPositionJitterAmount(float value) {
 }
 
 void Trigger::measure(float tempo, float sampleRate, int bufferSize) {
-    float beatsPerMeasure = kDefaultQuadrat * _numerator / _denominator;
+    float beatsPerMeasure = kBeatsPerMeasure * _numerator / _denominator;
     auto framesPerMeasure = static_cast<uint32_t>(kSecondsPerMinute * sampleRate * beatsPerMeasure / tempo);
     _framesPerBeat = framesPerMeasure / _numerator;
     _jitterLFO.setFramesPerMeasure(framesPerMeasure);
@@ -162,54 +161,42 @@ void Trigger::setSliceLength(float value, IEnvelope& envelope) {
 }
 
 void Trigger::schedule(float currentBeat, bool isLaunch) {
-    float normalisedBeat { currentBeat - static_cast<int>(currentBeat / _beatsPerPattern) * _beatsPerPattern };
-    if (isLaunch || _needsAdjustIndexes || currentBeat < _latestBeat) {
-        adjustNextIndex(_triggerPoints.data(), _pointsCount, _nextPointIndex, normalisedBeat, isLaunch);
+    if (_needsAdjustIndexes) {
+        adjustNextIndex(_triggerTicks.data(), _pointsCount, _iterator, _nextPointIndex);
         _needsAdjustIndexes = false;
     }
-    float nextPoint = _triggerPoints[_nextPointIndex];
-    if (normalisedBeat > _latestPoint) {
-        nextPoint += _beatsPerPattern;
-    }
-    float distance { nextPoint >= normalisedBeat ? nextPoint - normalisedBeat : _beatsPerPattern };
-    _framesTillTrigger = distance * _framesPerBeat;
     if (_slicePositionJitterAmount > 0) _jitterLFO.setCurrentBeat(currentBeat - static_cast<int>(currentBeat / _numerator) * _numerator);
-    _currentFrame = 0;
-    _latestBeat = currentBeat;
-    _scheduled = true;
 }
 
 void Trigger::next(bool engaged) {
-    if (_scheduled && (_framesTillTrigger--) <= 0) {
+    if (_iterator == _triggerTicks[_nextPointIndex]) {
         if (engaged && _nextPointIndex < _repeats) {
             bool reset = false;
             auto sliceOffset = _slicePositionFrames;
-            if (_slicePositionJitterAmount > 0) {
-                auto lfoOffset = _jitterLFO.triangleValueAt(static_cast<int>(_currentFrame)) * _slicePositionJitterAmount;
-                sliceOffset += lfoOffset * _framesPerBeat * _numerator;
-                if (sliceOffset < 0) sliceOffset = 0;
-                if (sliceOffset >= 480000) sliceOffset = 480000 - 1;
-                reset = true;
-            }
+            // if (_slicePositionJitterAmount > 0) {
+                
+            //     auto lfoOffset = _jitterLFO.triangleValueAt(static_cast<int>(_currentFrame)) * _slicePositionJitterAmount;
+            //     sliceOffset += lfoOffset * _framesPerBeat * _numerator;
+            //     if (sliceOffset < 0) sliceOffset = 0;
+            //     if (sliceOffset >= 480000) sliceOffset = 480000 - 1;
+            //     reset = true;
+            // }
             long onset = 0;
             if (_retrigger && _nextPointIndex % _retrigger == 0) {
-                onset = _triggerPoints[_nextPointIndex] * _framesPerBeat;
+                onset = _framesPerBeat * static_cast<float>(_triggerTicks[_nextPointIndex]) / kTicksPerBeat;
                 reset = true;
             }
             _generator.activateSlice(onset, sliceOffset, _framesPerSlice, reset);
-            _framesTillUnlock = 0.015625 * _framesPerBeat * _numerator;
+            _ticksTillUnlock = 3;
         }
-        _nextPointIndex++;
-        if (_nextPointIndex > _pointsCount - 1) _nextPointIndex = 0;
-        _scheduled = false;
+        _nextPointIndex = (_nextPointIndex + 1) % _pointsCount;
     }
-    if (_framesTillUnlock > 0) _framesTillUnlock--;
-    _currentFrame ++;
+    _iterator = (_iterator + 1) % (_beatsPerPattern * kTicksPerBeat);
+    if (_ticksTillUnlock > 0) _ticksTillUnlock--;
 }
 
 void Trigger::reset() {
-    _scheduled = false;
-    _framesTillUnlock = 0;
+    _ticksTillUnlock = 0;
 }
 
 void Trigger::setRetrigger(int retrigger) {

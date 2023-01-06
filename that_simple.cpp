@@ -57,14 +57,6 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 
 	midisync.tickTheClock();
 	core.preprocess(p);
-
- 	p.currentBeat += _beat_kof * midisync.tempo();
-	
-	auto delta = abs(_sync_beat - p.currentBeat);
-	if (delta < tick || midisync.readAndResetSPPChanged()) {
-		p.currentBeat = midisync.beat();
- 		_sync_beat = floor(p.currentBeat + num); 
-	}
  
 	//DWT->CYCCNT = 0;
 	core.process(in, out, size);
@@ -91,10 +83,11 @@ int main(void) {
 
 	//hw.StartLog();
 
-	midisync.run();
+	
 
 	controller.initialize(hw);
 	core.initialize();
+	midisync.run(core);
 
 	hw.SetAudioBlockSize(bufferSize); // number of samples handled per callback
 	hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_48KHZ);

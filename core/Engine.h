@@ -83,6 +83,8 @@ public:
     void setFrozen(bool frozen);
     void setAntifreeze(bool value);
     
+    void advanceTimeline();
+
     void process(float in0, float in1, float* out0, float* out1, bool engaged);
     
     void reset(bool hard = true);

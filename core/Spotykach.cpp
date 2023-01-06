@@ -46,6 +46,12 @@ long Spotykach::enginesCount() const {
     return kEnginesCount;
 }
 
+void Spotykach::advanceTimeline() {
+    for (int i = 0; i < enginesCount(); i++) {
+        engineAt(i).advanceTimeline();
+    }
+}
+
 void Spotykach::setJitterRate(float normVal) {
     for (int i = 0; i < enginesCount(); i++) {
         engineAt(i).setJitterRate(normVal);
