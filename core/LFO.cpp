@@ -26,6 +26,7 @@ void LFO::setPeriod(float value) {
 
 void LFO::setCurrentBeat(float value) {
     _currentBeat = value;
+    _frame = -1;
 }
 
 void LFO::setFramesPerMeasure(long framesPerMeasure) {
@@ -33,9 +34,13 @@ void LFO::setFramesPerMeasure(long framesPerMeasure) {
     _framesPerBeat = _framesPerMeasure / 4;
 }
 
-float LFO::triangleValueAt(int frame) {
+void LFO::advance() {
+    _frame = (_frame + 1) % _framesPerMeasure;
+}
+
+float LFO::triangleValue() {
     long fp = _framesPerMeasure * _period / 2;
     float fraction = _currentBeat - int(_currentBeat / (4 * _period)) * (4 * _period);
-    long fphase = static_cast<long>(fraction * _framesPerBeat + frame);
+    long fphase = static_cast<long>(fraction * _framesPerBeat + _frame);
     return (2.0 / fp) * (fp - std::abs(mod(fphase - fp, 2 * fp) - fp)) - 1.0;
 }

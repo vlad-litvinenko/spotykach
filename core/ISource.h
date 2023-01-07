@@ -16,6 +16,8 @@ public:
     virtual bool isFrozen() = 0;
     virtual void setAntifreeze(bool) = 0;
     
+    virtual uint32_t length() = 0;
+
     virtual void setCycleStart(uint32_t start) = 0;
 
     virtual void initialize() = 0;

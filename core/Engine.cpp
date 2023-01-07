@@ -46,7 +46,7 @@ Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
     setJitterAmount(0);
     setJitterRate(0.75);
     setFrozen(false);
-    _trigger.prepareMeterPattern(_step, 0, 4, 4);
+    _trigger.prepareMeterPattern(_step, 0);
 }
 
 void Engine::setIsOn(bool on) {
@@ -86,15 +86,13 @@ void Engine::setStepPosition(float normVal) {
             maxIndex = CWordsCount - 1;
             valueIndex = std::min(maxIndex, int(normVal * (maxIndex + 1)));
             onsets = CWords[valueIndex].onsets;
+            step = 0.0625; //1/16
             break;
         }
     }
     
-    if (!fcomp(step, _step)) {
+    if (!fcomp(step, _step) || onsets != _onsets) {
         _step = step;
-        _invalidatePattern = true;
-    }
-    else if (onsets != _onsets) {
         _onsets = onsets;
         _invalidatePattern = true;
     }
@@ -146,7 +144,7 @@ void Engine::setRetrigger(float normVal) {
 
 void Engine::setJitterAmount(float value) {
     _raw.jitterAmount = value;
-    _trigger.setPositionJitterAmount(value);
+    _generator.setPositionJitterAmount(value);
 }
 
 void Engine::setJitterRate(float value) {
@@ -169,7 +167,7 @@ void Engine::setFrozen(bool frozen) {
     _raw.frozen = frozen;
     _source.setFrozen(frozen);
     if (isTurningOff) {
-        _source.setCycleStart(_trigger.slicePositionFrames());
+        _source.setCycleStart(_generator.slicePositionFrames());
         _generator.setNeedsResetSlices();
     }
 }
@@ -184,43 +182,51 @@ void Engine::initialize() {
 }
 
 void Engine::preprocess(PlaybackParameters p) {
-    bool isLaunch = false;
     if (p.isPlaying != _isPlaying) {
         _isPlaying = p.isPlaying;
-        isLaunch = _isPlaying;
         reset(true);
     }
     
+    auto invalidateCrossfade = false;
+    static uint32_t framesPerMeasure = 0;
+
     if (!fcomp(p.tempo, _tempo)) {
         _tempo = p.tempo;
-        _trigger.measure(p.tempo, p.sampleRate, p.bufferSize);
-        _invalidateSliceLength = true;
+        framesPerMeasure = static_cast<uint32_t>(60.0 * p.sampleRate * 4 / p.tempo);
+        _jitterLFO.setFramesPerMeasure(framesPerMeasure);
+        invalidateCrossfade = true;
     }
     
     if (_invalidatePattern) {
         if (_grid == Grid::kGrid_CWord) {
-            _trigger.prepareCWordPattern(_onsets, _shift, p.numerator, p.denominator);
+            _trigger.prepareCWordPattern(_onsets, _shift);
         }
         else {
-            _trigger.prepareMeterPattern(_step, _shift, p.numerator, p.denominator);
+            _trigger.prepareMeterPattern(_step, _shift);
         }
-        _invalidateSliceLength = true;
+        invalidateCrossfade = true;
         _invalidatePattern = false;
     }
     
     if (_invalidateSlicePosition) {
-        _trigger.setSlicePosition(_start);
+        _generator.setSlicePosition(_start);
         _invalidateSlicePosition = false;
     }
     
     if (_invalidateSliceLength) {
-        _trigger.setSliceLength(_slice, _envelope);
+        _generator.setSliceLength(_slice);
+        invalidateCrossfade = true;
         _invalidateSliceLength = false;
     }
-    
-    if (_isPlaying) {
-        _trigger.schedule(p.currentBeat, isLaunch);
+
+    if (invalidateCrossfade) {
+        auto framesPerStep { static_cast<uint32_t>(_step * framesPerMeasure) };
+        auto framesPerSlice { _generator.framesPerSlice() };
+        _envelope.setFramesPerCrossfade(std::max(framesPerSlice - framesPerStep, uint32_t(0)));
+        invalidateCrossfade = false;
     }
+
+    _jitterLFO.setCurrentBeat(p.currentBeat - static_cast<int>(p.currentBeat / 4) * 4);
 }
 
 void Engine::advanceTimeline() {
@@ -228,7 +234,7 @@ void Engine::advanceTimeline() {
 }
 
 void Engine::process(float in0, float in1, float* out0, float* out1, bool engaged) {
-    //_trigger.next(_isOn && engaged);
+    _jitterLFO.advance();
     _source.write(in0, in1);
     _generator.generate(out0, out1);
 }
@@ -237,5 +243,4 @@ void Engine::reset(bool hard) {
     _source.reset();
     _generator.reset();
     if (hard) _trigger.reset();
-    
 }

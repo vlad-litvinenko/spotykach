@@ -17,13 +17,15 @@ public:
     void setPeriod(float) override;
     void setCurrentBeat(float) override;
     void setFramesPerMeasure(long) override;
-    float triangleValueAt(int) override;
+    float triangleValue() override;
+    void advance() override;
     
 private:
     bool _isOn { false };
     long _framesPerMeasure { 0 };
     long _framesPerBeat { 0 };
     float _currentBeat { 0 };
+    long _frame { 0 };
     float _period { 0.25 }; // 1/4
  };
 

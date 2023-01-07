@@ -8,20 +8,37 @@
 
 #include "Generator.h"
 #include "Parameters.h"
+#include "Buffers.h"
 
 using namespace vlly;
 using namespace spotykach;
 
-Generator::Generator(ISource& inSource, IEnvelope& inEnvelope) :
-    _source(inSource),
-    _envelope(inEnvelope),
-    _onset(0),
-    _offset(0),
-    _direction(kDirection_Forward) {
+static const int kBeatsPerMeasure = 4;
+static const float kSecondsPerMinute = 60.0;
+
+Generator::Generator(ISource& inSource, IEnvelope& inEnvelope, ILFO& inJitterLFO) :
+    _source { inSource },
+    _envelope { inEnvelope },
+    _jitterLFO { inJitterLFO },
+    _onset { 0 },
+    _direction { kDirection_Forward } {
     for (auto i = 0; i < kSlicesCount; i++) {
         _slices[i] = std::make_shared<Slice>(_source, _buffers[i] ,_envelope);
     }
     reset();
+}
+
+void Generator::setSlicePosition(float value) {
+    _slicePosition = value;
+    _slicePositionFrames = _source.length() * _slicePosition;
+}
+
+void Generator::setPositionJitterAmount(float value) {
+    _slicePositionJitterAmount = value;
+}
+
+void Generator::setSliceLength(float value) {
+    _framesPerSlice = value * kSliceBufferLength;
 }
 
 void Generator::setDirection(Direction direction) {
@@ -50,15 +67,23 @@ void Generator::generate(float* out0, float* out1) {
     *out1 = out1Val;
 }
 
-void Generator::activateSlice(uint32_t onset, uint32_t offset, uint32_t length, bool reset) {
+void Generator::activateSlice(uint32_t onset) {
+    auto reset = onset != _onset;
+    auto offset = _slicePositionFrames;
+    if (_slicePositionJitterAmount > 0) {        
+        auto lfoOffset = _jitterLFO.triangleValue() * _slicePositionJitterAmount;
+        offset += lfoOffset * _source.length();
+        offset = std::max(offset, 0ul);
+        offset = std::min(offset, _source.length() - 1);
+        reset = true;
+    }
+    
     if (reset) {
         setNeedsResetSlices();
         _onset = onset;
     }
     
-    _offset = offset;
-    
-    if (!_source.isFilled() && _source.readHead() < _onset + _offset) return;
+    if (!_source.isFilled() && _source.readHead() < _onset + offset) return;
     
     for (size_t i = 0; i < _slices.size(); i ++) {
         auto s = _slices[i];
@@ -72,7 +97,7 @@ void Generator::activateSlice(uint32_t onset, uint32_t offset, uint32_t length, 
             _fwd = bnf ? !_fwd : !rev;
         }
         int direction = _fwd ? 1 : -1;
-        s->activate(_onset + _offset, length, direction);
+        s->activate(_onset + offset, _framesPerSlice, direction);
         break;
     }
 }

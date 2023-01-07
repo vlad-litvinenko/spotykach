@@ -24,6 +24,8 @@ public:
 
     void initialize() override;
     
+    uint32_t length() override { return _bufferLength; };
+
     void write(float, float) override;
     uint32_t readHead() override;
     
