@@ -33,19 +33,14 @@ public:
     
     uint32_t pointsCount() override { return _pointsCount; };
     uint32_t beatsPerPattern() override { return _beatsPerPattern; };
-    void measure(float, float, int) override;
-    void prepareMeterPattern(float, float, int, int) override;
-    void prepareCWordPattern(int, float, int, int) override;
-    void schedule(float, bool) override;
+    void measure(float, float) override;
+    void prepareMeterPattern(float, float) override;
+    void prepareCWordPattern(int, float) override;
+    
 
     void next(bool) override;
     
     void reset() override;
-    
-    void setSlicePosition(float) override;
-    void setPositionJitterAmount(float value) override;
-    uint32_t slicePositionFrames() override { return _slicePositionFrames; }
-    void setSliceLength(float, IEnvelope&) override;
     
     void setRetrigger(int) override;
     
@@ -55,34 +50,22 @@ public:
     bool locking() override { return _ticksTillUnlock > 0; };
     
 private:
+    void adjustIterator();
+    void adjustRepeatsIfNeeded(bool keep);
+
     IGenerator& _generator;
-    ILFO& _jitterLFO;
 
-    uint32_t _iterator;
     std::array<uint32_t, 256> _triggerTicks;
-    uint32_t _ticksTillUnlock;
-
-    float _step;
-    float _slicePosition;
-    float _slicePositionJitterAmount;
-    bool _needsAdjustIndexes;
-    
-    uint32_t _numerator;
-    uint32_t _denominator;
-    
-    std::array<float, 256> _triggerPoints;
-    float _latestBeat;
-    float _latestPoint;
     uint32_t _pointsCount;
+    uint32_t _iterator;
     uint32_t _nextPointIndex;
     uint32_t _beatsPerPattern;
+    uint32_t _framesPerBeat;
+
+    uint32_t _ticksTillUnlock;
     
     uint32_t _repeats;
     uint32_t _retrigger;
-    
-    uint32_t _slicePositionFrames;
-    uint32_t _framesPerSlice;
-    uint32_t _framesPerBeat;
 };
 
 #endif
