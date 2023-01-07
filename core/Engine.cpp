@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include "Engine.h"
 #include "../control/fcomp.h"
+#include "constants.h"
 
 using namespace vlly;
 using namespace spotykach;
@@ -21,17 +22,17 @@ inline int gridStepCount(Grid grid) {
 }
 
 Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
-    _trigger {t},
-    _source {s},
-    _envelope {e},
-    _generator {g},
-    _jitterLFO {l},
-    _isPlaying { false },
-    _tempo {0},
-    _grid {kGrid_CWord},
-    _onsets {7},
-    _step {0},
-    _shift { 0 }
+    _trigger    { t },
+    _source     { s },
+    _envelope   { e },
+    _generator  { g },
+    _jitterLFO  { l },
+    _isPlaying  { false },
+    _tempo      { 0 },
+    _grid       { kGrid_CWord },
+    _onsets     { 7 },
+    _step       { 0 },
+    _shift      { 0 }
 {
     setSlicePosition(0);
     setShift(0);
@@ -59,7 +60,7 @@ void Engine::setShift(float normVal) {
     float shiftValue = round(normVal * 15.f) / 16.f;
     if (!fcomp(shiftValue, _shift)) {
         _shift = shiftValue;
-        _invalidatePattern = true;
+        preparePattern();
     }
 }
 
@@ -94,8 +95,18 @@ void Engine::setStepPosition(float normVal) {
     if (!fcomp(step, _step) || onsets != _onsets) {
         _step = step;
         _onsets = onsets;
-        _invalidatePattern = true;
+        preparePattern();
     }
+}
+
+void Engine::preparePattern() {
+    if (_grid == Grid::kGrid_CWord) {
+        _trigger.prepareCWordPattern(_onsets, _shift);
+    } 
+    else {
+        _trigger.prepareMeterPattern(_step, _shift);
+    }
+    _invalidateCrossfade = true;
 }
 
 void Engine::setGrid(float normVal) {
@@ -104,7 +115,6 @@ void Engine::setGrid(float normVal) {
     if (grid != _grid) {
         _grid = grid;
         setStepPosition(_raw.stepGridPosition);
-        _invalidatePattern = true;
     }
 }
 
@@ -114,7 +124,7 @@ void Engine::setSlicePosition(float normVal) {
     float start = std::min(normVal, 127.f/128.f);
     if (start != _start) {
         _start = start;
-        _invalidateSlicePosition = true;
+        _generator.setSlicePosition(_start);
     }
 }
 
@@ -124,7 +134,8 @@ void Engine::setSliceLength(float normVal) {
     float slice = fmax(normVal, 1./128.);
     if (slice != _slice) {
         _slice = slice;
-        _invalidateSliceLength = true;
+        _generator.setSliceLength(_slice);
+        _invalidateCrossfade = true;
     }
 }
 
@@ -167,7 +178,7 @@ void Engine::setFrozen(bool frozen) {
     _raw.frozen = frozen;
     _source.setFrozen(frozen);
     if (isTurningOff) {
-        _source.setCycleStart(_generator.slicePositionFrames());
+        _generator.setCycleStart();
         _generator.setNeedsResetSlices();
     }
 }
@@ -187,46 +198,22 @@ void Engine::preprocess(PlaybackParameters p) {
         reset(true);
     }
     
-    auto invalidateCrossfade = false;
     static uint32_t framesPerMeasure = 0;
 
     if (!fcomp(p.tempo, _tempo)) {
         _tempo = p.tempo;
-        framesPerMeasure = static_cast<uint32_t>(60.0 * p.sampleRate * 4 / p.tempo);
+        framesPerMeasure = static_cast<uint32_t>(kSecondsPerMinute * p.sampleRate * kBeatsPerMeasure / p.tempo);
+        _generator.setFramesPerMeasure(framesPerMeasure);
         _jitterLFO.setFramesPerMeasure(framesPerMeasure);
-        invalidateCrossfade = true;
-    }
-    
-    if (_invalidatePattern) {
-        if (_grid == Grid::kGrid_CWord) {
-            _trigger.prepareCWordPattern(_onsets, _shift);
-        }
-        else {
-            _trigger.prepareMeterPattern(_step, _shift);
-        }
-        invalidateCrossfade = true;
-        _invalidatePattern = false;
-    }
-    
-    if (_invalidateSlicePosition) {
-        _generator.setSlicePosition(_start);
-        _invalidateSlicePosition = false;
-    }
-    
-    if (_invalidateSliceLength) {
-        _generator.setSliceLength(_slice);
-        invalidateCrossfade = true;
-        _invalidateSliceLength = false;
+        _invalidateCrossfade = true;
     }
 
-    if (invalidateCrossfade) {
+    if (_invalidateCrossfade) {
         auto framesPerStep { static_cast<uint32_t>(_step * framesPerMeasure) };
         auto framesPerSlice { _generator.framesPerSlice() };
         _envelope.setFramesPerCrossfade(std::max(framesPerSlice - framesPerStep, uint32_t(0)));
-        invalidateCrossfade = false;
+        _invalidateCrossfade = false;
     }
-
-    _jitterLFO.setCurrentBeat(p.currentBeat - static_cast<int>(p.currentBeat / 4) * 4);
 }
 
 void Engine::advanceTimeline() {

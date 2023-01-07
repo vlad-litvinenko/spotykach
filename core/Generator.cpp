@@ -9,12 +9,11 @@
 #include "Generator.h"
 #include "Parameters.h"
 #include "Buffers.h"
+#include "constants.h"
+#include "../control/fcomp.h"
 
 using namespace vlly;
 using namespace spotykach;
-
-static const int kBeatsPerMeasure = 4;
-static const float kSecondsPerMinute = 60.0;
 
 Generator::Generator(ISource& inSource, IEnvelope& inEnvelope, ILFO& inJitterLFO) :
     _source { inSource },
@@ -45,8 +44,16 @@ void Generator::setDirection(Direction direction) {
     _direction = direction;
 }
 
+void Generator::setCycleStart() {
+    _source.setCycleStart(_slicePositionFrames);
+}
+
 void Generator::initialize() {
     for (auto s: _slices) s->initialize();
+}
+
+void Generator::setFramesPerMeasure(uint32_t value) {
+    _framesPerBeat = value / kBeatsPerMeasure;
 }
 
 void Generator::generate(float* out0, float* out1) {
@@ -67,8 +74,8 @@ void Generator::generate(float* out0, float* out1) {
     *out1 = out1Val;
 }
 
-void Generator::activateSlice(uint32_t onset) {
-    auto reset = onset != _onset;
+void Generator::activateSlice(float onset) {
+    auto reset = !fcomp(onset, _onset);
     auto offset = _slicePositionFrames;
     if (_slicePositionJitterAmount > 0) {        
         auto lfoOffset = _jitterLFO.triangleValue() * _slicePositionJitterAmount;
@@ -83,7 +90,9 @@ void Generator::activateSlice(uint32_t onset) {
         _onset = onset;
     }
     
-    if (!_source.isFilled() && _source.readHead() < _onset + offset) return;
+    auto onserFrames = _framesPerBeat * _onset;
+
+    if (!_source.isFilled() && _source.readHead() < _onset + onserFrames) return;
     
     for (size_t i = 0; i < _slices.size(); i ++) {
         auto s = _slices[i];

@@ -29,11 +29,10 @@ static inline void adjustNextIndex(uint32_t* points, uint32_t pointsCount, uint3
 
 class Trigger: public ITrigger {
 public:
-    Trigger(IGenerator& inGenerator, ILFO& inSlicePositionLFO);
+    Trigger(IGenerator& inGenerator);
     
     uint32_t pointsCount() override { return _pointsCount; };
     uint32_t beatsPerPattern() override { return _beatsPerPattern; };
-    void measure(float, float) override;
     void prepareMeterPattern(float, float) override;
     void prepareCWordPattern(int, float) override;
     
@@ -55,7 +54,7 @@ private:
 
     IGenerator& _generator;
 
-    std::array<uint32_t, 256> _triggerTicks;
+    std::array<uint32_t, 256> _triggerPoints;
     uint32_t _pointsCount;
     uint32_t _iterator;
     uint32_t _nextPointIndex;

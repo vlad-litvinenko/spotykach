@@ -21,11 +21,7 @@ namespace spotykach {
 struct PlaybackParameters {
     bool isPlaying;
     float tempo;
-    int numerator;
-    int denominator;
     float sampleRate;
-    int bufferSize;
-    float currentBeat;
 };
 
 struct RawParameters {
@@ -110,9 +106,9 @@ private:
     float _start;
     float _slice;
     
-    bool _invalidatePattern;
-    bool _invalidateSlicePosition;
-    bool _invalidateSliceLength;
+    bool _invalidateCrossfade;
+
+    void preparePattern();
 };
 }
 }

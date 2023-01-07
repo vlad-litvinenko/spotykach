@@ -9,21 +9,20 @@
 #include "Trigger.h"
 #include <cmath>
 #include <algorithm>
+#include "constants.h"
 
-static const int kBeatsPerMeasure       = 4;
-static const float kSecondsPerMinute    = 60.0;
 static const int kTicksPerBeat          = 24;
 
-Trigger::Trigger(IGenerator& inGenerator, ILFO& inJitterLFO) :
-    _generator { inGenerator },
-    _iterator { 0 },
-    _pointsCount { 0 },
-    _nextPointIndex { 0 },
-    _beatsPerPattern { 0 },
-    _repeats { INT32_MAX },
-    _retrigger { 0 },
-    _framesPerBeat (0) {
-}
+Trigger::Trigger(IGenerator& inGenerator) :
+    _generator          { inGenerator },
+    _pointsCount        { 0 },
+    _iterator           { 0 },
+    _nextPointIndex     { 0 },
+    _beatsPerPattern    { 0 },
+    _ticksTillUnlock    { 0 },
+    _repeats            { INT32_MAX },
+    _retrigger          { 0 } 
+    {}
 
 void Trigger::prepareCWordPattern(int onsets, float shift) {
     bool keepRepeats = _repeats < _pointsCount;
@@ -61,7 +60,7 @@ void Trigger::prepareCWordPattern(int onsets, float shift) {
     
     _beatsPerPattern = kBeatsPerMeasure;
     _pointsCount = 0;
-    _triggerTicks.fill(0);
+    _triggerPoints.fill(0);
     auto beatShift = shift * kBeatsPerMeasure;
     for (size_t i = 0; i < pattern.size(); i++) {
         if (!pattern[i]) continue;
@@ -69,7 +68,7 @@ void Trigger::prepareCWordPattern(int onsets, float shift) {
         if (point >= _beatsPerPattern) {
             point -= _beatsPerPattern;
         }
-        _triggerTicks[_pointsCount] = static_cast<uint32_t>(round(point * kTicksPerBeat));
+        _triggerPoints[_pointsCount] = static_cast<uint32_t>(round(point * kTicksPerBeat));
         _pointsCount ++;
     }
     
@@ -100,7 +99,7 @@ void Trigger::prepareMeterPattern(float step, float shift) {
         if (point >= _beatsPerPattern) {
             point -= _beatsPerPattern;
         }
-        _triggerTicks[_pointsCount] = static_cast<uint32_t>(round(point * kTicksPerBeat));
+        _triggerPoints[_pointsCount] = static_cast<uint32_t>(round(point * kTicksPerBeat));
         _pointsCount++;
     }
     
@@ -109,7 +108,7 @@ void Trigger::prepareMeterPattern(float step, float shift) {
 }
 
 void Trigger::adjustIterator() {
-    adjustNextIndex(_triggerTicks.data(), _pointsCount, _iterator, _nextPointIndex);
+    adjustNextIndex(_triggerPoints.data(), _pointsCount, _iterator, _nextPointIndex);
 }
 
 void Trigger::adjustRepeatsIfNeeded(bool keep) {
@@ -118,16 +117,12 @@ void Trigger::adjustRepeatsIfNeeded(bool keep) {
     }
 }
 
-void Trigger::measure(float tempo, float sampleRate) {
-    _framesPerBeat = static_cast<uint32_t>(kSecondsPerMinute * sampleRate / tempo);
-}
-
 void Trigger::next(bool engaged) {
-    if (_iterator == _triggerTicks[_nextPointIndex]) {
+    if (_iterator == _triggerPoints[_nextPointIndex]) {
         if (engaged && _nextPointIndex < _repeats) {
             long onset = 0;
             if (_retrigger && _nextPointIndex % _retrigger == 0) {
-                onset = _framesPerBeat * static_cast<float>(_triggerTicks[_nextPointIndex]) / kTicksPerBeat;
+                onset = static_cast<float>(_triggerPoints[_nextPointIndex]) / kTicksPerBeat;
             }
             _generator.activateSlice(onset);
             _ticksTillUnlock = 3;
@@ -139,6 +134,7 @@ void Trigger::next(bool engaged) {
 }
 
 void Trigger::reset() {
+    _iterator = 0;
     _ticksTillUnlock = 0;
 }
 

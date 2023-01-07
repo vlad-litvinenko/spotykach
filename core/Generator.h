@@ -27,15 +27,18 @@ public:
     
     void initialize() override;
 
+    void setFramesPerMeasure(uint32_t) override;
     void setSlicePosition(float) override;
-    void setPositionJitterAmount(float value) override;
+    void setPositionJitterAmount(float) override;
     void setSliceLength(float) override;
-    uint32_t framesPerSlice() override { return _framesPerSlice; }
-    void activateSlice(uint32_t) override;
+    void setCycleStart() override;
+    void setDirection(vlly::spotykach::Direction) override;
+    
+    void activateSlice(float) override;
     void generate(float*, float*) override;
     void reset() override;
     
-    void setDirection(vlly::spotykach::Direction) override;
+    uint32_t framesPerSlice() override { return _framesPerSlice; }
     
     void setNeedsResetSlices() override;
 
@@ -52,7 +55,7 @@ private:
     uint32_t _framesPerSlice;
     uint32_t _framesPerBeat;
     
-    uint32_t _onset;
+    float _onset;
     bool _fwd;
     vlly::spotykach::Direction _direction;
 };

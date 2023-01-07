@@ -21,8 +21,8 @@ Spotykach::Spotykach() {
     for (int i = 0; i < enginesCount(); i++) {
         auto e = std::make_shared<Envelope>();
         auto s = std::make_shared<Source>();
-        auto g = std::make_shared<Generator>(*s, *e);
-        auto t = std::make_shared<Trigger>(*g, *l);
+        auto g = std::make_shared<Generator>(*s, *e, *l);
+        auto t = std::make_shared<Trigger>(*g);
         _engines[i] = std::make_shared<Engine>(*t, *s, *e, *g, *l);
         setVolume(0, i);
 
