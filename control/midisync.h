@@ -15,8 +15,6 @@ public:
     void stop();
     bool isPlaying();
     float tempo();
-    float beat();
-    bool readAndResetSPPChanged();
     void tickTheClock();
 
 private:
@@ -34,12 +32,10 @@ private:
     
     float _avg = 20.83;
     float _tempo = 120;
-    float _beat = 0;
     bool _is_playing = false;
     bool _is_about_to_play = false;
     bool _is_about_to_stop = false;
     int _countdown_to_stop = 5;
-    bool _is_spp_changed = false;
     
     void handleEvent(daisy::MidiEvent e);
     void resume();

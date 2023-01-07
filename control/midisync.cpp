@@ -8,10 +8,6 @@ inline uint16_t combinedBytes(uint8_t bytes[2]) {
    return _14bit;
 }
 
-inline float calculatedBeat(uint32_t beat, uint32_t tick) {
-    return static_cast<float>(beat) + static_cast<float>(tick) / 24.f;
-}
-
 void MIDISync::run(vlly::spotykach::Spotykach& core) {
     // daisy::MidiUsbHandler::Config cfg;
 	// cfg.transport_config.periph = daisy::MidiUsbTransport::Config::Periph::INTERNAL;
@@ -71,16 +67,6 @@ float MIDISync::tempo() {
     return _tempo;
 }
 
-float MIDISync::beat() {
-    return _beat;
-}
-    
-bool MIDISync::readAndResetSPPChanged() {
-    auto r = _is_spp_changed;
-    _is_spp_changed = false;
-    return r;
-}
-
 void MIDISync::reset() {
     _ptime = 0;
     _wndw.fill(0);
@@ -107,14 +93,6 @@ void MIDISync::resume() {
     _is_about_to_stop = false;
 }
 
-void MIDISync::seek(uint8_t bytes[2]) {
-    auto beat = combinedBytes(bytes);
-    _beat_cnt = beat / 4;
-    _tick_cnt = (beat - _beat_cnt * 4) * 6;
-    _beat = calculatedBeat(_beat_cnt, _tick_cnt);
-     _is_spp_changed = true;
-}
-
 void MIDISync::tick() {
     if (_is_about_to_play) {
         _is_playing = true;
@@ -131,7 +109,7 @@ void MIDISync::tick() {
     _ptime = t;
 
     if (!_is_playing) return;
-    _beat = calculatedBeat(_beat_cnt, _tick_cnt);
+
     _tick_cnt++;
     if (_tick_cnt == 24) {
         _tick_cnt = 0;
