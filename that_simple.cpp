@@ -3,8 +3,6 @@
 #include "core/Spotykach.h"
 #include "control/controller.h"
 #include "control/midisync.h"
-
-#include "core_cm7.h"
 #include "control/deb.h"
 
 using namespace daisy;
@@ -43,17 +41,9 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 	}
 
 	midisync.tickTheClock();
-	core.preprocess(p);
- 
-	//DWT->CYCCNT = 0;
-	core.process(in, out, size);
 
-    // if (DWT->CYCCNT > 390000) {
-    //     hw.SetLed(true);
-	// }
-	// else {
-	// 	hw.SetLed(false);
-	// }
+	core.preprocess(p);
+	core.process(in, out, size);
 }
 
 int main(void) {
@@ -61,14 +51,8 @@ int main(void) {
 	hw.Init();
 
 	HW::hw().setHW(&hw);
-	
 	// HW::hw().startLog();
 	// HW::hw().setLed(false);
-
-	// CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
-	// DWT->LAR = 0xC5ACCE55;
-	// DWT->CYCCNT = 0;
-	// DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
 
 	controller.initialize(hw);
 	core.initialize();
@@ -86,8 +70,5 @@ int main(void) {
 			controller.setPatrameters(core, midisync);
 			param_count_down = 0;
 		}
-
-		// controller.setPatrameters(core, midisync);
-		// System::Delay(50);
 	}
 }
