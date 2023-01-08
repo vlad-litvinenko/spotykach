@@ -21,6 +21,10 @@ inline int gridStepCount(Grid grid) {
     }
 }
 
+inline float exp_val(float val) {
+    return (pow(10.0, 2 * val - 1.0)) / 10.0 - 0.01;
+}
+
 Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
     _trigger    { t },
     _source     { s },
@@ -134,7 +138,7 @@ void Engine::setSliceLength(float normVal) {
     float slice = fmax(normVal, 1./128.);
     if (slice != _slice) {
         _slice = slice;
-        _generator.setSliceLength(_slice);
+        _generator.setSliceLength(exp_val(_slice));
         _invalidateCrossfade = true;
     }
 }
@@ -155,7 +159,7 @@ void Engine::setRetrigger(float normVal) {
 
 void Engine::setJitterAmount(float value) {
     _raw.jitterAmount = value;
-    _generator.setPositionJitterAmount(value);
+    _generator.setPositionJitterAmount(exp_val(value));
 }
 
 void Engine::setJitterRate(float value) {
