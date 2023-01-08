@@ -58,9 +58,9 @@ void Controller::setMuxParameters(Engine& e,  Spotykach& s, Mux8& m, int ei) {
             case MuxTarget::Position: e.setSlicePosition(p.value); break;
             case MuxTarget::Slice: e.setSliceLength(p.value); break;
             case MuxTarget::Retrigger: e.setRetrigger(p.value); break;
-            case MuxTarget::Jitter: e.setJitterAmount(p.value < 0.005 ? 0 : p.value); break;
+            case MuxTarget::Jitter: e.setJitterAmount(p.value < 0.03 ? 0 : p.value); break;
             case MuxTarget::Step: e.setStepPosition(p.value); break;
-            case MuxTarget::Level: s.setVolume(p.value < 0.005 ? 0 : p.value, ei); break;
+            case MuxTarget::Level: s.setVolume(p.value < 0.03 ? 0 : p.value, ei); break;
             case MuxTarget::Shift: e.setShift(p.value); break; 
             case MuxTarget::Repeats: e.setRepeats(p.value); break;
         }
