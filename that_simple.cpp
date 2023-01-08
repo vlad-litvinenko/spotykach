@@ -60,7 +60,9 @@ int main(void) {
 	hw.Configure();
 	hw.Init();
 
-	// HW::hw().setHW(&hw);
+	HW::hw().setHW(&hw);
+	
+	// HW::hw().startLog();
 	// HW::hw().setLed(false);
 
 	// CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
@@ -75,13 +77,17 @@ int main(void) {
 	hw.SetAudioBlockSize(bufferSize);
 	hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_48KHZ);
 	hw.StartAudio(AudioCallback);
-
-	int param_count_down = 0;
+	
 	while(1) {
 		midisync.pull();
+
+		static int param_count_down = 0;
 		if (++param_count_down == 50) {
 			controller.setPatrameters(core, midisync);
 			param_count_down = 0;
 		}
+
+		// controller.setPatrameters(core, midisync);
+		// System::Delay(50);
 	}
 }

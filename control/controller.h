@@ -33,8 +33,6 @@ private:
     std::array<Mux8, 2> _muxs;
     std::array<ChannelToggles, 2> _channelToggles;
     GlobalToggles _globalToggles;
-    
-    daisy::DaisySeed* _hw = nullptr;
 };
 
 }

@@ -1,4 +1,5 @@
 #include "controller.h"
+#include "deb.h"
 
 using namespace vlly;
 using namespace spotykach;
@@ -10,8 +11,6 @@ void Controller::initialize(DaisySeed& hw) {
     initToggles(hw);
 
     hw.adc.Start();
-
-    _hw = &hw;
 }
 
 void Controller::initKnobs(DaisySeed& hw) {

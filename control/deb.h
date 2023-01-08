@@ -13,11 +13,22 @@ public:
 
     void setHW(daisy::DaisySeed* hw) {
         _hw = hw;
+        
     }
 
     void setLed(bool led) {
         _hw->SetLed(led);
     }
+
+    void startLog() {
+        _hw->StartLog();
+    }
+
+    template <typename... VA>
+    void print(const char* format, VA... va) {
+        _hw->PrintLine(format, va...);
+    }
+
 
 private:
     HW() = default;
