@@ -19,7 +19,7 @@ Generator::Generator(ISource& inSource, IEnvelope& inEnvelope, ILFO& inJitterLFO
     _source { inSource },
     _envelope { inEnvelope },
     _jitterLFO { inJitterLFO },
-    _onset { 0 },
+    _raw_onset { 0 },
     _direction { kDirection_Forward } {
     for (auto i = 0; i < kSlicesCount; i++) {
         _slices[i] = std::make_shared<Slice>(_source, _buffers[i] ,_envelope);
@@ -74,8 +74,8 @@ void Generator::generate(float* out0, float* out1) {
     *out1 = out1Val;
 }
 
-void Generator::activateSlice(float onset) {
-    auto reset = !fcomp(onset, _onset);
+void Generator::activateSlice(float in_raw_onset) {
+    auto reset = !fcomp(in_raw_onset, _raw_onset);
     auto offset = _slicePositionFrames;
     if (_slicePositionJitterAmount > 0) {        
         auto lfoOffset = _jitterLFO.triangleValue() * _slicePositionJitterAmount;
@@ -87,12 +87,13 @@ void Generator::activateSlice(float onset) {
     
     if (reset) {
         setNeedsResetSlices();
-        _onset = onset;
+        _raw_onset = in_raw_onset;
     }
     
-    auto onserFrames = _framesPerBeat * _onset;
+    auto onset = _framesPerBeat * _raw_onset;
+    auto slice_start = onset + offset;
 
-    if (!_source.isFilled() && _source.readHead() < _onset + onserFrames) return;
+    if (!_source.isFilled() && _source.readHead() < slice_start) return;
     
     for (size_t i = 0; i < _slices.size(); i ++) {
         auto s = _slices[i];
@@ -106,7 +107,7 @@ void Generator::activateSlice(float onset) {
             _fwd = bnf ? !_fwd : !rev;
         }
         int direction = _fwd ? 1 : -1;
-        s->activate(_onset + offset, _framesPerSlice, direction);
+        s->activate(slice_start, _framesPerSlice, direction);
         break;
     }
 }

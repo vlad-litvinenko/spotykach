@@ -55,7 +55,7 @@ private:
     uint32_t _framesPerSlice;
     uint32_t _framesPerBeat;
     
-    float _onset;
+    float _raw_onset;
     bool _fwd;
     vlly::spotykach::Direction _direction;
 };
