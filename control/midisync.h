@@ -4,6 +4,22 @@
 #include "hid/midi.h"
 #include "Spotykach.h"
 
+static const uint32_t kTicksPerBeat = 24;
+
+struct Beat {
+    uint32_t beats = 0;
+    uint32_t ticks = 0;
+
+    float value() {
+        return beats + static_cast<float>(ticks) / kTicksPerBeat;
+    }
+
+    void reset() {
+        beats = 0;
+        ticks = 0;
+    }
+};
+
 class MIDISync {
 public:
     MIDISync() = default;
@@ -27,11 +43,10 @@ private:
     uint8_t _dev_cnt = 0; //deviations count
     uint8_t _dev_cnt_thres = 3; //deviations until reset
     uint32_t _dev_thres = 3; //min deviation to consider
-    uint32_t _tick_cnt { 0 };
-    uint32_t _beat_cnt { 0 };
     
     float _avg = 20.83;
     float _tempo = 120;
+    Beat _beat;
     bool _is_playing = false;
     bool _is_about_to_play = false;
     bool _is_about_to_stop = false;

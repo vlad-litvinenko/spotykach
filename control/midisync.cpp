@@ -78,8 +78,7 @@ void MIDISync::reset() {
 void MIDISync::start() {
     _is_about_to_play = true;
     _is_about_to_stop = false;
-    _tick_cnt = 0;
-    _beat_cnt = 0;
+    _beat.reset();
 }
 
 void MIDISync::stop() {
@@ -110,11 +109,12 @@ void MIDISync::tick() {
 
     if (!_is_playing) return;
 
-    _tick_cnt++;
-    if (_tick_cnt == 24) {
-        _tick_cnt = 0;
-        _beat_cnt ++;
+    _beat.ticks++;
+    if (_beat.ticks == 24) {
+        _beat.ticks = 0;
+        _beat.beats ++;
     }
+    
     _core->advanceTimeline();
 }
 
@@ -137,6 +137,12 @@ float MIDISync::avg() {
 
 float MIDISync::tempo(float tick) {
     return round(2500.f / tick);
+}
+
+void MIDISync::seek(uint8_t bytes[2]) {
+    auto beat = combinedBytes(bytes);
+    _beat.beats = beat / 4;
+    _beat.ticks = (beat - _beat.beats * 4) * 6;
 }
 
 void MIDISync::checkDeviation(uint32_t delta) {
