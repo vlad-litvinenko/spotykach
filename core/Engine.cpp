@@ -216,11 +216,11 @@ void Engine::preprocess(PlaybackParameters p) {
     }
 }
 
-void Engine::advanceTimeline() {
-    _trigger.next(true);
+void Engine::advanceTimeline(bool engaged) {
+    _trigger.next(engaged);
 }
 
-void Engine::process(float in0, float in1, float* out0, float* out1, bool engaged) {
+void Engine::process(float in0, float in1, float* out0, float* out1) {
     _jitterLFO.advance();
     _source.write(in0, in1);
     _generator.generate(out0, out1);

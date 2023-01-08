@@ -46,12 +46,6 @@ long Spotykach::enginesCount() const {
     return kEnginesCount;
 }
 
-void Spotykach::advanceTimeline() {
-    for (int i = 0; i < enginesCount(); i++) {
-        engineAt(i).advanceTimeline();
-    }
-}
-
 void Spotykach::setJitterRate(float normVal) {
     for (int i = 0; i < enginesCount(); i++) {
         engineAt(i).setJitterRate(normVal);
@@ -87,6 +81,15 @@ void Spotykach::initialize() const {
     for (auto e: _engines) e->initialize();
 }
 
+void Spotykach::advanceTimeline() {
+    auto& e1 = engineAt(0);
+    e1.advanceTimeline();
+    
+    auto& e2 = engineAt(1);
+    bool engaged = !(_mutex && e1.isLocking());
+    e2.advanceTimeline(engaged);
+}
+
 void Spotykach::preprocess(PlaybackParameters p) const {
     for (auto e: _engines) e->preprocess(p);
 }
@@ -106,14 +109,13 @@ void Spotykach::process(const float* const* inBuf, float** outBuf, int numFrames
         float in0Ext = inBuf[0][f];
         float in1Ext = inBuf[1][f];
 
-        e1.process(in0Ext, in1Ext, &out0, &out1, true);
+        e1.process(in0Ext, in1Ext, &out0, &out1);
         out0Summ += out0 * e1_vol;
         out1Summ += out1 * e1_vol;
 
         float e2_in0 = _cascade ? out0 : in0Ext;
         float e2_in1 = _cascade ? out1 : in1Ext;
-        bool engaged = !(_mutex && e1.isLocking());
-        e2.process(e2_in0, e2_in1, &out0, &out1, engaged);
+        e2.process(e2_in0, e2_in1, &out0, &out1);
         out0Summ += out0 * e2_vol;
         out1Summ += out1 * e2_vol;
         

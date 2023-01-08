@@ -79,9 +79,9 @@ public:
     void setFrozen(bool frozen);
     void setAntifreeze(bool value);
     
-    void advanceTimeline();
+    void advanceTimeline(bool engaged = true);
 
-    void process(float in0, float in1, float* out0, float* out1, bool engaged);
+    void process(float in0, float in1, float* out0, float* out1);
     
     void reset(bool hard = true);
     
