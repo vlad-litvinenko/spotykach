@@ -1,4 +1,4 @@
-## Spotykach for Simple platform / Daisy Seed
+## Spotykach slicer/looper for Simple platform / Daisy Seed
 Work In Progress
 
 [Simple Platform](https://www.synthux.academy/simple)
