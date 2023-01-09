@@ -5,49 +5,34 @@
 
 struct Mux8 {
 public: 
-    enum class Target {
-        Position,
-        Slice,
-        Retrigger,
-        Jitter,
-        Step,
-        Level,
-        Repeats,
-        Shift
-    };
-
-    struct Param {
-        float value;
-        Target target;   
-    }; 
-
     Mux8() = default;
     ~Mux8() = default;
 
     using ADCChannel = int16_t;
     using Index = int16_t;
-    void initialize(daisy::DaisySeed& hw, daisy::AdcChannelConfig& conf, Index i, ADCChannel in_adc_ch);
+    void Mux8::initialize(DaisySeed& hw, AdcChannelConfig& conf, Index i, ADCChannel in_adc_ch) {
+        using namespace seed;
+        _adc_channel = in_adc_ch;
+        conf.InitMux(outPin(i), _knobs.size(), D12, D11, D10);
+    }
 
-    void initKnobs(daisy::DaisySeed& hw);
+    void Mux8::initKnobs(daisy::DaisySeed& hw) {
+        for (auto i = 0; i < _knobs.size(); i++) {
+            _knobs[i].initialize(_adc_channel, i, hw);
+        }
+    }
 
-    Param paramAt(int index);
+    std::tuple<MuxKnob::Target, float> Mux8::paramAt(int index) {
+        auto knob = _knobs[index];
+        return { knob.target(), knob.value() };
+    };
 
     size_t knobsCount() const { return _knobs.size(); }
 
 private:
     int16_t _adc_channel;
-    static const int _knobsCount { 8 };
-    std::array<MuxKnob, _knobsCount> _knobs;
-    constexpr static std::array<Target, _knobsCount> _targets = {
-        Target::Position,
-        Target::Slice,
-        Target::Retrigger,
-        Target::Jitter,
-        Target::Step,
-        Target::Level,
-        Target::Shift,
-        Target::Repeats
-    };
+    std::array<MuxKnob, kKnobsCount> _knobs;
+    
     daisy::Pin outPin(int ch) const {
         return ch == 0 ? daisy::seed::A0 : daisy::seed::A2;
     }

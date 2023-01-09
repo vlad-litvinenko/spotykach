@@ -52,23 +52,25 @@ void Controller::setPatrameters(Spotykach& core, MIDISync& midi) {
 using namespace vlly;
 using namespace spotykach;
 void Controller::setMuxParameters(Engine& e,  Spotykach& s, Mux8& m, int ei) {
-    using MuxTarget = Mux8::Target;
+    using Target = MuxKnob::Target;
     for (size_t i = 0; i < m.knobsCount(); i++) {
         auto p = m.paramAt(i);
-        switch (p.target) {
-            case MuxTarget::Position: e.setSlicePosition(p.value); break;
-            case MuxTarget::Slice: e.setSliceLength(p.value); break;
-            case MuxTarget::Retrigger: e.setRetrigger(p.value); break;
-            case MuxTarget::Jitter: e.setJitterAmount(p.value < 0.03 ? 0 : p.value); break;
-            case MuxTarget::Step: e.setStepPosition(p.value); break;
-            case MuxTarget::Level: s.setVolume(p.value < 0.03 ? 0 : p.value, ei); break;
-            case MuxTarget::Shift: e.setShift(p.value); break; 
-            case MuxTarget::Repeats: e.setRepeats(p.value); break;
+        auto t = std::get<0>(p);
+        auto v = std::get<1>(p);
+        switch (t) {
+            case Target::Position: e.setSlicePosition(v); break;
+            case Target::Slice: e.setSliceLength(v); break;
+            case Target::Retrigger: e.setRetrigger(v); break;
+            case Target::Jitter: e.setJitterAmount(v < 0.03 ? 0 : v); break;
+            case Target::Step: e.setStepPosition(v); break;
+            case Target::Level: s.setVolume(v < 0.03 ? 0 : v, ei); break;
+            case Target::Shift: e.setShift(v); break; 
+            case Target::Repeats: e.setRepeats(v); break;
         }
     }
 }
 
-void Controller::setKnobParameters(vlly::spotykach::Spotykach &s) {
+void Controller::setKnobParameters(Spotykach &s) {
     for (size_t i = 0; i < _knobs.size(); i++) {
         auto t = _knobs[i].target();
         auto v = _knobs[i].value();
@@ -78,33 +80,33 @@ void Controller::setKnobParameters(vlly::spotykach::Spotykach &s) {
     }   
 }
 
-void Controller::setChannelToggles(vlly::spotykach::Engine& e, Spotykach& s, ChannelToggles& ct, int ei) {
+void Controller::setChannelToggles(Engine& e, Spotykach& s, ChannelToggles& ct, int ei) {
     for (size_t i = 0; i < ct.count(); i++) {
         auto toggle = ct.at(i);
         auto target = std::get<0>(toggle);
         auto isOn = std::get<1>(toggle);
-        using ChTarget = ChannelToggles::Target;
+        using Target = ChannelToggles::Target;
         switch (target) {
-            case ChTarget::Grid: e.setGrid(isOn ? 1 : 0); break;
-            case ChTarget::Reverse: e.setDirection(isOn ? 1 : 0); break;
-            case ChTarget::Declick: e.setDeclick(isOn); break;
-            case ChTarget::Freeze: e.setFrozen(isOn); break;
-            case ChTarget::Mute: s.setMute(!isOn, ei); break;
+            case Target::Grid: e.setGrid(isOn ? 1 : 0); break;
+            case Target::Reverse: e.setDirection(isOn ? 1 : 0); break;
+            case Target::Declick: e.setDeclick(isOn); break;
+            case Target::Freeze: e.setFrozen(isOn); break;
+            case Target::Mute: s.setMute(!isOn, ei); break;
         }
     }
 }
 
 void Controller::setGlobalToggles(Spotykach& s, MIDISync& m) {
-    using GTarget = GlobalToggles::Target;
+    using Target = GlobalToggles::Target;
     auto cnt = _globalToggles.count();
     for (size_t i = 0; i < cnt; i++) {
         auto toggle = _globalToggles.at(i);
         auto target = std::get<0>(toggle);
         auto isOn = std::get<1>(toggle);
         switch (target) {
-            case GTarget::Mutex: s.setMutex(isOn); break;
-            case GTarget::Cascade: s.setCascade(isOn); break;
-            case GTarget::Run: {
+            case Target::Mutex: s.setMutex(isOn); break;
+            case Target::Cascade: s.setCascade(isOn); break;
+            case Target::Run: {
                 static bool runState = false;
                 if (isOn != runState) {
                     runState = isOn;
