@@ -10,10 +10,10 @@ public:
 
     using MuxChannel = uint8_t;
     using ADCCHannel = int;
-    void initialize(ADCCHannel adcChannel, MuxChannel muxChannel, daisy::DaisySeed& hw) {
+    void initialize(ADCCHannel adc_ch, MuxChannel mux_ch, daisy::DaisySeed& hw) {
         const auto flip = true;
-        const auto sampleRate = hw.AudioCallbackRate();
-        _control.Init(hw.adc.GetMuxPtr(adcChannel, muxChannel), sampleRate, flip);
+        const auto sample_rate = hw.AudioCallbackRate();
+        _control.Init(hw.adc.GetMuxPtr(adc_ch, mux_ch), sample_rate, flip);
     }
 
     float smoothing() const { 

@@ -24,9 +24,9 @@ public:
     Mux8() = default;
     ~Mux8() = default;
 
-    using ConfigChannelOffset = int16_t;
+    using ADCChannel = int16_t;
     using Index = int16_t;
-    void initialize(daisy::DaisySeed& hw, daisy::AdcChannelConfig& conf, Index i, ConfigChannelOffset ch);
+    void initialize(daisy::DaisySeed& hw, daisy::AdcChannelConfig& conf, Index i, ADCChannel in_adc_ch);
 
     void initKnobs(daisy::DaisySeed& hw);
 
@@ -35,7 +35,7 @@ public:
     size_t knobsCount() const { return _knobs.size(); }
 
 private:
-    int16_t _channel;
+    int16_t _adc_channel;
     static const int _knobsCount { 8 };
     std::array<MuxKnob, _knobsCount> _knobs;
     constexpr static std::array<Target, _knobsCount> _targets = {
@@ -48,5 +48,7 @@ private:
         Target::Shift,
         Target::Repeats
     };
-    daisy::Pin pin(int ch) const;
+    daisy::Pin outPin(int ch) const {
+        return ch == 0 ? daisy::seed::A0 : daisy::seed::A2;
+    }
 };
