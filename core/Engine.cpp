@@ -47,7 +47,7 @@ Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
     setDirection(0);
     setRetrigger(0);
     setIsOn(true);
-    setDeclick(false);
+    setDeclick(true);
     setJitterAmount(0);
     setJitterRate(0.75);
     setFrozen(false);
