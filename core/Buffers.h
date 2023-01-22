@@ -6,7 +6,7 @@
 #include "daisy_seed.h"
 
 static const int kSliceBufferSeconds { 2 };
-static const int kSourceBufferSeconds { 10 };
+static const int kSourceBufferSeconds { 5 };
 static const int kSampleRate { 48000 };
 
 static const size_t kSourceBufferLength = kSourceBufferSeconds * kSampleRate;
@@ -20,6 +20,7 @@ static float DSY_SDRAM_BSS _srcBuf2R[kSourceBufferLength];
 
 static float DSY_SDRAM_BSS _slcBuf1L[kSliceBufferLength];
 static float DSY_SDRAM_BSS _slcBuf1R[kSliceBufferLength];
+
 
 static float DSY_SDRAM_BSS _slcBuf2L[kSliceBufferLength];
 static float DSY_SDRAM_BSS _slcBuf2R[kSliceBufferLength];
