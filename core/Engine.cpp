@@ -5,10 +5,11 @@
 //  Created by Vladyslav Lytvynenko on 02.04.22.
 //
 
-#include <stdio.h>
+
 #include "Engine.h"
 #include "../control/fcomp.h"
 #include "constants.h"
+#include <algorithm>
 
 using namespace vlly;
 using namespace spotykach;
@@ -149,7 +150,8 @@ int Engine::pointsCount() {
 
 void Engine::setRepeats(float normVal) {
     _raw.repeats = normVal;
-    _trigger.setRepeats(round(normVal * pointsCount()));
+    auto rnd = round(normVal * pointsCount());
+    _trigger.setRepeats(std::max(static_cast<int>(rnd), 1));
 }
 
 void Engine::setRetrigger(float normVal) {
