@@ -11,6 +11,7 @@
 #include "Generator.h"
 #include "Trigger.h"
 #include "LFO.h"
+#include "fcomp.h"
 
 using namespace vlly;
 using namespace spotykach;
@@ -24,7 +25,6 @@ Spotykach::Spotykach() {
         auto g = std::make_shared<Generator>(*s, *e, *l);
         auto t = std::make_shared<Trigger>(*g);
         _engines[i] = std::make_shared<Engine>(*t, *s, *e, *g, *l);
-        setVolume(0, i);
 
         _releasePool.emplace_back(e);
         _releasePool.emplace_back(s);
@@ -36,6 +36,7 @@ Spotykach::Spotykach() {
     setCascade(false);
     setMix(1);
     setJitterRate(0);
+    setVolumeBalance(0.5);
 }
 
 Engine& Spotykach::engineAt(int index) const {
@@ -60,8 +61,16 @@ void Spotykach::setMix(float normVal) {
     _mix = logVolume(normVal);
 }
 
-void Spotykach::setVolume(float value, int index) {
-    _vol[index] = logVolume(value * 1.7);
+void Spotykach::setVolumeBalance(float value) {
+    float amp = 1.7;
+    if (value < 0.5) {
+        _vol[0] = logVolume(2 * value) * amp;
+        _vol[1] = amp;    
+    } 
+    else {
+        _vol[0] = amp;
+        _vol[1] = logVolume(2 * (1 - value)) * amp;
+    }
 }
 
 void Spotykach::setMute(bool value, int index) {
