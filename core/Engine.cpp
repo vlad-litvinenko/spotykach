@@ -17,7 +17,6 @@ using namespace spotykach;
 inline int gridStepCount(Grid grid) {
     switch (grid) {
         case kGrid_Even: return EvenStepsCount;
-        case kGrid_Odd: return OddStepsCount;
         case kGrid_CWord: return CWordsCount;
     }
 }
@@ -82,12 +81,6 @@ void Engine::setStepPosition(float normVal) {
             step = EvenSteps[valueIndex].value;
             break;
         }
-        case kGrid_Odd: {
-            maxIndex = OddStepsCount - 1;
-            valueIndex = std::min(maxIndex, int(normVal * (maxIndex + 1)));
-            step = OddSteps[valueIndex].value;
-            break;
-        }
         case kGrid_CWord: {
             maxIndex = CWordsCount - 1;
             valueIndex = std::min(maxIndex, int(normVal * (maxIndex + 1)));
@@ -116,7 +109,7 @@ void Engine::preparePattern() {
 
 void Engine::setGrid(float normVal) {
     _raw.grid = normVal;
-    Grid grid = spotykach::Grid(normVal * (kGrids_Count - 1));
+    Grid grid = spotykach::Grid(normVal * (kGrid_Count - 1));
     if (grid != _grid) {
         _grid = grid;
         setStepPosition(_raw.stepGridPosition);
