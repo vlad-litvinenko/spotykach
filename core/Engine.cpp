@@ -137,13 +137,9 @@ void Engine::setSliceLength(float normVal) {
     }
 }
 
-int Engine::pointsCount() {
-    return _trigger.pointsCount();
-}
-
 void Engine::setRepeats(float normVal) {
     _raw.repeats = normVal;
-    auto rnd = round(normVal * pointsCount());
+    auto rnd = round(normVal * _trigger.pointsCount());
     _trigger.setRepeats(std::max(static_cast<int>(rnd), 1));
 }
 

@@ -117,6 +117,10 @@ void Trigger::adjustRepeatsIfNeeded(bool keep) {
     }
 }
 
+void Trigger::oneShot() {
+    _generator.activateSlice(0);
+}
+
 void Trigger::next(bool engaged) {
     if (_iterator == _triggerPoints[_nextPointIndex]) {
         if (engaged && _nextPointIndex < _repeats) {

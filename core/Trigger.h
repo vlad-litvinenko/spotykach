@@ -36,7 +36,7 @@ public:
     void prepareMeterPattern(float, float) override;
     void prepareCWordPattern(int, float) override;
     
-
+    void oneShot();
     void next(bool) override;
     
     void reset() override;

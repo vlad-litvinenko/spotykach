@@ -60,8 +60,6 @@ public:
     void setStepPosition(float stepPosition);
     void setGrid(float grid);
     
-    int pointsCount();
-    
     void setRepeats(float repeats);
     int repeats() { return _trigger.repeats(); };
     
