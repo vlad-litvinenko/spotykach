@@ -63,9 +63,9 @@ void Controller::setMuxParameters(Engine& e,  Spotykach& s, Mux8& m, int ei) {
             case Target::Retrigger: e.setRetrigger(v); break;
             case Target::Jitter: e.setJitterAmount(v < 0.03 ? 0 : v); break;
             case Target::Step: e.setStepPosition(v); break;
-            case Target::Level: s.setVolume(v < 0.03 ? 0 : v, ei); break;
-            case Target::Shift: e.setShift(v); break; 
-            case Target::Repeats: e.setRepeats(v); break;
+            case Target::Level: break;
+            case Target::Shift: if (ei == 0) s.setPatternBalance(v); break; 
+            case Target::Repeats: if (ei == 0) s.setVolumeBalance(v); break;
         }
     }
 }
@@ -89,9 +89,9 @@ void Controller::setChannelToggles(Engine& e, Spotykach& s, ChannelToggles& ct, 
         switch (target) {
             case Target::Grid: e.setGrid(isOn ? 1 : 0); break;
             case Target::Reverse: e.setDirection(isOn ? 1 : 0); break;
-            case Target::Declick: e.setDeclick(isOn); break;
-            case Target::Freeze: e.setFrozen(isOn); break;
-            case Target::Mute: s.setMute(!isOn, ei); break;
+            case Target::Declick: break;
+            case Target::Freeze: break;
+            case Target::Mute: break;
         }
     }
 }
