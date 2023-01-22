@@ -34,9 +34,9 @@ public:
     
     void setMix(float normVal);
     
-    void setVolume(float value, int index);
-    
-    void setMute(bool value, int index);
+    void setVolumeBalance(float value);
+
+    void setPatternBalance(float value);
 
     void setCascade(bool value);
     

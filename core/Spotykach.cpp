@@ -73,8 +73,50 @@ void Spotykach::setVolumeBalance(float value) {
     }
 }
 
-void Spotykach::setMute(bool value, int index) {
-    _mute[index] = value;
+void Spotykach::setPatternBalance(float value) {
+    auto e1 = engineAt(0);
+    auto e2 = engineAt(1);
+    //center
+    if (fcomp(value, 0.5)) {
+        e1.setShift(0);
+        e1.setRepeats(1.0);
+        e2.setShift(0);
+        e2.setRepeats(1.0);
+        return;
+    }
+    //0...0.24
+    if (value < 0.25) {
+        e1.setShift(0);
+        e1.setRepeats(1 - 2 * value);
+        e2.setShift(1 - 2 * value);
+        e2.setRepeats(2 * value);
+        return;
+    }
+    //0.25...center
+    if (value < 0.5) {
+        e1.setShift(0);
+        e1.setRepeats(2 * value);
+        e2.setShift(1 - 2 * value);
+        e2.setRepeats(2 * value);
+        return;
+    }
+
+    //0.76...1.0
+    if (value > 0.75) {
+        e1.setShift(2 * (1 - value));
+        e1.setRepeats(2 * value - 1);
+        e2.setShift(0);
+        e2.setRepeats(2 * value - 1);
+        return;
+    }
+
+    //0.5...0.75
+    if (value > 0.5) {
+        e1.setShift(2 * value - 1);
+        e1.setRepeats(2 * (1 - value));
+        e2.setShift(0);
+        e2.setRepeats(2 * value - 1);
+    }
 }
 
 void Spotykach::setCascade(bool value) {
