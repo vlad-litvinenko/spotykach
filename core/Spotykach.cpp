@@ -103,8 +103,8 @@ void Spotykach::setPatternBalance(float value) {
 
     //0.76...1.0
     if (value > 0.75) {
-        e1.setShift(2 * (1 - value));
-        e1.setRepeats(2 * value - 1);
+        e1.setShift(2 * value - 1);
+        e1.setRepeats(2 * (1 - value));
         e2.setShift(0);
         e2.setRepeats(2 * value - 1);
         return;
@@ -115,7 +115,7 @@ void Spotykach::setPatternBalance(float value) {
         e1.setShift(2 * value - 1);
         e1.setRepeats(2 * (1 - value));
         e2.setShift(0);
-        e2.setRepeats(2 * value - 1);
+        e2.setRepeats(2 * (1 - value));
     }
 }
 
