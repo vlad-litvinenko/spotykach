@@ -35,3 +35,7 @@ private:
 
     daisy::DaisySeed* _hw;
 };
+
+#define LOGFLOAT(v) HW::hw().print("%d", int(v * 1000));
+#define LOGBOOL(v) HW::hw().print("%d", v);
+#define LOGINT(v) HW::hw().print("%d", v);
