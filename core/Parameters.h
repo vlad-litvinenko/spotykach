@@ -28,8 +28,9 @@ namespace spotykach {
     enum Grid {
         kGrid_Even,
         kGrid_CWord,
-        kGrid_Count
     };
+
+    static const int kGrid_Count = 2;
 
     struct Step {
         float value;
