@@ -10,6 +10,7 @@
 
 #include "Engine.h"
 #include "Parameters.h"
+#include "globals.h"
 #include <array>
 #include <vector>
 #include <memory>
@@ -17,8 +18,6 @@
 
 namespace vlly {
 namespace spotykach {
-
-static const int kEnginesCount = 2;
 
 class Spotykach {
 public:

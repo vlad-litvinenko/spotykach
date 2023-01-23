@@ -16,10 +16,10 @@
 #include "Slice.h"
 #include "Parameters.h"
 #include "SliceBuffer.h"
+#include "globals.h"
 #include <array>
 #include <memory>
 
-static const int kSlicesCount = 3;
 
 class Generator: public IGenerator {
 public:

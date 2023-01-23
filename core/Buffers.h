@@ -4,13 +4,10 @@
 #include <assert.h>
 #include "dev/sdram.h"
 #include "daisy_seed.h"
+#include "globals.h"
 
-static const int kSliceBufferSeconds { 2 };
-static const int kSourceBufferSeconds { 10 };
-static const int kSampleRate { 48000 };
-
-static const size_t kSourceBufferLength = kSourceBufferSeconds * kSampleRate;
-static const size_t kSliceBufferLength = kSliceBufferSeconds * kSampleRate;
+static const size_t kSourceBufferLength = kSourceMaxSeconds * kSampleRate;
+static const size_t kSliceBufferLength = kSliceMaxSeconds * kSampleRate;
 
 static float DSY_SDRAM_BSS _srcBuf1L[kSourceBufferLength];
 static float DSY_SDRAM_BSS _srcBuf1R[kSourceBufferLength];
@@ -69,7 +66,7 @@ private:
     };
 
     int _providedSourceBufCount { 0 };
-    static const int _srcBufsCount { 4 };
+    static const int _srcBufsCount { kEnginesCount * kChannelsCount };
     float* _srcBufs[_srcBufsCount] = {
         _srcBuf1L,
         _srcBuf1R,
@@ -78,7 +75,7 @@ private:
     };
 
     int _providedSliceBufCount { 0 };
-    static const int _slcBufsCount { 12 };
+    static const int _slcBufsCount { kSlicesCount * kEnginesCount * kChannelsCount };
     float* _slcBufs[_slcBufsCount] = {
         _slcBuf1L,
         _slcBuf1R,
