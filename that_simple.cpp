@@ -1,5 +1,6 @@
 #include "daisy_seed.h"
 #include "daisysp.h"
+#include "core/globals.h"
 #include "core/Spotykach.h"
 #include "control/controller.h"
 #include "control/midisync.h"
@@ -18,13 +19,12 @@ PlaybackParameters p;
 MIDISync midisync;
 
 const float tempo { 120 };
-const int sampleRate { 48000 };
 const int bufferSize { 4 };
 
 void configurePlayback() {
 	p.isPlaying = midisync.isPlaying();
 	p.tempo = midisync.tempo();
-	p.sampleRate = sampleRate;
+	p.sampleRate = kSampleRate;
 }
 
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size) {
