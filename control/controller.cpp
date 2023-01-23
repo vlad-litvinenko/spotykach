@@ -38,7 +38,7 @@ void Controller::initToggles(DaisySeed& hw) {
     _globalToggles.initialize(hw);
 }
 
-void Controller::setPatrameters(Spotykach& core, MIDISync& midi) {
+void Controller::setParameters(Spotykach& core, MIDISync& midi) {
     for (int i = 0; i < core.enginesCount(); i++) {
         Engine& e = core.engineAt(i);
         setMuxParameters(e, core, _muxs[i], i);

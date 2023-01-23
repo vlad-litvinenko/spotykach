@@ -18,7 +18,7 @@ public:
 
     void initialize(daisy::DaisySeed& hw);
 
-    void setPatrameters(Spotykach& core, MIDISync& midi);
+    void setParameters(Spotykach& core, MIDISync& midi);
 
 private:
     void initKnobs(daisy::DaisySeed& hw);
