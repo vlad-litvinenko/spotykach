@@ -6,6 +6,8 @@
 #include "control/midisync.h"
 #include "control/deb.h"
 
+//#define LOG
+
 using namespace daisy;
 using namespace daisysp;
 
@@ -51,24 +53,34 @@ int main(void) {
 	hw.Init();
 
 	HW::hw().setHW(&hw);
-	// HW::hw().startLog();
+#ifdef LOG
+	HW::hw().startLog();
+#endif
 	// HW::hw().setLed(false);
 
 	controller.initialize(hw);
 	core.initialize();
+#ifndef LOG
 	midisync.run(core);
 
 	hw.SetAudioBlockSize(bufferSize);
 	hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_48KHZ);
 	hw.StartAudio(AudioCallback);
-	
+#endif
+
 	while(1) {
+#ifndef LOG
 		midisync.pull();
 
 		static int param_count_down = 0;
 		if (++param_count_down == 50) {
-			controller.setPatrameters(core, midisync);
+			controller.setParameters(core, midisync);
 			param_count_down = 0;
 		}
+#endif
+#ifdef LOG
+		controller.setParameters(core, midisync);
+		System::Delay(50);
+#endif
 	}
 }
