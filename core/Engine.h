@@ -83,6 +83,8 @@ public:
     
     void reset(bool hard = true);
     
+    int index = -1;
+
 private:
     ITrigger& _trigger;
     ISource& _source;

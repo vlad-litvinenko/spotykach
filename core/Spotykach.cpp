@@ -11,7 +11,7 @@
 #include "Generator.h"
 #include "Trigger.h"
 #include "LFO.h"
-#include "fcomp.h"
+#include "../control/fcomp.h"
 
 using namespace vlly;
 using namespace spotykach;
@@ -25,7 +25,7 @@ Spotykach::Spotykach() {
         auto g = std::make_shared<Generator>(*s, *e, *l);
         auto t = std::make_shared<Trigger>(*g);
         _engines[i] = std::make_shared<Engine>(*t, *s, *e, *g, *l);
-
+        _engines[i]->index = i + 1;
         _releasePool.emplace_back(e);
         _releasePool.emplace_back(s);
         _releasePool.emplace_back(g);
