@@ -50,7 +50,7 @@ Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
     setDeclick(true);
     setJitterAmount(0);
     setJitterRate(0.75);
-    setFrozen(false);
+    setFrozen(true);
     _trigger.prepareMeterPattern(_step, 0);
 }
 

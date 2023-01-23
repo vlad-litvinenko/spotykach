@@ -90,7 +90,7 @@ void Controller::setChannelToggles(Engine& e, Spotykach& s, ChannelToggles& ct, 
             case Target::Grid: e.setGrid(isOn ? 1 : 0); break;
             case Target::Reverse: e.setDirection(isOn ? 1 : 0); break;
             case Target::Declick: break;
-            case Target::Freeze: break;
+            case Target::Freeze: e.setFrozen(isOn); break;
             case Target::Mute: break;
         }
     }
