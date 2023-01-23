@@ -63,13 +63,17 @@ void Spotykach::setMix(float normVal) {
 
 void Spotykach::setVolumeBalance(float value) {
     float amp = 1.7;
-    if (value < 0.5) {
-        _vol[0] = logVolume(2 * value) * amp;
-        _vol[1] = amp;    
+    if (fcomp(value, 0.5)) {
+        _vol[0] = amp;
+        _vol[1] = amp;
+    }
+    else if (value < 0.5) {
+        _vol[0] = amp;
+        _vol[1] = logVolume(2 * value) * amp;    
     } 
     else {
-        _vol[0] = amp;
-        _vol[1] = logVolume(2 * (1 - value)) * amp;
+        _vol[0] = logVolume(2 * (1 - value)) * amp;
+        _vol[1] = amp;
     }
 }
 
