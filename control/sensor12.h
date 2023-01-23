@@ -1,4 +1,4 @@
-#pragma once;
+#pragma once
 
 #include "daisy.h"
 #include "mpr121.h"
