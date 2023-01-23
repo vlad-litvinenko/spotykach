@@ -7,9 +7,10 @@
 
 
 #include "Engine.h"
-#include "../control/fcomp.h"
-#include "constants.h"
+#include "globals.h"
+#include "../common/fcomp.h"
 #include <algorithm>
+
 
 using namespace vlly;
 using namespace spotykach;

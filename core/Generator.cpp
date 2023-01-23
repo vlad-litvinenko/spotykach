@@ -9,8 +9,8 @@
 #include "Generator.h"
 #include "Parameters.h"
 #include "Buffers.h"
-#include "constants.h"
-#include "../control/fcomp.h"
+#include "globals.h"
+#include "../common/fcomp.h"
 
 using namespace vlly;
 using namespace spotykach;

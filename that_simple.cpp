@@ -4,7 +4,7 @@
 #include "core/Spotykach.h"
 #include "control/controller.h"
 #include "control/midisync.h"
-#include "control/deb.h"
+#include "common/deb.h"
 
 //#define LOG
 

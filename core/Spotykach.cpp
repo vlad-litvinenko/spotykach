@@ -11,7 +11,7 @@
 #include "Generator.h"
 #include "Trigger.h"
 #include "LFO.h"
-#include "../control/fcomp.h"
+#include "../common/fcomp.h"
 
 using namespace vlly;
 using namespace spotykach;

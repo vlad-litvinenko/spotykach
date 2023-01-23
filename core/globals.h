@@ -1,5 +1,8 @@
 #pragma once
 
+static const int kBeatsPerMeasure       = 4;
+static const float kSecondsPerMinute    = 60.0;
+
 static const int kEnginesCount = 2;
 
 static const int kSlicesCount = 3;

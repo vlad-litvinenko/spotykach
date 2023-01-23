@@ -9,7 +9,7 @@
 #include "Trigger.h"
 #include <cmath>
 #include <algorithm>
-#include "constants.h"
+#include "globals.h"
 
 static const int kTicksPerBeat          = 24;
 
