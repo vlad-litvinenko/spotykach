@@ -2,58 +2,31 @@
 
 #include "daisy.h"
 #include "mpr121.h"
-
-#ifndef _BV
-#define _BV(bit) (1 << (static_cast<int>(bit))) 
-#endif
+#include "sensorpad.h"
 
 class  Sensor12 {
 public:
-    enum class Target {
-        PlayStop    = 0,
-        TrigA       = 1,
-        TrigB       = 2,
-        RecA        = 3,
-        RecB        = 4,
-        StepAPlus   = 5,
-        StepAMinus  = 6,
-        StepBPlus   = 7,
-        StepBMinus  = 8
-    };
-
      Sensor12() = default;
     ~ Sensor12() = default;
 
     void init() {
         daisy::Mpr121I2C::Config cfg;
         _mpr.Init(cfg);
+        for (size_t i = 0; i < _pads.size(); i++) {
+            _pads[i].assign(i);
+        }
     }
 
-    void isTouched(Target target) {
-        auto new_state = _mpr.Touched();
-        auto index = static_cast<int>(target);
-        
-        // if it *wasn't* touched and now *is*
-        if ((new_state & _BV(index)) && !(_state & _BV(index)) ) {
-            
-        }
-        // if it *was* touched and now *isnt*
-        if (!(new_state & _BV(index)) && (_state & _BV(index)) ) {
+    void process() {
+        auto state = _mpr.Touched();
+        for (auto p: _pads) p.process(state);
+    }
 
-        }
-
-        _state = new_state;
+    SensorPad& padAt(int index) {
+        return _pads[index];
     }
 
 private:
     daisy::Mpr121I2C _mpr;
-    uint16_t _state = 0;
-
-    inline bool isTouchDown(Target target, uint16_t new_state) {
-        return (_state & _BV(target)) && !(new_state & _BV(target));
-    }
-
-    inline bool isTouchUp(Target target, uint16_t new_state) {
-        return !(new_state & _BV(target)) && (_state & _BV(target));
-    }
+    std::array<SensorPad, SensorPad::targets_count> _pads;
 };
