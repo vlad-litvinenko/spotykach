@@ -27,13 +27,19 @@ void Slice::activate(long offset, long length, int direction) {
     _offset = offset;
     _length = length;
     _direction = direction;
-    _iterator = _direction < 0 ? _length - 1 : 0;
+    _iterator = 0;
     _active = true;
 }
 
 void Slice::synthesize(float *out0, float* out1) {
     if (!_buffer.isFull()) {
-        auto readPosition = _offset + _buffer.writeHead();
+        auto readPosition = 0;
+        if (_direction > 0) {
+            readPosition = _offset + _buffer.writeHead();
+        }
+        else {
+            readPosition = _offset + _length - _buffer.writeHead();
+        }
         float s0 = 0;
         float s1 = 0;
         _source.read(s0, s1, readPosition);
@@ -62,8 +68,8 @@ void Slice::initialize() {
 }
 
 void Slice::next() {
-    _iterator += _direction;
-    if (_iterator == -1 || _iterator == _length) {
+    _iterator ++;
+    if (_iterator == _length) {
         _active = false;
     }
 }
