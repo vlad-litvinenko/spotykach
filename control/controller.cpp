@@ -8,30 +8,8 @@ using namespace daisy;
 void Controller::initialize(DaisySeed& hw, Spotykach& s) {
     initKnobs(hw);
     initToggles(hw);
-    initSensor(s);
 
     hw.adc.Start();
-}
-
-void Controller::initSensor(Spotykach& s) {
-    _sensor.initialize();
-    using Target = SensorPad::Target;
-    for (auto& p: _sensor.pads())
-        switch (p.target()) {
-            case Target::PlayStop: 
-                p.mode = SensorPad::Mode::Toggle;
-                break;
-            case Target::RecA: break;
-            case Target::RecB: break;
-            case Target::StepAMinus: break;
-            case Target::StepAPlus: break;
-            case Target::StepBMinus: break;
-            case Target::StepBPlus: break;
-            case Target::TrigA: 
-                p.touched_down = []() {  };
-                break;
-            case Target::TrigB: break;
-        }
 }
 
 void Controller::initKnobs(DaisySeed& hw) {
@@ -69,14 +47,7 @@ void Controller::setParameters(Spotykach& core, MIDISync& midi) {
     
     setKnobParameters(core);
     setGlobalToggles(core, midi);
-    
-    readSensor();
 };
-
-void Controller::readSensor() {
-    _sensor.process();
-    //TODO
-}
 
 using namespace vlly;
 using namespace spotykach;
