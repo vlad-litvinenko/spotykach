@@ -3,7 +3,7 @@ TARGET = that_simple
 
 # Sources
 C_INCLUDES += -Icore
-CPP_SOURCES = that_simple.cpp $(wildcard core/*.cpp) $(wildcard control/*.cpp)
+CPP_SOURCES = that_simple.cpp $(wildcard core/*.cpp) $(wildcard control/*.cpp) $(wildcard fx/mi/*.cpp)
 
 # Library Locations
 LIBDAISY_DIR = ../libDaisy/

@@ -1,8 +1,12 @@
 #pragma once
 
 #include "daisy_seed.h"
-#include "daisysp.h"
 #include "../common/fcomp.h"
+#include "mi/pitch_shifter.h"
+#include "mi/units.h"
+
+static clouds::FloatFrame _frames[4];
+static uint16_t DSY_SDRAM_BSS _buf[4096];
 
 class PitchShift {
 public:
@@ -10,10 +14,9 @@ public:
     ~PitchShift() = default;
 
     void initialize(float const sr, float const delay) {
-        ps_0_.Init(sr);
-        ps_1_.Init(sr);
-        ps_0_.SetDelSize(delay);
-        ps_1_.SetDelSize(delay);
+        ps_.Init(_buf);
+        ps_.set_ratio(stmlib::SemitonesToRatio(0));
+	    ps_.set_size(1.0);
     }
 
     void setShift(float s) {
@@ -32,8 +35,7 @@ public:
             semitones = 24.0 * (s - 0.5);
             _bypass = false;
         }
-        ps_0_.SetTransposition(semitones);
-        ps_1_.SetTransposition(semitones);
+        ps_.set_ratio(stmlib::SemitonesToRatio(semitones));
     }
 
     void process(const float* const* in, float **out, size_t size) {
@@ -44,15 +46,19 @@ public:
         }
 
         for (size_t i = 0; i < size; i++) {
-            float in0 = in[0][i];
-            float in1 = in[1][i];
-            out[0][i] = ps_0_.Process(in0);
-            out[1][i] = ps_1_.Process(in1);
+		    _frames[i].l = in[0][i];
+		    _frames[i].r = in[1][i];
+	    }
+	
+	    ps_.Process(_frames, size);
+
+        for (size_t i = 0; i < size; i++) {
+            out[0][i] = _frames[i].l;
+            out[1][i] = _frames[i].r;
         }
     }
 
 private:
-    daisysp::PitchShifter ps_0_;
-    daisysp::PitchShifter ps_1_;
+    clouds::PitchShifter ps_;
     bool _bypass = true;
 };
