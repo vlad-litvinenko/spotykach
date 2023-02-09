@@ -138,11 +138,14 @@ void Spotykach::initialize() const {
 
 void Spotykach::advanceTimeline() {
     auto& e1 = engineAt(0);
-    e1.advanceTimeline();
+    if (e1.isOn()) {    e1.advanceTimeline();
+    }
     
     auto& e2 = engineAt(1);
-    bool engaged = !(_mutex && e1.isLocking());
-    e2.advanceTimeline(engaged);
+    if (e2.isOn()) {
+        bool engaged = !(_mutex && e1.isLocking());
+        e2.advanceTimeline(engaged);
+    }
 }
 
 void Spotykach::preprocess(PlaybackParameters p) const {
