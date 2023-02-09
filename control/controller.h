@@ -7,6 +7,7 @@
 #include "channeltoggles.h"
 #include "Spotykach.h"
 #include "midisync.h"
+#include "../fx/pitch.shift.h"
 
 namespace vlly {
 namespace spotykach {
@@ -18,19 +19,16 @@ public:
 
     void initialize(daisy::DaisySeed& hw, Spotykach& s);
 
-    void setParameters(Spotykach& core, MIDISync& midi);
+    void setParameters(Spotykach& core, MIDISync& midi, PitchShift& ps);
 
 private:
     void initKnobs(daisy::DaisySeed& hw);
     void initToggles(daisy::DaisySeed& hw);
-    void initSensor(Spotykach& s);
 
-    void setMuxParameters(Engine& e, Spotykach &s, Mux8& m, int i);
+    void setMuxParameters(Engine& e, Spotykach &s, PitchShift& ps, Mux8& m, int i);
     void setKnobParameters(Spotykach &s);
     void setChannelToggles(Engine& e, Spotykach &s, ChannelToggles& ct, int i);
     void setGlobalToggles(Spotykach &s, MIDISync& m);
-
-    void readSensor();
 
     std::array<Knob, 1> _knobs;
     std::array<Mux8, 2> _muxs;

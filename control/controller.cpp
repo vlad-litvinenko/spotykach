@@ -38,10 +38,10 @@ void Controller::initToggles(DaisySeed& hw) {
     _globalToggles.initialize(hw);
 }
 
-void Controller::setParameters(Spotykach& core, MIDISync& midi) {
+void Controller::setParameters(Spotykach& core, MIDISync& midi, PitchShift& ps) {
     for (int i = 0; i < core.enginesCount(); i++) {
         Engine& e = core.engineAt(i);
-        setMuxParameters(e, core, _muxs[i], i);
+        setMuxParameters(e, core, ps, _muxs[i], i);
         setChannelToggles(e, core, _channelToggles[i], i);
     }
     
@@ -51,7 +51,7 @@ void Controller::setParameters(Spotykach& core, MIDISync& midi) {
 
 using namespace vlly;
 using namespace spotykach;
-void Controller::setMuxParameters(Engine& e,  Spotykach& s, Mux8& m, int ei) {
+void Controller::setMuxParameters(Engine& e,  Spotykach& s, PitchShift& ps, Mux8& m, int ei) {
     using Target = MuxKnob::Target;
     for (size_t i = 0; i < m.knobsCount(); i++) {
         auto p = m.paramAt(i);
@@ -64,7 +64,15 @@ void Controller::setMuxParameters(Engine& e,  Spotykach& s, Mux8& m, int ei) {
             case Target::Jitter: e.setJitterAmount(v < 0.03 ? 0 : v); break;
             case Target::Step: e.setStepPosition(v); break;
             case Target::Level: break;
-            case Target::Shift: if (ei == 0) s.setPatternBalance(v); break; 
+            case Target::Shift: {
+                if (ei == 0) {
+                    s.setPatternBalance(v);  
+                }
+                else {
+                    ps.setShift(v);
+                }
+                break;
+            }
             case Target::Repeats: if (ei == 0) s.setVolumeBalance(v); break;
         }
     }
