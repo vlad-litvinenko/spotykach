@@ -41,6 +41,9 @@ void Generator::setSliceLength(float value) {
 }
 
 void Generator::setDirection(Direction direction) {
+    if (direction != _direction) {
+        setNeedsResetSlices();
+    } 
     _direction = direction;
 }
 
