@@ -7,7 +7,6 @@
 #include "channeltoggles.h"
 #include "Spotykach.h"
 #include "midisync.h"
-#include "sensor.h"
 
 namespace vlly {
 namespace spotykach {
