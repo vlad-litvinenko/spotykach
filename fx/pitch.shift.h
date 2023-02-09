@@ -10,8 +10,10 @@ public:
     ~PitchShift() = default;
 
     void initialize(float const sr, float const delay) {
-        // _ps.Init(sr);
-        // _ps.SetDelSize(delay);
+        ps_0_.Init(sr);
+        ps_1_.Init(sr);
+        ps_0_.SetDelSize(delay);
+        ps_1_.SetDelSize(delay);
     }
 
     void setShift(float s) {
@@ -30,7 +32,8 @@ public:
             semitones = 24.0 * (s - 0.5);
             _bypass = false;
         }
-        // _ps.SetTransposition(semitones);
+        ps_0_.SetTransposition(semitones);
+        ps_1_.SetTransposition(semitones);
     }
 
     void process(const float* const* in, float **out, size_t size) {
@@ -43,12 +46,13 @@ public:
         for (size_t i = 0; i < size; i++) {
             float in0 = in[0][i];
             float in1 = in[1][i];
-            // out[0][i] = _ps.Process(in0);
-            // out[1][i] = _ps.Process(in1);
+            out[0][i] = ps_0_.Process(in0);
+            out[1][i] = ps_1_.Process(in1);
         }
     }
 
 private:
-    // daisysp::PitchShifter _ps;
+    daisysp::PitchShifter ps_0_;
+    daisysp::PitchShifter ps_1_;
     bool _bypass = true;
 };

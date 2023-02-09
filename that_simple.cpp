@@ -23,12 +23,12 @@ PitchShift pitchshift;
 const float tempo { 120 };
 const int bufferSize { 4 };
 
-// float sliced_0_[bufferSize];
-// float sliced_1_[bufferSize];
-// float *sliced_[2] = {
-// 	&sliced_0_[0],
-// 	&sliced_1_[0]
-// };
+float sliced_0_[bufferSize];
+float sliced_1_[bufferSize];
+float *sliced_[2] = {
+	&sliced_0_[0],
+	&sliced_1_[0]
+};
 
 void configurePlayback() {
 	p.isPlaying = midisync.isPlaying();
@@ -52,9 +52,9 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 	midisync.tickTheClock();
 
 	core.preprocess(p);
-	core.process(in, out, size);
+	core.process(in, sliced_, size);
 
-	// pitchshift.process(sliced_, out, size);
+	pitchshift.process(sliced_, out, size);
 }
 
 int main(void) {
