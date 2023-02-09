@@ -58,7 +58,7 @@ int main(void) {
 #endif
 	// HW::hw().setLed(false);
 
-	controller.initialize(hw);
+	controller.initialize(hw, core);
 	core.initialize();
 #ifndef LOG
 	midisync.run(core);
