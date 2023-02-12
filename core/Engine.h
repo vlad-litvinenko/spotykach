@@ -30,13 +30,14 @@ struct RawParameters {
     float stepGridPosition = -1;
     float slicePosition    = -1;
     float sliceLength      = -1;
-    float direction        = -1;
+    
     float repeats          = -1;
     float retrigger        = -1;
     float jitterAmount     = -1;
     bool on                 = false;
     bool declick            = false;
     bool frozen             = false;
+    bool reverse            = false;
 };
 
 class Engine {
@@ -70,7 +71,7 @@ public:
     
     void setDeclick(bool declick);
     
-    void setDirection(float direction);
+    void setReverse(bool reverse);
     
     void preprocess(PlaybackParameters p);
     
@@ -101,8 +102,8 @@ private:
     
     Grid _grid;
     int _onsets;
-    float _step;
-    float _shift;
+    int _step;
+    int _shift;
     float _start;
     float _slice;
     

@@ -10,23 +10,24 @@
 
 
 Slice::Slice(ISource& inSource, ISliceBuffer& inBuffer, IEnvelope& inEnvelope) :
-    _source(inSource),
-    _envelope(inEnvelope),
-    _buffer(inBuffer),
-    _active(false),
-    _length(0),
-    _offset(0),
-    _iterator(0),
-    _direction(0) {}
+    _source     { inSource },
+    _envelope   { inEnvelope },
+    _buffer     { inBuffer },
+    _active     { false },
+    _length     { 0 },
+    _offset     { 0 },
+    _iterator   { 0 },
+    _reverse    { false } 
+    {}
 
-void Slice::activate(long offset, long length, int direction) {
+void Slice::activate(long offset, long length, bool reverse) {
     if (_needsReset || offset != _offset) {
         _buffer.reset();
         _needsReset = false;
     }
     _offset = offset;
     _length = length;
-    _direction = direction;
+    _reverse = reverse;
     _iterator = 0;
     _active = true;
 }
@@ -34,11 +35,11 @@ void Slice::activate(long offset, long length, int direction) {
 void Slice::synthesize(float *out0, float* out1) {
     if (!_buffer.isFull()) {
         auto readPosition = 0;
-        if (_direction > 0) {
-            readPosition = _offset + _buffer.writeHead();
+        if (_reverse) {
+            readPosition = _offset + _length - _buffer.writeHead();
         }
         else {
-            readPosition = _offset + _length - _buffer.writeHead();
+            readPosition = _offset + _buffer.writeHead();
         }
         float s0 = 0;
         float s1 = 0;

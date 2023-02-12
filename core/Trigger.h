@@ -33,8 +33,8 @@ public:
     
     uint32_t pointsCount() override { return _pointsCount; };
     uint32_t beatsPerPattern() override { return _beatsPerPattern; };
-    void prepareMeterPattern(float, float) override;
-    void prepareCWordPattern(int, float) override;
+    void prepareMeterPattern(int, int) override;
+    void prepareCWordPattern(int, int) override;
     
     void oneShot();
     void next(bool) override;
@@ -54,7 +54,7 @@ private:
 
     IGenerator& _generator;
 
-    std::array<uint32_t, 256> _triggerPoints;
+    std::array<uint32_t, 64> _triggerPoints;
     uint32_t _pointsCount;
     uint32_t _iterator;
     uint32_t _nextPointIndex;

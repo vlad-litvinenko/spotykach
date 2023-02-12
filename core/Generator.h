@@ -32,7 +32,7 @@ public:
     void setPositionJitterAmount(float) override;
     void setSliceLength(float) override;
     void setCycleStart() override;
-    void setDirection(vlly::spotykach::Direction) override;
+    void setReverse(bool) override;
     
     void activateSlice(float) override;
     void generate(float*, float*) override;
@@ -56,8 +56,7 @@ private:
     uint32_t _framesPerBeat;
     
     float _raw_onset;
-    bool _fwd;
-    vlly::spotykach::Direction _direction;
+    bool _reverse;
 };
 
 #endif /* defined(__Spotykach__Synth__) */

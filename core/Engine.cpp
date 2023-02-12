@@ -17,8 +17,8 @@ using namespace spotykach;
 
 inline int gridStepCount(Grid grid) {
     switch (grid) {
-        case kGrid_Even: return EvenStepsCount;
-        case kGrid_CWord: return CWordsCount;
+        case Grid::even : return EvenStepsCount;
+        case Grid::c_word: return CWordsCount;
     }
 }
 
@@ -34,7 +34,7 @@ Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
     _jitterLFO  { l },
     _isPlaying  { false },
     _tempo      { 0 },
-    _grid       { kGrid_CWord },
+    _grid       { Grid::c_word },
     _onsets     { 7 },
     _step       { 0 },
     _shift      { 0 }
@@ -45,7 +45,7 @@ Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
     setStepPosition(4.0 / (CWordsCount - 1));
     setSliceLength(0.5);
     setRepeats(9);
-    setDirection(0);
+    setReverse(false);
     setRetrigger(0);
     setIsOn(true);
     setDeclick(true);
@@ -61,37 +61,36 @@ void Engine::setIsOn(bool on) {
 };
 
 void Engine::setShift(float normVal) {
+    if (fcomp(_raw.shift, normVal)) return;
     _raw.shift = normVal;
-    float shiftValue = round(normVal * 15.f) / 16.f;
-    if (!fcomp(shiftValue, _shift)) {
-        _shift = shiftValue;
-        preparePattern();
-    }
+    float shiftValue = int(normVal * 15);
+    _shift = shiftValue;
+    preparePattern();
 }
 
 void Engine::setStepPosition(float normVal) {
     _raw.stepGridPosition = normVal;
     int maxIndex;
     int valueIndex;
-    int onsets = _onsets;
-    float step = _step;
+    auto onsets = _onsets;
+    auto step = _step;
     switch (_grid) {
-        case kGrid_Even: {
+        case Grid::even: {
             maxIndex = EvenStepsCount - 1;
             valueIndex = std::min(maxIndex, int(normVal * (maxIndex + 1)));
-            step = EvenSteps[valueIndex].value;
+            step = EvenSteps[valueIndex];
             break;
         }
-        case kGrid_CWord: {
+        case Grid::c_word: {
             maxIndex = CWordsCount - 1;
             valueIndex = std::min(maxIndex, int(normVal * (maxIndex + 1)));
-            onsets = CWords[valueIndex].onsets;
-            step = 0.0625; //1/16
+            onsets = CWords[valueIndex];
+            step = 6; //1/16
             break;
         }
     }
     
-    if (!fcomp(step, _step) || onsets != _onsets) {
+    if (step != _step || onsets != _onsets) {
         _step = step;
         _onsets = onsets;
         preparePattern();
@@ -99,7 +98,7 @@ void Engine::setStepPosition(float normVal) {
 }
 
 void Engine::preparePattern() {
-    if (_grid == Grid::kGrid_CWord) {
+    if (_grid == Grid::c_word) {
         _trigger.prepareCWordPattern(_onsets, _shift);
     } 
     else {
@@ -163,10 +162,10 @@ void Engine::setDeclick(bool declick) {
     _envelope.setDeclick(declick);
 }
 
-void Engine::setDirection(float normVal) {
-    _raw.direction = normVal;
-    Direction direction = static_cast<Direction>(round(normVal * (kDirections_Count - 1)));
-    _generator.setDirection(direction);
+void Engine::setReverse(bool value) {
+    if (value == _raw.reverse) return;
+    _raw.reverse = value;
+    _generator.setReverse(value);
 }
 
 void Engine::setFrozen(bool frozen) {
@@ -205,7 +204,7 @@ void Engine::preprocess(PlaybackParameters p) {
     }
 
     if (_invalidateCrossfade) {
-        auto framesPerStep { static_cast<uint32_t>(_step * framesPerMeasure) };
+        auto framesPerStep { static_cast<uint32_t>(static_cast<float>(_step) * framesPerMeasure / (kTicksPerBeat * kBeatsPerMeasure)) };
         auto framesPerSlice { _generator.framesPerSlice() };
         _envelope.setFramesPerCrossfade(std::max(framesPerSlice - framesPerStep, uint32_t(0)));
         _invalidateCrossfade = false;

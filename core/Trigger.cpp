@@ -11,8 +11,6 @@
 #include <algorithm>
 #include "globals.h"
 
-static const int kTicksPerBeat          = 24;
-
 Trigger::Trigger(IGenerator& inGenerator) :
     _generator          { inGenerator },
     _pointsCount        { 0 },
@@ -24,7 +22,9 @@ Trigger::Trigger(IGenerator& inGenerator) :
     _retrigger          { 0 } 
     {}
 
-void Trigger::prepareCWordPattern(int onsets, float shift) {
+void Trigger::prepareCWordPattern(int onsets, int shift) {
+    _pointsCount = 0;
+    _triggerPoints.fill(0);
     bool keepRepeats = _repeats < _pointsCount;
     const size_t size = 16;
     int y = onsets, a = y;
@@ -59,16 +59,16 @@ void Trigger::prepareCWordPattern(int onsets, float shift) {
     }
     
     _beatsPerPattern = kBeatsPerMeasure;
-    _pointsCount = 0;
-    _triggerPoints.fill(0);
-    auto beatShift = shift * kBeatsPerMeasure;
+    
+    auto ticks_per_16th = 6;
+    auto ticks_per_pattern = _beatsPerPattern * kTicksPerBeat;
     for (size_t i = 0; i < pattern.size(); i++) {
         if (!pattern[i]) continue;
-        auto point = static_cast<float>(i) / kBeatsPerMeasure + beatShift;
-        if (point >= _beatsPerPattern) {
-            point -= _beatsPerPattern;
+        auto point = i * ticks_per_16th + shift;
+        if (point >= ticks_per_pattern) {
+            point -= ticks_per_pattern;
         }
-        _triggerPoints[_pointsCount] = static_cast<uint32_t>(round(point * kTicksPerBeat));
+        _triggerPoints[_pointsCount] = point;
         _pointsCount ++;
     }
     
@@ -76,34 +76,26 @@ void Trigger::prepareCWordPattern(int onsets, float shift) {
     adjustIterator();
 }
 
-void Trigger::prepareMeterPattern(float step, float shift) {
-    bool keepRepeats = _repeats < _pointsCount;
-    
-    int steps { 0 };
-    float length { 0 };
-    int castedLength;
-    do {
-        steps ++;
-        length += step;
-        castedLength = static_cast<int>(length);
-    }
-    while (length != castedLength);
-    
+void Trigger::prepareMeterPattern(int step, int shift) {
+    bool keep_repeats = _repeats < _pointsCount;
     _pointsCount = 0;
-    auto beatsPerStep = kBeatsPerMeasure * step;
-    _beatsPerPattern = beatsPerStep * steps;
-
-    float beatShift = shift * kBeatsPerMeasure;
-    for (auto i = 0; i < steps; i++) {
-        auto point = i * beatsPerStep + beatShift;
-        if (point >= _beatsPerPattern) {
-            point -= _beatsPerPattern;
-        }
-        _triggerPoints[_pointsCount] = static_cast<uint32_t>(round(point * kTicksPerBeat));
-        _pointsCount++;
+    _triggerPoints.fill(0);
+    int pattern_length { 0 };
+    while (pattern_length % kTicksPerBeat || pattern_length < kTicksPerBeat * kBeatsPerMeasure) {
+        _triggerPoints[_pointsCount] = pattern_length;
+        _pointsCount ++;
+        pattern_length += step;
     }
-    
-    adjustRepeatsIfNeeded(keepRepeats);
+    _beatsPerPattern = pattern_length / kTicksPerBeat;
+    auto ticks_per_pattern = _beatsPerPattern * kTicksPerBeat;
+    for (auto i = 0; i < _pointsCount; i++) {
+        auto point = _triggerPoints[i] + shift;
+        if (point >= ticks_per_pattern) {
+            point -= ticks_per_pattern;
+        }
+        _triggerPoints[i] = point;
+    }
+    adjustRepeatsIfNeeded(keep_repeats);
     adjustIterator();
 }
 

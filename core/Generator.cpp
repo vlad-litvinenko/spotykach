@@ -16,11 +16,11 @@ using namespace vlly;
 using namespace spotykach;
 
 Generator::Generator(ISource& inSource, IEnvelope& inEnvelope, ILFO& inJitterLFO) :
-    _source { inSource },
-    _envelope { inEnvelope },
-    _jitterLFO { inJitterLFO },
-    _raw_onset { 0 },
-    _direction { kDirection_Forward } {
+    _source     { inSource },
+    _envelope   { inEnvelope },
+    _jitterLFO  { inJitterLFO },
+    _raw_onset  { 0 },
+    _reverse    { false } {
     for (auto i = 0; i < kSlicesCount; i++) {
         _slices[i] = std::make_shared<Slice>(_source, _buffers[i] ,_envelope);
     }
@@ -40,11 +40,11 @@ void Generator::setSliceLength(float value) {
     _framesPerSlice = value * kSliceBufferLength;
 }
 
-void Generator::setDirection(Direction direction) {
-    if (direction != _direction) {
+void Generator::setReverse(bool value) {
+    if (value != _reverse) {
         setNeedsResetSlices();
     } 
-    _direction = direction;
+    _reverse = value;
 }
 
 void Generator::setCycleStart() {
@@ -101,22 +101,12 @@ void Generator::activateSlice(float in_raw_onset) {
     for (size_t i = 0; i < _slices.size(); i ++) {
         auto s = _slices[i];
         if (s->isActive()) continue;
-        if (reset) {
-            _fwd = true;
-        }
-        else {
-            bool bnf = _direction == kDirection_Pendulum;
-            bool rev = _direction == kDirection_Reverse;
-            _fwd = bnf ? !_fwd : !rev;
-        }
-        int direction = _fwd ? 1 : -1;
-        s->activate(slice_start, _framesPerSlice, direction);
+        s->activate(slice_start, _framesPerSlice, _reverse);
         break;
     }
 }
 
 void Generator::reset() {
-    _fwd = true;
     setNeedsResetSlices();
 }
 

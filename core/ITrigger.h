@@ -15,8 +15,8 @@ class ITrigger {
 public:
     virtual uint32_t pointsCount() = 0;
     virtual uint32_t beatsPerPattern() = 0;
-    virtual void prepareMeterPattern(float step, float shift) = 0;
-    virtual void prepareCWordPattern(int onsets, float shift) = 0;
+    virtual void prepareMeterPattern(int step, int shift) = 0;
+    virtual void prepareCWordPattern(int onsets, int shift) = 0;
     virtual void oneShot() = 0;
     virtual void next(bool engaged) = 0;
     virtual void reset() = 0;

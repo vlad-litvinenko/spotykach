@@ -49,6 +49,7 @@ private:
     std::array<std::shared_ptr<Engine>, kEnginesCount> _engines;
     
     float _vol[kEnginesCount];
+    float pattern_balance_;
     float _mix;
     bool _mutex;
     bool _cascade;

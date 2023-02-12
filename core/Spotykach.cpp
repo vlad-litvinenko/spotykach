@@ -36,6 +36,7 @@ Spotykach::Spotykach() {
     setCascade(false);
     setMix(1);
     setJitterRate(0);
+    setPatternBalance(0.5);
     setVolumeBalance(0.5);
 }
 
@@ -78,6 +79,9 @@ void Spotykach::setVolumeBalance(float value) {
 }
 
 void Spotykach::setPatternBalance(float value) {
+    if (fcomp(value, pattern_balance_)) return;
+    pattern_balance_ = value;
+
     auto e1 = engineAt(0);
     auto e2 = engineAt(1);
     //center

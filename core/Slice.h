@@ -22,7 +22,7 @@ public:
     bool isActive() { return _active; };
     bool isInactive() { return !_active; };
     void initialize();
-    void activate(long offset, long length, int direction);
+    void activate(long offset, long length, bool reverse);
     void synthesize(float *out0, float* out1);
     void setNeedsReset();
     
@@ -36,7 +36,7 @@ private :
     long _length;
     long _offset;
     long _iterator;
-    int _direction;
+    bool _reverse;
     
     bool _needsReset;
     

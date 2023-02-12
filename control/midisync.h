@@ -3,8 +3,7 @@
 #include "daisy_seed.h"
 #include "hid/midi.h"
 #include "Spotykach.h"
-
-static const uint32_t kTicksPerBeat = 24;
+#include "globals.h"
 
 struct Beat {
     uint32_t beats = 0;
