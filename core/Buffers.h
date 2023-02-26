@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <assert.h>
 #include "dev/sdram.h"
 #include "daisy_seed.h"
@@ -56,7 +55,7 @@ public:
 
     uint16_t* pitch_buf() {
         return pitch_buf_;
-    }
+    };
 
 private:
     Buffers() {

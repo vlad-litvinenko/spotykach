@@ -14,7 +14,7 @@ public:
     ~PitchShift() = default;
 
     void initialize(float const sr, float const delay) {
-        ps_.Init(Buffers::pool.pitch_buf());
+        ps_.Init(Buffers::pool().pitch_buf());
         ps_.set_ratio(stmlib::SemitonesToRatio(0));
 	    ps_.set_size(1.0);
     }
