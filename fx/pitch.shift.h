@@ -4,9 +4,9 @@
 #include "../common/fcomp.h"
 #include "mi/pitch_shifter.h"
 #include "mi/units.h"
+#include "../core/Buffers.h"
 
 static clouds::FloatFrame _frames[4];
-static uint16_t DSY_SDRAM_BSS _buf[4096];
 
 class PitchShift {
 public:
@@ -14,7 +14,7 @@ public:
     ~PitchShift() = default;
 
     void initialize(float const sr, float const delay) {
-        ps_.Init(_buf);
+        ps_.Init(Buffers::pool.pitch_buf());
         ps_.set_ratio(stmlib::SemitonesToRatio(0));
 	    ps_.set_size(1.0);
     }

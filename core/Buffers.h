@@ -33,6 +33,8 @@ static float DSY_SDRAM_BSS _slcBuf5R[kSliceBufferLength];
 static float DSY_SDRAM_BSS _slcBuf6L[kSliceBufferLength];
 static float DSY_SDRAM_BSS _slcBuf6R[kSliceBufferLength];
 
+static uint16_t DSY_SDRAM_BSS pitch_buf_[4096];
+
 class Buffers {
 public:
     static Buffers& pool() {
@@ -51,6 +53,10 @@ public:
         assert(_providedSliceBufCount < _slcBufsCount);
         return _slcBufs[_providedSliceBufCount++];
     };
+
+    uint16_t* pitch_buf() {
+        return pitch_buf_;
+    }
 
 private:
     Buffers() {
