@@ -1,86 +1,65 @@
 #include "controller.h"
+#include "deb.h"
 
 using namespace vlly;
 using namespace spotykach;
 
 using namespace daisy;
 
-void Controller::initialize(DaisySeed& hw, Spotykach& s) {
-    // initKnobs(hw);
-    // initToggles(hw);
+void Controller::initialize(DaisySeed& hw, Spotykach& core) {
+    // init_knobs(hw);
+    // init_toggles(hw);
 
     hw.adc.Start();
 
-    _sensor.initialize();
+    init_sensor(core);
 }
 
-void Controller::initKnobs(DaisySeed& hw) {
+void Controller::init_knobs(DaisySeed& hw) {
     size_t knobs_count = _knobs.size();
-    size_t mux_count = _muxs.size();
-    size_t count = knobs_count + mux_count;
     
-    AdcChannelConfig conf[count];
+    AdcChannelConfig conf[knobs_count];
     
     size_t i;
     for (i = 0; i < knobs_count; i++) _knobs[i].initialize(conf[i], i);
-    for (i = 0; i < mux_count; i++) {
-        auto config_index = i + knobs_count;
-        _muxs[i].initialize(hw, conf[config_index], i, config_index);
-    }
         
-    hw.adc.Init(conf, count);
+    hw.adc.Init(conf, knobs_count);
     
     for (i = 0; i < knobs_count; i++) _knobs[i].configure(hw);
-    for (i = 0; i < mux_count; i++) _muxs[i].initKnobs(hw);
 }
 
-void Controller::initToggles(DaisySeed& hw) {
+void Controller::init_toggles(DaisySeed& hw) {
     _channel_toggles[0].initialize(hw, 0);
     _channel_toggles[1].initialize(hw, 1);
     _global_toggles.initialize(hw);
 }
 
-void Controller::setParameters(Spotykach& core, MIDISync& midi, PitchShift& ps) {
+void Controller::init_sensor(Spotykach& core) {
+    _sensor.initialize();
+    _sensor.set_mode(DescreteSensorPad::Mode::Toggle, DescreteSensor::Target::PlayStop);
+    _sensor.set_on_touch([&core]{ 
+        HW::hw().print("#### SHOT A");
+     }, 
+     DescreteSensor::Target::OneShotA);
+    _sensor.set_on_touch([&core]{
+        HW::hw().print("#### SHOT B");
+    }, 
+    DescreteSensor::Target::OneShotB);
+}
+
+void Controller::set_parameters(Spotykach& core, MIDISync& midi, PitchShift& ps) {
     for (int i = 0; i < core.enginesCount(); i++) {
         Engine& e = core.engineAt(i);
-        setMuxParameters(e, core, ps, _muxs[i], i);
-        setChannelToggles(e, core, _channel_toggles[i], i);
+        set_channel_toggles(e, core, _channel_toggles[i], i);
     }
     
-    setKnobParameters(core);
-    setGlobalToggles(core, midi);
+    set_knob_parameters(core);
+    set_global_toggles(core, midi);
 };
 
 using namespace vlly;
 using namespace spotykach;
-void Controller::setMuxParameters(Engine& e,  Spotykach& s, PitchShift& ps, Mux8& m, int ei) {
-    using Target = MuxKnob::Target;
-    for (size_t i = 0; i < m.knobsCount(); i++) {
-        auto p = m.paramAt(i);
-        auto t = std::get<0>(p);
-        auto v = std::get<1>(p);
-        switch (t) {
-            case Target::Position: e.setSlicePosition(v); break;
-            case Target::Slice: e.setSliceLength(v); break;
-            case Target::Retrigger: e.setRetrigger(v); break;
-            case Target::Jitter: e.setJitterAmount(v < 0.03 ? 0 : v); break;
-            case Target::Step: e.setStepPosition(v); break;
-            case Target::Level: break;
-            case Target::Shift: {
-                if (ei == 0) {
-                    s.setPatternBalance(v);  
-                }
-                else {
-                    ps.setShift(v);
-                }
-                break;
-            }
-            case Target::Repeats: if (ei == 0) s.setVolumeBalance(v); break;
-        }
-    }
-}
-
-void Controller::setKnobParameters(Spotykach &s) {
+void Controller::set_knob_parameters(Spotykach &s) {
     for (size_t i = 0; i < _knobs.size(); i++) {
         auto t = _knobs[i].target();
         auto v = _knobs[i].value();
@@ -90,7 +69,7 @@ void Controller::setKnobParameters(Spotykach &s) {
     }   
 }
 
-void Controller::setChannelToggles(Engine& e, Spotykach& s, ChannelToggles& ct, int ei) {
+void Controller::set_channel_toggles(Engine& e, Spotykach& s, ChannelToggles& ct, int ei) {
     for (size_t i = 0; i < ct.count(); i++) {
         auto toggle = ct.at(i);
         auto target = std::get<0>(toggle);
@@ -105,7 +84,7 @@ void Controller::setChannelToggles(Engine& e, Spotykach& s, ChannelToggles& ct, 
     }
 }
 
-void Controller::setGlobalToggles(Spotykach& s, MIDISync& m) {
+void Controller::set_global_toggles(Spotykach& s, MIDISync& m) {
     using Target = GlobalToggles::Target;
     auto cnt = _global_toggles.count();
     for (size_t i = 0; i < cnt; i++) {
@@ -128,4 +107,25 @@ void Controller::setGlobalToggles(Spotykach& s, MIDISync& m) {
             }
         }
     }
+}
+
+using Target = DescreteSensor::Target;
+void Controller::read_sensor(Spotykach& core) {
+    // auto is_playing = _sensor.is_on(Target::PlayStop);
+
+    // auto& e_a = core.engineAt(0);
+    // auto& e_b = core.engineAt(1);
+
+    // e_a.setFrozen(!_sensor.is_on(Target::RecordA));
+    // e_a.setFrozen(!_sensor.is_on(Target::RecordB));
+
+    HW::hw().print("PLAYING %d", _sensor.is_on(Target::PlayStop));
+    HW::hw().print("PLYNG A %d", _sensor.is_on(Target::OneShotA));
+    HW::hw().print("PLYNG B %d", _sensor.is_on(Target::OneShotB));
+    HW::hw().print("RECRD A %d", _sensor.is_on(Target::RecordA));
+    HW::hw().print("RECRD B %d", _sensor.is_on(Target::RecordB));
+    HW::hw().print("PT PL A %d", _sensor.is_on(Target::PatternPlusA));
+    HW::hw().print("PT MN A %d", _sensor.is_on(Target::PatternMinusA));
+    HW::hw().print("PT PL B %d", _sensor.is_on(Target::PatternPlusB));
+    HW::hw().print("PT MN B %d", _sensor.is_on(Target::PatternMinusB));
 }
