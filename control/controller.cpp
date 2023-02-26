@@ -6,10 +6,12 @@ using namespace spotykach;
 using namespace daisy;
 
 void Controller::initialize(DaisySeed& hw, Spotykach& s) {
-    initKnobs(hw);
-    initToggles(hw);
+    // initKnobs(hw);
+    // initToggles(hw);
 
     hw.adc.Start();
+
+    _sensor.initialize();
 }
 
 void Controller::initKnobs(DaisySeed& hw) {
@@ -33,16 +35,16 @@ void Controller::initKnobs(DaisySeed& hw) {
 }
 
 void Controller::initToggles(DaisySeed& hw) {
-    _channelToggles[0].initialize(hw, 0);
-    _channelToggles[1].initialize(hw, 1);
-    _globalToggles.initialize(hw);
+    _channel_toggles[0].initialize(hw, 0);
+    _channel_toggles[1].initialize(hw, 1);
+    _global_toggles.initialize(hw);
 }
 
 void Controller::setParameters(Spotykach& core, MIDISync& midi, PitchShift& ps) {
     for (int i = 0; i < core.enginesCount(); i++) {
         Engine& e = core.engineAt(i);
         setMuxParameters(e, core, ps, _muxs[i], i);
-        setChannelToggles(e, core, _channelToggles[i], i);
+        setChannelToggles(e, core, _channel_toggles[i], i);
     }
     
     setKnobParameters(core);
@@ -105,9 +107,9 @@ void Controller::setChannelToggles(Engine& e, Spotykach& s, ChannelToggles& ct, 
 
 void Controller::setGlobalToggles(Spotykach& s, MIDISync& m) {
     using Target = GlobalToggles::Target;
-    auto cnt = _globalToggles.count();
+    auto cnt = _global_toggles.count();
     for (size_t i = 0; i < cnt; i++) {
-        auto toggle = _globalToggles.at(i);
+        auto toggle = _global_toggles.at(i);
         auto target = std::get<0>(toggle);
         auto isOn = std::get<1>(toggle);
         switch (target) {

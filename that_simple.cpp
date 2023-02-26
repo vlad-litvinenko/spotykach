@@ -37,6 +37,10 @@ void configurePlayback() {
 }
 
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size) {
+	memcpy(out[0], in[0], size * sizeof(float));
+	memcpy(out[1], in[0], size * sizeof(float));
+	return;
+
 	static int cnfg_cnt { 0 };
 	if (++cnfg_cnt == 40) {
 		configurePlayback();
@@ -61,19 +65,19 @@ int main(void) {
 	hw.Configure();
 	hw.Init();
 
-	HW::hw().setHW(&hw);
+	// HW::hw().setHW(&hw);
 #ifdef LOG
 	HW::hw().startLog();
 #endif
 	// HW::hw().setLed(false);
 
-	core.initialize();
-	pitchshift.initialize(48000, 4096);
-	pitchshift.setShift(0.5);
-	controller.initialize(hw, core);
+	// core.initialize();
+	// pitchshift.initialize(48000, 4096);
+	// pitchshift.setShift(0.5);
+	// controller.initialize(hw, core);
 
 #ifndef LOG
-	midisync.run(core);
+	//midisync.run(core);
 
 	hw.SetAudioBlockSize(bufferSize);
 	hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_48KHZ);
@@ -82,13 +86,13 @@ int main(void) {
 
 	while(1) {
 #ifndef LOG
-		midisync.pull();
+		// midisync.pull();
 
-		static int param_count_down = 0;
-		if (++param_count_down == 50) {
-			controller.setParameters(core, midisync, pitchshift);
-			param_count_down = 0;
-		}
+		// static int param_count_down = 0;
+		// if (++param_count_down == 50) {
+		// 	controller.setParameters(core, midisync, pitchshift);
+		// 	param_count_down = 0;
+		// }
 #endif
 #ifdef LOG
 		controller.setParameters(core, midisync, pitchshift);
