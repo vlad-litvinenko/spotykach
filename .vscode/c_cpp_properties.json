@@ -2,7 +2,7 @@
     "configurations": [
         {
             "cStandard": "c17",
-            "compilerPath": "/opt/homebrew/bin/arm-none-eabi-gcc",
+            "compilerPath": "/usr/local/bin/arm-none-eabi-gcc",
             "cppStandard": "c++17",
             "defines": [
                 "_DEBUG",
