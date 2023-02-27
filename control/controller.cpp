@@ -1,5 +1,5 @@
 #include "controller.h"
-#include "deb.h"
+#include "../common/deb.h"
 
 using namespace vlly;
 using namespace spotykach;
@@ -10,7 +10,7 @@ void Controller::initialize(DaisySeed& hw, Spotykach& core) {
     // init_knobs(hw);
     // init_toggles(hw);
 
-    hw.adc.Start();
+    //hw.adc.Start();
 
     init_sensor(core);
 }
@@ -34,27 +34,27 @@ void Controller::init_toggles(DaisySeed& hw) {
     _global_toggles.initialize(hw);
 }
 
+using Target = DescreteSensor::Target;
 void Controller::init_sensor(Spotykach& core) {
     _sensor.initialize();
-    _sensor.set_mode(DescreteSensorPad::Mode::Toggle, DescreteSensor::Target::PlayStop);
-    _sensor.set_on_touch([&core]{ 
-        HW::hw().print("#### SHOT A");
-     }, 
-     DescreteSensor::Target::OneShotA);
-    _sensor.set_on_touch([&core]{
-        HW::hw().print("#### SHOT B");
-    }, 
-    DescreteSensor::Target::OneShotB);
+    _sensor.set_mode(DescreteSensorPad::Mode::Toggle, Target::PlayStop);
+    _sensor.set_on_touch([&core]{ HW::hw().print("#### ONE SHOT A"); }, Target::OneShotA);
+    _sensor.set_on_touch([&core]{ HW::hw().print("#### ONE SHOT B"); }, Target::OneShotB);
+    _sensor.set_on_touch([&core]{ HW::hw().print("#### MINUS PATTERN A"); }, Target::PatternMinusA);
+    _sensor.set_on_touch([&core]{ HW::hw().print("#### MINUS PATTERN A"); }, Target::PatternPlusA);
+    _sensor.set_on_touch([&core]{ HW::hw().print("#### MINUS PATTERN B"); }, Target::PatternMinusB);
+    _sensor.set_on_touch([&core]{ HW::hw().print("#### MINUS PATTERN B"); }, Target::PatternPlusB);
 }
 
 void Controller::set_parameters(Spotykach& core, MIDISync& midi, PitchShift& ps) {
-    for (int i = 0; i < core.enginesCount(); i++) {
-        Engine& e = core.engineAt(i);
-        set_channel_toggles(e, core, _channel_toggles[i], i);
-    }
+    // for (int i = 0; i < core.enginesCount(); i++) {
+    //     Engine& e = core.engineAt(i);
+    //     set_channel_toggles(e, core, _channel_toggles[i], i);
+    // }
     
-    set_knob_parameters(core);
-    set_global_toggles(core, midi);
+    // set_knob_parameters(core);
+    // set_global_toggles(core, midi);
+    read_sensor(core);
 };
 
 using namespace vlly;
@@ -79,6 +79,7 @@ void Controller::set_channel_toggles(Engine& e, Spotykach& s, ChannelToggles& ct
             case Target::Grid: e.setGrid(isOn ? 1 : 0); break;
             case Target::Reverse: e.setReverse(isOn); break;
             case Target::Freeze: e.setFrozen(isOn); break;
+
             default: {}
         }
     }
@@ -109,8 +110,8 @@ void Controller::set_global_toggles(Spotykach& s, MIDISync& m) {
     }
 }
 
-using Target = DescreteSensor::Target;
 void Controller::read_sensor(Spotykach& core) {
+    _sensor.process();
     // auto is_playing = _sensor.is_on(Target::PlayStop);
 
     // auto& e_a = core.engineAt(0);
@@ -118,14 +119,4 @@ void Controller::read_sensor(Spotykach& core) {
 
     // e_a.setFrozen(!_sensor.is_on(Target::RecordA));
     // e_a.setFrozen(!_sensor.is_on(Target::RecordB));
-
-    HW::hw().print("PLAYING %d", _sensor.is_on(Target::PlayStop));
-    HW::hw().print("PLYNG A %d", _sensor.is_on(Target::OneShotA));
-    HW::hw().print("PLYNG B %d", _sensor.is_on(Target::OneShotB));
-    HW::hw().print("RECRD A %d", _sensor.is_on(Target::RecordA));
-    HW::hw().print("RECRD B %d", _sensor.is_on(Target::RecordB));
-    HW::hw().print("PT PL A %d", _sensor.is_on(Target::PatternPlusA));
-    HW::hw().print("PT MN A %d", _sensor.is_on(Target::PatternMinusA));
-    HW::hw().print("PT PL B %d", _sensor.is_on(Target::PatternPlusB));
-    HW::hw().print("PT MN B %d", _sensor.is_on(Target::PatternMinusB));
 }
