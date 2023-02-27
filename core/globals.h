@@ -1,7 +1,7 @@
 #pragma once
 
 static const int kBeatsPerMeasure       = 4;
-static const int kTicksPerBeat          = 24;
+static const int kTicksPerBeat          = 4;
 static const float kSecondsPerMinute    = 60.0;
 
 static const int kEnginesCount = 2;
