@@ -60,7 +60,7 @@ void Trigger::prepareCWordPattern(int onsets, int shift) {
     
     _beatsPerPattern = kBeatsPerMeasure;
     
-    auto ticks_per_16th = 6;
+    auto ticks_per_16th = kTicksPerBeat / 4;
     auto ticks_per_pattern = _beatsPerPattern * kTicksPerBeat;
     for (size_t i = 0; i < pattern.size(); i++) {
         if (!pattern[i]) continue;
