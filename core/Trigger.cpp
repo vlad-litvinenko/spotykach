@@ -87,8 +87,8 @@ void Trigger::prepareMeterPattern(int step, int shift) {
         pattern_length += step;
     }
     _beatsPerPattern = pattern_length / kTicksPerBeat;
-    auto ticks_per_pattern = _beatsPerPattern * kTicksPerBeat;
-    for (auto i = 0; i < _pointsCount; i++) {
+    uint32_t ticks_per_pattern = _beatsPerPattern * kTicksPerBeat;
+    for (uint32_t i = 0; i < _pointsCount; i++) {
         auto point = _triggerPoints[i] + shift;
         if (point >= ticks_per_pattern) {
             point -= ticks_per_pattern;
