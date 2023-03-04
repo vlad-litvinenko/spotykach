@@ -25,9 +25,9 @@ bool GlobalToggles::isOnAt(int index) {
 Pin GlobalToggles::pin(Target t) {
     using namespace seed;
     switch (t) {
-        case Target::Mutex:     return D28;
+        case Target::Mutex:     return D30;
         case Target::Cascade:   return D29;
-        case Target::Run:       return D30;
+        case Target::Split:     return D27;
         default: return {};
     };
 };

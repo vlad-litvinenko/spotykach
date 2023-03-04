@@ -7,7 +7,7 @@ public:
     enum class Target {
         Mutex,
         Cascade,
-        Run
+        Split
     };
 
     GlobalToggles() = default;
@@ -29,7 +29,7 @@ private:
     constexpr static std::array<Target, kTargetsCount> _targets = {
         Target::Mutex,
         Target::Cascade,
-        Target::Run
+        Target::Split
     };
 
     std::array<daisy::Switch, kTargetsCount> _switches;
