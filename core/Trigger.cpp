@@ -99,6 +99,14 @@ void Trigger::prepareMeterPattern(int step, int shift) {
     adjustIterator();
 }
 
+void Trigger::setRetrigger(int retrigger) {
+    _retrigger = retrigger;
+}
+
+void Trigger::setRepeats(int repeats) {
+    _repeats = _pointsCount ? std::min(_pointsCount, static_cast<uint32_t>(repeats)) : repeats;
+}
+
 void Trigger::adjustIterator() {
     adjustNextIndex(_triggerPoints.data(), _pointsCount, _iterator, _nextPointIndex);
 }
@@ -131,13 +139,8 @@ void Trigger::next(bool engaged) {
 
 void Trigger::reset() {
     _iterator = 0;
+    _nextPointIndex = 0;
     _ticksTillUnlock = 0;
 }
 
-void Trigger::setRetrigger(int retrigger) {
-    _retrigger = retrigger;
-}
 
-void Trigger::setRepeats(int repeats) {
-    _repeats = _pointsCount ? std::min(_pointsCount, static_cast<uint32_t>(repeats)) : repeats;
-}
