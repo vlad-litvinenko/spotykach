@@ -33,6 +33,7 @@ Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
     _generator  { g },
     _jitterLFO  { l },
     _tempo      { 0 },
+    _is_playing { false },
     _grid       { Grid::c_word },
     _onsets     { 7 },
     _step       { 0 },
@@ -46,7 +47,6 @@ Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
     setRepeats(9);
     setReverse(false);
     setRetrigger(0);
-    set_is_playing(false);
     setDeclick(true);
     setJitterAmount(0);
     setJitterRate(0.75);
