@@ -94,7 +94,6 @@ private:
     RawParameters _raw;
     
     bool _is_playing;
-    
     float _tempo;
     
     Grid _grid;
