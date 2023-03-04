@@ -27,7 +27,7 @@ private:
     void init_knobs(daisy::DaisySeed& hw);
     void init_toggles(daisy::DaisySeed& hw);
 
-    void set_knob_parameters(Spotykach &s);
+    void set_knob_parameters(Spotykach &s, PitchShift& ps);
     void set_channel_toggles(Engine& e, Spotykach &s, ChannelToggles& ct, int i);
     void set_global_toggles(Spotykach &s, MIDISync& m);
     void read_sensor(Spotykach &core);

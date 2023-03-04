@@ -6,7 +6,18 @@
 class Knob {
 public:
     enum class Target {
-        JitterRate
+        SlicePositionA,
+        SliceLengthA,
+        RetriggerA,
+        JitterAmountA,
+        JitterRate,
+        VolumeCrossfade,
+        PatternCrossfade,
+        Pitch,
+        SlicePositionB,
+        SliceLengthB,
+        RetriggerB,
+        JitterAmountB
     };
 
     Knob() = default;
@@ -26,8 +37,22 @@ private:
     };
     
     daisy::Pin pin(Knob::Target usage) const {
+        using namespace daisy;
+        using namespace seed;
+        using KT = Knob::Target;
         switch (usage) {
-            case Knob::Target::JitterRate: return daisy::seed::A1;
+            case KT::SlicePositionA:    return A10;
+            case KT::SliceLengthA:      return A9;
+            case KT::RetriggerA:        return A11;
+            case KT::JitterAmountA:     return A8;
+            case KT::JitterRate:        return A6;
+            case KT::VolumeCrossfade:   return A5; //?
+            case KT::PatternCrossfade:  return A7;
+            case KT::Pitch:             return A4;
+            case KT::SlicePositionB:    return A2;
+            case KT::SliceLengthB:      return A1;
+            case KT::RetriggerB:        return A0;
+            case KT::JitterAmountB:     return A3;
             default: return {};
         }
     };

@@ -52,19 +52,33 @@ void Controller::set_parameters(Spotykach& core, MIDISync& midi, PitchShift& ps)
     //     set_channel_toggles(e, core, _channel_toggles[i], i);
     // }
     
-    // set_knob_parameters(core);
+    set_knob_parameters(core, ps);
     // set_global_toggles(core, midi);
     read_sensor(core);
 };
 
 using namespace vlly;
 using namespace spotykach;
-void Controller::set_knob_parameters(Spotykach &s) {
+using KT = Knob::Target;
+void Controller::set_knob_parameters(Spotykach &s, PitchShift& ps) {
+    auto& e_a = s.engineAt(0);
+    auto& e_b = s.engineAt(1);
     for (size_t i = 0; i < _knobs.size(); i++) {
         auto t = _knobs[i].target();
         auto v = _knobs[i].value();
         switch (t) {
-            case Knob::Target::JitterRate: s.setJitterRate(v); break;
+            case KT::SlicePositionA:    e_a.setSlicePosition(v); break;
+            case KT::SliceLengthA:      e_a.setSliceLength(v); break;
+            case KT::RetriggerA:        e_a.setRetrigger(v); break;
+            case KT::JitterAmountA:     e_a.setJitterAmount(v); break;
+            case KT::JitterRate:        s.setJitterRate(v); break;
+            case KT::VolumeCrossfade:   s.setVolumeBalance(0.5); break;
+            case KT::PatternCrossfade:  s.setPatternBalance(v); break;
+            case KT::Pitch:             ps.setShift(v); break;
+            case KT::SlicePositionB:    e_b.setSlicePosition(v); break;
+            case KT::SliceLengthB:      e_b.setSliceLength(v); break;
+            case KT::RetriggerB:        e_b.setRetrigger(v); break;
+            case KT::JitterAmountB:     e_b.setJitterAmount(v); break;
         }
     }   
 }
@@ -78,8 +92,6 @@ void Controller::set_channel_toggles(Engine& e, Spotykach& s, ChannelToggles& ct
         switch (target) {
             case Target::Grid: e.setGrid(isOn ? 1 : 0); break;
             case Target::Reverse: e.setReverse(isOn); break;
-            case Target::Freeze: e.setFrozen(isOn); break;
-
             default: {}
         }
     }
