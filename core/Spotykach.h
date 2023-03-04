@@ -27,7 +27,7 @@ public:
     Engine& engineAt(int index) const;
     long enginesCount() const;
     
-    void advanceTimeline();
+    void step();
 
     void setMutex(bool mutex);
     

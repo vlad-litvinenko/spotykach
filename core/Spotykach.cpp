@@ -140,9 +140,10 @@ void Spotykach::initialize() const {
     for (auto e: _engines) e->initialize();
 }
 
-void Spotykach::advanceTimeline() {
+void Spotykach::step() {
     auto& e1 = engineAt(0);
-    if (e1.isOn()) {    e1.advanceTimeline();
+    if (e1.isOn()) {    
+        e1.advanceTimeline();
     }
     
     auto& e2 = engineAt(1);

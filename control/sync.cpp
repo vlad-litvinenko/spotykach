@@ -66,7 +66,7 @@ void Sync::tick() {
         _beat.beats ++;
     }
     
-    _core->advanceTimeline();
+    _core->step();
 }
 
 void Sync::push(uint32_t interval) {
