@@ -24,11 +24,8 @@ Pin ChannelToggles::pin(Target t, Channel ch) {
     using namespace seed;
     auto ch1 { ch == 0 };
     switch (t) {
-        case Target::Grid:      return ch1 ? D18 : D23;
-        case Target::Reverse:   return ch1 ? D19 : D24;
-        case Target::Declick:   return ch1 ? D20 : D25;
-        case Target::Freeze:    return ch1 ? D21 : D26;
-        case Target::Mute:      return ch1 ? D22 : D27;
+        case Target::Grid:      return ch1 ? D0 : D10;
+        case Target::Reverse:   return ch1 ? D1 : D26;
     };
 };
 #pragma GCC diagnostic pop

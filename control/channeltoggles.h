@@ -6,10 +6,7 @@ struct ChannelToggles {
 public:
     enum class Target {
         Grid,
-        Reverse,
-        Declick,
-        Freeze,
-        Mute
+        Reverse
     };
 
     ChannelToggles() = default;
@@ -31,10 +28,7 @@ private:
     static const int kTargetsCount { 5 };
     constexpr static std::array<Target, kTargetsCount> _targets = {
         Target::Grid,
-        Target::Reverse,
-        Target::Declick,
-        Target::Freeze,
-        Target::Mute
+        Target::Reverse
     };
 
     std::array<daisy::Switch, kTargetsCount> _switches;
