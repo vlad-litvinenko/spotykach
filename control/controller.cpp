@@ -7,10 +7,10 @@ using namespace spotykach;
 using namespace daisy;
 
 void Controller::initialize(DaisySeed& hw, Spotykach& core) {
-    // init_knobs(hw);
-    // init_toggles(hw);
+    init_knobs(hw);
+    init_toggles(hw);
 
-    //hw.adc.Start();
+    hw.adc.Start();
 
     init_sensor(core);
 }
@@ -46,14 +46,14 @@ void Controller::init_sensor(Spotykach& core) {
     _sensor.set_on_touch([&core]{ HW::hw().print("#### MINUS PATTERN B"); }, Target::PatternPlusB);
 }
 
-void Controller::set_parameters(Spotykach& core, MIDISync& midi, PitchShift& ps) {
-    // for (int i = 0; i < core.enginesCount(); i++) {
-    //     Engine& e = core.engineAt(i);
-    //     set_channel_toggles(e, core, _channel_toggles[i], i);
-    // }
+void Controller::set_parameters(Spotykach& core, PitchShift& ps) {
+    for (int i = 0; i < core.enginesCount(); i++) {
+        Engine& e = core.engineAt(i);
+        set_channel_toggles(e, core, _channel_toggles[i], i);
+    }
     
     set_knob_parameters(core, ps);
-    // set_global_toggles(core, midi);
+    set_global_toggles(core);
     read_sensor(core);
 };
 
@@ -67,18 +67,18 @@ void Controller::set_knob_parameters(Spotykach &s, PitchShift& ps) {
         auto t = _knobs[i].target();
         auto v = _knobs[i].value();
         switch (t) {
-            case KT::SlicePositionA:    e_a.setSlicePosition(v); break;
-            case KT::SliceLengthA:      e_a.setSliceLength(v); break;
-            case KT::RetriggerA:        e_a.setRetrigger(v); break;
-            case KT::JitterAmountA:     e_a.setJitterAmount(v); break;
-            case KT::JitterRate:        s.setJitterRate(v); break;
-            case KT::VolumeCrossfade:   s.setVolumeBalance(0.5); break;
-            case KT::PatternCrossfade:  s.setPatternBalance(v); break;
-            case KT::Pitch:             ps.setShift(v); break;
-            case KT::SlicePositionB:    e_b.setSlicePosition(v); break;
-            case KT::SliceLengthB:      e_b.setSliceLength(v); break;
-            case KT::RetriggerB:        e_b.setRetrigger(v); break;
-            case KT::JitterAmountB:     e_b.setJitterAmount(v); break;
+            case KT::SlicePositionA:    e_a.setSlicePosition(v);    break;
+            case KT::SliceLengthA:      e_a.setSliceLength(v);      break;
+            case KT::RetriggerA:        e_a.setRetrigger(v);        break;
+            case KT::JitterAmountA:     e_a.setJitterAmount(v);     break;
+            case KT::JitterRate:        s.setJitterRate(v);         break;
+            case KT::VolumeCrossfade:   s.setVolumeBalance(0.5);    break;
+            case KT::PatternCrossfade:  s.setPatternBalance(v);     break;
+            case KT::Pitch:             ps.setShift(v);             break;
+            case KT::SlicePositionB:    e_b.setSlicePosition(v);    break;
+            case KT::SliceLengthB:      e_b.setSliceLength(v);      break;
+            case KT::RetriggerB:        e_b.setRetrigger(v);        break;
+            case KT::JitterAmountB:     e_b.setJitterAmount(v);     break;
         }
     }   
 }
@@ -90,14 +90,14 @@ void Controller::set_channel_toggles(Engine& e, Spotykach& s, ChannelToggles& ct
         auto isOn = std::get<1>(toggle);
         using Target = ChannelToggles::Target;
         switch (target) {
-            case Target::Grid: e.setGrid(isOn ? 1 : 0); break;
-            case Target::Reverse: e.setReverse(isOn); break;
+            case Target::Grid:      e.setGrid(isOn ? 1 : 0); break;
+            case Target::Reverse:   e.setReverse(isOn);      break;
             default: {}
         }
     }
 }
 
-void Controller::set_global_toggles(Spotykach& s, MIDISync& m) {
+void Controller::set_global_toggles(Spotykach& s) {
     using Target = GlobalToggles::Target;
     auto cnt = _global_toggles.count();
     for (size_t i = 0; i < cnt; i++) {
@@ -107,17 +107,7 @@ void Controller::set_global_toggles(Spotykach& s, MIDISync& m) {
         switch (target) {
             case Target::Mutex: s.setMutex(isOn); break;
             case Target::Cascade: s.setCascade(isOn); break;
-            case Target::Run: {
-                static bool runState = false;
-                if (isOn != runState) {
-                    runState = isOn;
-                    if (runState) 
-                        m.start();
-                    else 
-                        m.stop();
-                }
-                break;
-            }
+            case Target::Split: break;
         }
     }
 }

@@ -22,8 +22,8 @@ bool GlobalToggles::isOnAt(int index) {
     return _switches[index].Pressed();
 }
 
+using namespace seed;
 Pin GlobalToggles::pin(Target t) {
-    using namespace seed;
     switch (t) {
         case Target::Mutex:     return D30;
         case Target::Cascade:   return D29;

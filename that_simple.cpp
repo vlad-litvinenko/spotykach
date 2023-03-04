@@ -2,7 +2,7 @@
 #include "core/globals.h"
 #include "core/Spotykach.h"
 #include "control/controller.h"
-#include "control/midisync.h"
+#include "control/sync.h"
 #include "common/deb.h"
 #include "fx/pitch.shift.h"
 
@@ -17,7 +17,7 @@ DaisySeed hw;
 Controller controller;
 Spotykach core;
 PlaybackParameters p;
-MIDISync midisync;
+Sync snc;
 PitchShift pitchshift;
 
 const float tempo { 120 };
@@ -31,8 +31,8 @@ float *sliced_[2] = {
 };
 
 void configurePlayback() {
-	p.isPlaying = midisync.isPlaying();
-	p.tempo = midisync.tempo();
+	p.isPlaying = snc.isPlaying();
+	p.tempo = snc.tempo();
 	p.sampleRate = kSampleRate;
 }
 
@@ -48,8 +48,6 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 		memset(out[1], 0, size * sizeof(float));
 		return;
 	}
-
-	midisync.tickTheClock();
 
 	core.preprocess(p);
 	core.process(in, sliced_, size);
@@ -68,31 +66,27 @@ int main(void) {
 	// HW::hw().setLed(false);
 
 	core.initialize();
+	snc.run(core);
 	pitchshift.initialize(48000, 4096);
 	pitchshift.setShift(0.5);
 	controller.initialize(hw, core);
 
-#ifndef LOG
-	midisync.run(core);
 
+#ifndef LOG
 	hw.SetAudioBlockSize(bufferSize);
 	hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_48KHZ);
 	hw.StartAudio(AudioCallback);
 #endif
 
 	while(1) {
-#ifndef LOG
-		midisync.pull();
-
-		static int param_count_down = 0;
-		if (++param_count_down == 50) {
-			controller.set_parameters(core, midisync, pitchshift);
-			param_count_down = 0;
+		snc.pull(hw);	
+		static uint32_t counter = 0;
+		if (++counter == 10e4 ) {
+			counter = 0;
+			controller.set_parameters(core, pitchshift);
+			#ifdef LOG
+			hw.PrintLine("%d", int(snc.tempo()));
+			#endif
 		}
-#endif
-#ifdef LOG
-		controller.set_parameters(core, midisync, pitchshift);
-		System::Delay(100);
-#endif
 	}
 }

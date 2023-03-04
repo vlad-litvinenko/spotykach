@@ -8,7 +8,7 @@ void ChannelToggles::initialize(DaisySeed hw, Channel ch) {
             pin(_targets[i], ch),
             0,
             Switch::Type::TYPE_TOGGLE,
-            Switch::Polarity::POLARITY_NORMAL,
+            Switch::Polarity::POLARITY_INVERTED,
             Switch::Pull::PULL_UP);
     }
 }

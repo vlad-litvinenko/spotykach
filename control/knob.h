@@ -32,8 +32,19 @@ private:
     daisy::AnalogControl _ctrl;
     Smoother _smoother;
     int _channel;
-    constexpr static  std::array<Target, 1> _targets = { 
-        Knob::Target::JitterRate
+    constexpr static  std::array<Target, 12> _targets = { 
+        Knob::Target::SlicePositionA,
+        Knob::Target::SliceLengthA,
+        Knob::Target::RetriggerA,
+        Knob::Target::JitterAmountA,
+        Knob::Target::JitterRate,
+        Knob::Target::VolumeCrossfade,
+        Knob::Target::PatternCrossfade,
+        Knob::Target::Pitch,
+        Knob::Target::SlicePositionB,
+        Knob::Target::SliceLengthB,
+        Knob::Target::RetriggerB,
+        Knob::Target::JitterAmountB
     };
     
     daisy::Pin pin(Knob::Target usage) const {

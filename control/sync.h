@@ -1,9 +1,9 @@
 #pragma once
 
 #include "daisy_seed.h"
-#include "hid/midi.h"
-#include "Spotykach.h"
-#include "globals.h"
+#include <array>
+#include "../core/globals.h"
+#include "../core/Spotykach.h"
 
 struct Beat {
     uint32_t beats = 0;
@@ -19,41 +19,40 @@ struct Beat {
     }
 };
 
-class MIDISync {
+class Sync {
 public:
-    MIDISync() = default;
-    ~MIDISync() = default;   
+    Sync() = default;
+    ~Sync() = default;   
 
     void run(vlly::spotykach::Spotykach& core);
-    void pull();
+    void pull(daisy::DaisySeed& hw);
     void start();
     void stop();
     bool isPlaying();
     float tempo();
-    void tickTheClock();
 
 private:
     vlly::spotykach::Spotykach* _core;
-    daisy::MidiUartHandler _midi;
+
     bool _filled = false;
     uint32_t _ptime = 0;
     std::size_t _iterator = 0;
-    std::array<uint32_t, 96> _wndw; //24 ticks * 4 beats = 1 measure
+    std::array<uint32_t, 16> _wndw; //4 ticks * 4 beats = 1 measure
     uint8_t _dev_cnt = 0; //deviations count
     uint8_t _dev_cnt_thres = 3; //deviations until reset
     uint32_t _dev_thres = 3; //min deviation to consider
     
-    float _avg = 20.83;
+    float _avg = 125;
     float _tempo = 120;
     Beat _beat;
     bool _is_playing = false;
     bool _is_about_to_play = false;
     bool _is_about_to_stop = false;
     int _countdown_to_stop = 5;
+    int _last_state = 1;
     
-    void handleEvent(daisy::MidiEvent e);
-    void resume();
-    void seek(uint8_t bytes[2]);
+    daisy::GPIO g;
+
     void tick();
     void push(uint32_t interval);
     float avg();
