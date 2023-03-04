@@ -34,7 +34,7 @@ Spotykach::Spotykach() {
     
     setMutex(false);
     setCascade(false);
-    setMix(1);
+    setSplit(false);
     setJitterRate(0);
     setPatternBalance(0.5);
     setVolumeBalance(0.5);
@@ -56,10 +56,6 @@ void Spotykach::setJitterRate(float normVal) {
 
 void Spotykach::setMutex(bool mutex) {
     _mutex = (mutex > 0);
-}
-
-void Spotykach::setMix(float normVal) {
-    _mix = logVolume(normVal);
 }
 
 void Spotykach::setVolumeBalance(float value) {
@@ -136,6 +132,10 @@ void Spotykach::setCascade(bool value) {
     if (needsReset) e.reset();
 }
 
+void Spotykach::setSplit(bool value) {
+    _split = value;
+}
+
 void Spotykach::initialize() const {
     for (auto e: _engines) e->initialize();
 }
@@ -156,32 +156,37 @@ void Spotykach::preprocess(PlaybackParameters p) const {
     for (auto e: _engines) e->preprocess(p);
 }
 
-void Spotykach::process(const float* const* inBuf, float** outBuf, int numFrames) const {
+void Spotykach::process(const float* const* in_buf, float** out_buf, int num_frames) const {
     auto& e1 = engineAt(0);
     auto& e2 = engineAt(1);
     auto e1_vol = _vol[0];
     auto e2_vol = _vol[1];
 
-    float out0 = 0;
-    float out1 = 0;
+    for (int f = 0; f < num_frames; f++) {
+        float in_0_ext = in_buf[0][f];
+        float in_1_ext = in_buf[0][f]; //Note! Both are taken from 0, i.e. mono
 
-    for (int f = 0; f < numFrames; f++) {
-        float out0Summ = 0;
-        float out1Summ = 0;
-        float in0Ext = inBuf[0][f];
-        float in1Ext = inBuf[1][f];
+        float out_0_a = 0;
+        float out_1_a = 0;
+        e1.process(in_0_ext, in_1_ext, &out_0_a, &out_1_a);
+        out_0_a *= e1_vol;
+        out_1_a *= e1_vol;
 
-        e1.process(in0Ext, in1Ext, &out0, &out1);
-        out0Summ += out0 * e1_vol;
-        out1Summ += out1 * e1_vol;
+        float out_0_b = 0;
+        float out_1_b = 0;
+        float e2_in0 = _cascade ? out_0_a : in_0_ext;
+        float e2_in1 = _cascade ? out_0_a : in_1_ext;
+        e2.process(e2_in0, e2_in1, &out_0_b, &out_1_b);
+        out_0_b *= e2_vol;
+        out_1_b *= e2_vol;
 
-        float e2_in0 = _cascade ? out0 : in0Ext;
-        float e2_in1 = _cascade ? out1 : in1Ext;
-        e2.process(e2_in0, e2_in1, &out0, &out1);
-        out0Summ += out0 * e2_vol;
-        out1Summ += out1 * e2_vol;
-        
-        outBuf[0][f] = (out0Summ * _mix + in0Ext * (1 - _mix));
-        outBuf[1][f] = (out1Summ * _mix + in1Ext * (1 - _mix));
+        if (_split) {
+            out_buf[0][f] = out_0_a;
+            out_buf[1][f] = out_0_b;    
+        }
+        else {
+            out_buf[0][f] = out_0_a + out_0_b;
+            out_buf[1][f] = out_0_a + out_0_b;
+        }
     }
 }

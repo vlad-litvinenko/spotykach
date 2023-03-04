@@ -107,7 +107,7 @@ void Controller::set_global_toggles(Spotykach& s) {
         switch (target) {
             case Target::Mutex: s.setMutex(isOn); break;
             case Target::Cascade: s.setCascade(isOn); break;
-            case Target::Split: break;
+            case Target::Split: s.setSplit(isOn); break;
         }
     }
 }

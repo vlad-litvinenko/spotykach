@@ -31,7 +31,7 @@ public:
 
     void setMutex(bool mutex);
     
-    void setMix(float normVal);
+    void setSplit(bool value);
     
     void setVolumeBalance(float value);
 
@@ -50,7 +50,7 @@ private:
     
     float _vol[kEnginesCount];
     float pattern_balance_;
-    float _mix;
+    bool _split;
     bool _mutex;
     bool _cascade;
 
