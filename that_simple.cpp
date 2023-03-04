@@ -31,7 +31,7 @@ float *sliced_[2] = {
 };
 
 void configurePlayback() {
-	p.isPlaying = snc.isPlaying();
+	p.isPlaying = controller.is_playing();
 	p.tempo = snc.tempo();
 	p.sampleRate = kSampleRate;
 }
@@ -81,7 +81,7 @@ int main(void) {
 	while(1) {
 		snc.pull(hw);	
 		static uint32_t counter = 0;
-		if (++counter == 10e4 ) {
+		if (++counter == 10e2 ) {
 			counter = 0;
 			controller.set_parameters(core, pitchshift);
 			#ifdef LOG

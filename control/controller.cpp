@@ -38,12 +38,12 @@ using Target = DescreteSensor::Target;
 void Controller::init_sensor(Spotykach& core) {
     _sensor.initialize();
     _sensor.set_mode(DescreteSensorPad::Mode::Toggle, Target::PlayStop);
-    _sensor.set_on_touch([&core]{ HW::hw().print("#### ONE SHOT A"); }, Target::OneShotA);
-    _sensor.set_on_touch([&core]{ HW::hw().print("#### ONE SHOT B"); }, Target::OneShotB);
-    _sensor.set_on_touch([&core]{ HW::hw().print("#### MINUS PATTERN A"); }, Target::PatternMinusA);
-    _sensor.set_on_touch([&core]{ HW::hw().print("#### MINUS PATTERN A"); }, Target::PatternPlusA);
-    _sensor.set_on_touch([&core]{ HW::hw().print("#### MINUS PATTERN B"); }, Target::PatternMinusB);
-    _sensor.set_on_touch([&core]{ HW::hw().print("#### MINUS PATTERN B"); }, Target::PatternPlusB);
+    // _sensor.set_on_touch([&core]{ HW::hw().print("#### ONE SHOT A"); }, Target::OneShotA);
+    // _sensor.set_on_touch([&core]{ HW::hw().print("#### ONE SHOT B"); }, Target::OneShotB);
+    // _sensor.set_on_touch([&core]{ HW::hw().print("#### MINUS PATTERN A"); }, Target::PatternMinusA);
+    // _sensor.set_on_touch([&core]{ HW::hw().print("#### MINUS PATTERN A"); }, Target::PatternPlusA);
+    // _sensor.set_on_touch([&core]{ HW::hw().print("#### MINUS PATTERN B"); }, Target::PatternMinusB);
+    // _sensor.set_on_touch([&core]{ HW::hw().print("#### MINUS PATTERN B"); }, Target::PatternPlusB);
 }
 
 void Controller::set_parameters(Spotykach& core, PitchShift& ps) {
@@ -114,7 +114,7 @@ void Controller::set_global_toggles(Spotykach& s) {
 
 void Controller::read_sensor(Spotykach& core) {
     _sensor.process();
-    // auto is_playing = _sensor.is_on(Target::PlayStop);
+    _is_playing = _sensor.is_on(Target::PlayStop);
 
     // auto& e_a = core.engineAt(0);
     // auto& e_b = core.engineAt(1);

@@ -21,6 +21,8 @@ public:
 
     void set_parameters(Spotykach& core, PitchShift& ps);
 
+    bool is_playing();
+
 private:
     void init_sensor(Spotykach& core);
     void init_knobs(daisy::DaisySeed& hw);
@@ -34,6 +36,8 @@ private:
     std::array<Knob, 12> _knobs;
     std::array<ChannelToggles, 2> _channel_toggles;
     GlobalToggles _global_toggles;
+
+    bool _is_playing = false;
 };
 
 }
