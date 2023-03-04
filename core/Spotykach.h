@@ -27,6 +27,9 @@ public:
     Engine& engineAt(int index) const;
     long enginesCount() const;
     
+    void set_is_playing(bool value);
+    void set_is_playing(bool value, int index);
+
     void step();
 
     void setMutex(bool mutex);
@@ -53,6 +56,7 @@ private:
     bool _split;
     bool _mutex;
     bool _cascade;
+    bool _is_playing;
 
     std::vector<std::shared_ptr<void>> _releasePool;
 };

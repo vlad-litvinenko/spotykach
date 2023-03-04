@@ -114,7 +114,9 @@ void Controller::set_global_toggles(Spotykach& s) {
 
 void Controller::read_sensor(Spotykach& core) {
     _sensor.process();
-    _is_playing = _sensor.is_on(Target::PlayStop);
+    core.set_is_playing(_sensor.is_on(Target::PlayStop));
+    core.set_is_playing(_sensor.is_on(Target::OneShotA), 0);
+    core.set_is_playing(_sensor.is_on(Target::OneShotB), 1);
 
     // auto& e_a = core.engineAt(0);
     // auto& e_b = core.engineAt(1);

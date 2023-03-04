@@ -32,7 +32,6 @@ Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
     _envelope   { e },
     _generator  { g },
     _jitterLFO  { l },
-    _isPlaying  { false },
     _tempo      { 0 },
     _grid       { Grid::c_word },
     _onsets     { 7 },
@@ -47,18 +46,13 @@ Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
     setRepeats(9);
     setReverse(false);
     setRetrigger(0);
-    setIsOn(true);
+    set_is_playing(false);
     setDeclick(true);
     setJitterAmount(0);
     setJitterRate(0.75);
     setFrozen(true);
     _trigger.prepareMeterPattern(_step, 0);
 }
-
-void Engine::setIsOn(bool on) {
-    _raw.on = on;
-    _isOn = on;
-};
 
 void Engine::setShift(float normVal) {
     if (fcomp(_raw.shift, normVal)) return;
@@ -188,11 +182,6 @@ void Engine::initialize() {
 }
 
 void Engine::preprocess(PlaybackParameters p) {
-    if (p.isPlaying != _isPlaying) {
-        _isPlaying = p.isPlaying;
-        reset(true);
-    }
-    
     static uint32_t framesPerMeasure = 0;
 
     if (!fcomp(p.tempo, _tempo)) {
@@ -211,7 +200,13 @@ void Engine::preprocess(PlaybackParameters p) {
     }
 }
 
-void Engine::advanceTimeline(bool engaged) {
+void Engine::set_is_playing(bool value) {
+    if (value != _is_playing) reset();
+    _is_playing = value;
+}
+
+void Engine::step(bool engaged) {
+    if (!_is_playing) return;
     _trigger.next(engaged);
 }
 
@@ -222,7 +217,7 @@ void Engine::process(float in0, float in1, float* out0, float* out1) {
 }
 
 void Engine::reset(bool hard) {
-    _source.reset();
+    if (hard) _source.reset();
     _generator.reset();
-    if (hard) _trigger.reset();
+    _trigger.reset();
 }

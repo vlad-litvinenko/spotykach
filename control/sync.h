@@ -26,9 +26,6 @@ public:
 
     void run(vlly::spotykach::Spotykach& core);
     void pull(daisy::DaisySeed& hw);
-    void start();
-    void stop();
-    bool isPlaying();
     float tempo();
 
 private:
@@ -45,10 +42,6 @@ private:
     float _avg = 125;
     float _tempo = 120;
     Beat _beat;
-    bool _is_playing = false;
-    bool _is_about_to_play = false;
-    bool _is_about_to_stop = false;
-    int _countdown_to_stop = 5;
     int _last_state = 1;
     
     daisy::GPIO g;

@@ -140,17 +140,23 @@ void Spotykach::initialize() const {
     for (auto e: _engines) e->initialize();
 }
 
+void Spotykach::set_is_playing(bool value) {
+    _is_playing = value;
+    set_is_playing(value, 0);
+    set_is_playing(value, 1);
+}
+
+void Spotykach::set_is_playing(bool value, int index) {
+    engineAt(index).set_is_playing(value || _is_playing);
+}
+
 void Spotykach::step() {
     auto& e1 = engineAt(0);
-    if (e1.isOn()) {    
-        e1.advanceTimeline();
-    }
+    e1.step();
     
     auto& e2 = engineAt(1);
-    if (e2.isOn()) {
-        bool engaged = !(_mutex && e1.isLocking());
-        e2.advanceTimeline(engaged);
-    }
+    bool engaged = !(_mutex && e1.isLocking());
+    e2.step(engaged);
 }
 
 void Spotykach::preprocess(PlaybackParameters p) const {

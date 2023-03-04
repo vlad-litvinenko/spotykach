@@ -19,7 +19,6 @@ namespace vlly {
 namespace spotykach {
 
 struct PlaybackParameters {
-    bool isPlaying;
     float tempo;
     float sampleRate;
 };
@@ -49,9 +48,8 @@ public:
     
     void initialize();
     
-    bool isOn() { return _isOn; };
-    void setIsOn(bool on);
-    
+    void set_is_playing(bool value);
+
     bool isLocking() { return _trigger.locking(); };
     
     void setSlicePosition(float start);
@@ -78,7 +76,7 @@ public:
     void setFrozen(bool frozen);
     void setAntifreeze(bool value);
     
-    void advanceTimeline(bool engaged = true);
+    void step(bool engaged = true);
 
     void process(float in0, float in1, float* out0, float* out1);
     
@@ -95,8 +93,7 @@ private:
     
     RawParameters _raw;
     
-    bool _isOn;
-    bool _isPlaying;
+    bool _is_playing;
     
     float _tempo;
     

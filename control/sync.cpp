@@ -15,10 +15,6 @@ void Sync::pull(daisy::DaisySeed& hw) {
     _last_state = new_state;
 }
 
-bool Sync::isPlaying() {
-    return _is_playing;
-}
-
 float Sync::tempo() {
     return _tempo;
 }
@@ -31,24 +27,7 @@ void Sync::reset() {
     _dev_cnt = 0;
 }
 
-void Sync::start() {
-    _is_about_to_play = true;
-    _is_about_to_stop = false;
-    _beat.reset();
-}
-
-void Sync::stop() {
-    _countdown_to_stop = 5;
-    _is_about_to_stop = true;
-    _is_about_to_play = false;
-}
-
 void Sync::tick() {
-    if (_is_about_to_play) {
-        _is_playing = true;
-        _is_about_to_play = false;
-    }
-
     auto t = daisy::System::GetNow();
     auto delta = t - _ptime;
     if (_ptime > 0) {
@@ -57,8 +36,6 @@ void Sync::tick() {
         checkDeviation(delta);
     }
     _ptime = t;
-
-    if (!_is_playing) return;
 
     _beat.ticks++;
     if (_beat.ticks == kTicksPerBeat) {

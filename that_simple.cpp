@@ -31,7 +31,6 @@ float *sliced_[2] = {
 };
 
 void configurePlayback() {
-	p.isPlaying = controller.is_playing();
 	p.tempo = snc.tempo();
 	p.sampleRate = kSampleRate;
 }
@@ -41,12 +40,6 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 	if (++cnfg_cnt == 40) {
 		configurePlayback();
 		cnfg_cnt = 0;
-	}
-
-	if (!p.isPlaying) { 
-		memset(out[0], 0, size * sizeof(float));
-		memset(out[1], 0, size * sizeof(float));
-		return;
 	}
 
 	core.preprocess(p);
