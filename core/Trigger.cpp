@@ -142,5 +142,3 @@ void Trigger::reset() {
     _nextPointIndex = 0;
     _ticksTillUnlock = 0;
 }
-
-

@@ -8,7 +8,7 @@ void GlobalToggles::initialize(DaisySeed hw) {
             pin(_targets[i]), 
             0, 
             Switch::Type::TYPE_TOGGLE,
-            Switch::Polarity::POLARITY_NORMAL,
+            Switch::Polarity::POLARITY_INVERTED,
             Switch::Pull::PULL_UP);
     }
 }
