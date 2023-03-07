@@ -117,8 +117,8 @@ void Trigger::adjustRepeatsIfNeeded(bool keep) {
     }
 }
 
-void Trigger::oneShot() {
-    _generator.activateSlice(0);
+void Trigger::one_shot(bool reverse) {
+    _generator.activate_slice(0, reverse ? -1 : 1);
 }
 
 void Trigger::next(bool engaged) {
@@ -128,7 +128,7 @@ void Trigger::next(bool engaged) {
             if (_retrigger && _nextPointIndex % _retrigger == 0) {
                 onset = static_cast<float>(_triggerPoints[_nextPointIndex]) / kTicksPerBeat;
             }
-            _generator.activateSlice(onset);
+            _generator.activate_slice(onset, 0);
             _ticksTillUnlock = 3;
         }
         _nextPointIndex = (_nextPointIndex + 1) % _pointsCount;

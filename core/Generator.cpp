@@ -77,7 +77,7 @@ void Generator::generate(float* out0, float* out1) {
     *out1 = out1Val;
 }
 
-void Generator::activateSlice(float in_raw_onset) {
+void Generator::activate_slice(float in_raw_onset, int direction) {
     auto reset = !fcomp(in_raw_onset, _raw_onset);
     auto offset = _slicePositionFrames;
     if (_slicePositionJitterAmount > 0) {        
@@ -95,13 +95,17 @@ void Generator::activateSlice(float in_raw_onset) {
     
     auto onset = _framesPerBeat * _raw_onset;
     auto slice_start = onset + offset;
+    auto reverse = _reverse;
+    if (direction != 0) {
+        reverse = direction == -1;
+    }
 
     if (!_source.isFilled() && _source.readHead() < slice_start) return;
     
     for (size_t i = 0; i < _slices.size(); i ++) {
         auto s = _slices[i];
         if (s->isActive()) continue;
-        s->activate(slice_start, _framesPerSlice, _reverse);
+        s->activate(slice_start, _framesPerSlice, reverse);
         break;
     }
 }

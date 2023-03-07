@@ -35,6 +35,7 @@ Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
     _is_playing { false },
     _tempo      { 0 },
     _grid       { Grid::c_word },
+    _pattern_index { 4 },
     _onsets     { 7 },
     _step       { 0 },
     _shift      { 0 }
@@ -42,7 +43,6 @@ Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
     setSlicePosition(0);
     setShift(0);
     setGrid(1);
-    setStepPosition(4.0 / (CWordsCount - 1));
     setSliceLength(0.5);
     setRepeats(9);
     setReverse(false);
@@ -59,39 +59,41 @@ void Engine::setShift(float normVal) {
     _raw.shift = normVal;
     float shiftValue = int(normVal * 15);
     _shift = shiftValue;
-    preparePattern();
+    prepare_pattern();
 }
 
-void Engine::setStepPosition(float normVal) {
-    _raw.stepGridPosition = normVal;
-    int maxIndex;
-    int valueIndex;
-    auto onsets = _onsets;
+void Engine::next_pattern() {
+    auto index = _pattern_index;
+    set_pattern_index(++index);
+}
+
+void Engine::prev_pattern() {
+    auto index = _pattern_index;
+    set_pattern_index(-- index);
+}
+
+void Engine::set_pattern_index(int index) {
     auto step = _step;
+    auto onsets = _onsets;
+    int max_index = _grid == Grid::even ? EvenStepsCount - 1 : CWordsCount - 1; 
+    index = std::max(index, 0);
+    index = std::min(index, max_index);
+
+    _pattern_index = index;    
+
     switch (_grid) {
-        case Grid::even: {
-            maxIndex = EvenStepsCount - 1;
-            valueIndex = std::min(maxIndex, int(normVal * (maxIndex + 1)));
-            step = EvenSteps[valueIndex];
-            break;
-        }
-        case Grid::c_word: {
-            maxIndex = CWordsCount - 1;
-            valueIndex = std::min(maxIndex, int(normVal * (maxIndex + 1)));
-            onsets = CWords[valueIndex];
-            step = 6; //1/16
-            break;
-        }
+        case Grid::even: step = EvenSteps[index]; break;
+        case Grid::c_word: onsets = CWords[index]; step = 1; /*1/16*/ break;
     }
-    
+
     if (step != _step || onsets != _onsets) {
         _step = step;
         _onsets = onsets;
-        preparePattern();
+        prepare_pattern();
     }
 }
 
-void Engine::preparePattern() {
+void Engine::prepare_pattern() {
     if (_grid == Grid::c_word) {
         _trigger.prepareCWordPattern(_onsets, _shift);
     } 
@@ -106,7 +108,6 @@ void Engine::setGrid(float normVal) {
     Grid grid = spotykach::Grid(normVal * (kGrid_Count - 1));
     if (grid != _grid) {
         _grid = grid;
-        setStepPosition(_raw.stepGridPosition);
     }
 }
 

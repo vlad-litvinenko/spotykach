@@ -37,13 +37,17 @@ void Controller::init_toggles(DaisySeed& hw) {
 using Target = DescreteSensor::Target;
 void Controller::init_sensor(Spotykach& core) {
     _sensor.initialize();
+
+    auto& e_a = core.engineAt(0);
+    auto& e_b = core.engineAt(1);
+
     _sensor.set_mode(DescreteSensorPad::Mode::Toggle, Target::PlayStop);
     // _sensor.set_on_touch([&core]{ HW::hw().print("#### ONE SHOT A"); }, Target::OneShotA);
     // _sensor.set_on_touch([&core]{ HW::hw().print("#### ONE SHOT B"); }, Target::OneShotB);
-    // _sensor.set_on_touch([&core]{ HW::hw().print("#### MINUS PATTERN A"); }, Target::PatternMinusA);
-    // _sensor.set_on_touch([&core]{ HW::hw().print("#### MINUS PATTERN A"); }, Target::PatternPlusA);
-    // _sensor.set_on_touch([&core]{ HW::hw().print("#### MINUS PATTERN B"); }, Target::PatternMinusB);
-    // _sensor.set_on_touch([&core]{ HW::hw().print("#### MINUS PATTERN B"); }, Target::PatternPlusB);
+    _sensor.set_on_touch([&e_a]{ e_a.prev_pattern(); }, Target::PatternMinusA);
+    _sensor.set_on_touch([&e_a]{ e_a.next_pattern(); }, Target::PatternPlusA);
+    _sensor.set_on_touch([&e_b]{ e_b.prev_pattern(); }, Target::PatternMinusB);
+    _sensor.set_on_touch([&e_b]{ e_b.next_pattern(); }, Target::PatternPlusB);
 }
 
 void Controller::set_parameters(Spotykach& core, PitchShift& ps) {
@@ -61,24 +65,24 @@ using namespace vlly;
 using namespace spotykach;
 using KT = Knob::Target;
 void Controller::set_knob_parameters(Spotykach &s, PitchShift& ps) {
-    auto& e_a = s.engineAt(0);
-    auto& e_b = s.engineAt(1);
+    auto& a = s.engineAt(0);
+    auto& b = s.engineAt(1);
     for (size_t i = 0; i < _knobs.size(); i++) {
         auto t = _knobs[i].target();
         auto v = _knobs[i].value();
         switch (t) {
-            case KT::SlicePositionA:    e_a.setSlicePosition(v);    break;
-            case KT::SliceLengthA:      e_a.setSliceLength(v);      break;
-            case KT::RetriggerA:        e_a.setRetrigger(v);        break;
-            case KT::JitterAmountA:     e_a.setJitterAmount(v);     break;
-            case KT::JitterRate:        s.setJitterRate(v);         break;
-            case KT::VolumeCrossfade:   s.setVolumeBalance(0.5);    break;
-            case KT::PatternCrossfade:  s.setPatternBalance(v);     break;
-            case KT::Pitch:             ps.setShift(v);             break;
-            case KT::SlicePositionB:    e_b.setSlicePosition(v);    break;
-            case KT::SliceLengthB:      e_b.setSliceLength(v);      break;
-            case KT::RetriggerB:        e_b.setRetrigger(v);        break;
-            case KT::JitterAmountB:     e_b.setJitterAmount(v);     break;
+            case KT::SlicePositionA:    a.setSlicePosition(v);    break;
+            case KT::SliceLengthA:      a.setSliceLength(v);      break;
+            case KT::RetriggerA:        a.setRetrigger(v);        break;
+            case KT::JitterAmountA:     a.setJitterAmount(v);     break;
+            case KT::JitterRate:        s.setJitterRate(v);       break;
+            case KT::VolumeCrossfade:   s.setVolumeBalance(0.5);  break;
+            case KT::PatternCrossfade:  s.setPatternBalance(v);   break;
+            case KT::Pitch:             ps.setShift(v);           break;
+            case KT::SlicePositionB:    b.setSlicePosition(v);    break;
+            case KT::SliceLengthB:      b.setSliceLength(v);      break;
+            case KT::RetriggerB:        b.setRetrigger(v);        break;
+            case KT::JitterAmountB:     b.setJitterAmount(v);     break;
         }
     }   
 }

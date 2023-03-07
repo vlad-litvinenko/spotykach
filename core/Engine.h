@@ -26,7 +26,6 @@ struct PlaybackParameters {
 struct RawParameters {
     float grid             = -1;
     float shift            = -1;
-    float stepGridPosition = -1;
     float slicePosition    = -1;
     float sliceLength      = -1;
     
@@ -56,7 +55,8 @@ public:
     void setSliceLength(float slice);
     
     void setShift(float shift);
-    void setStepPosition(float stepPosition);
+    void next_pattern();
+    void prev_pattern();
     void setGrid(float grid);
     
     void setRepeats(float repeats);
@@ -80,6 +80,8 @@ public:
 
     void process(float in0, float in1, float* out0, float* out1);
     
+    
+
     void reset(bool hard = true);
     
     int index = -1;
@@ -97,6 +99,7 @@ private:
     float _tempo;
     
     Grid _grid;
+    int _pattern_index;
     int _onsets;
     int _step;
     int _shift;
@@ -105,7 +108,8 @@ private:
     
     bool _invalidateCrossfade;
 
-    void preparePattern();
+    void set_pattern_index(int index);
+    void prepare_pattern();
 };
 }
 }

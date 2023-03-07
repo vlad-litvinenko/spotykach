@@ -113,4 +113,4 @@ class PitchShifter {
 
 }  // namespace clouds
 
-#endif  // CLOUDS_DSP_FX_MINI_CHORUS_H_
+#endif  // CLOUDS_DSP_FX_PITCH_SHIFTER_H_

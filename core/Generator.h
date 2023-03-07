@@ -34,7 +34,7 @@ public:
     void setCycleStart() override;
     void setReverse(bool) override;
     
-    void activateSlice(float) override;
+    void activate_slice(float, int) override;
     void generate(float*, float*) override;
     void reset() override;
     
