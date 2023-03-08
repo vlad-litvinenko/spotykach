@@ -24,9 +24,13 @@
 #define _one_of(n, m, v) _bit(n, v) ^ _bit(m, v)
 #endif
 
+#ifndef _target_index
+#define _target_index(t) static_cast<uint32_t>(t)
+#endif
+
 //If 1st or 2nd pad was touched and now both are,
 //ignore change, reset state to previous.
-inline uint16_t sanitize(int n, int m, uint16_t v, uint16_t p) {
+inline uint16_t one_or_both(int n, int m, uint16_t v, uint16_t p) {
     if (_one_of(n, m, p) && _both(n, m, v)) {
         v = (v & ~(1 << n)) | (_bit(n, p) << n);
         v = (v & ~(1 << m)) | (_bit(m, p) << m);
@@ -92,12 +96,41 @@ public:
     void process() {
         auto state = _mpr.Touched();
         
-        state = sanitize(1, 2, state, _state);
-        state = sanitize(5, 6, state, _state);
-        
-        _state = state;
+        _buffer[_iterator] = state;
+        _iterator++;
+        if (_iterator < _buffer_length) return;
+        _iterator = 0;
+        for (int i = 0; i < 16; i++) {
+            auto s = 0;
+            for (int j = 0; j < _buffer_length; j++) {
+                s += (_buffer[j] >> i) & 1;
+            }
+            if ((s >= _buffer_length - 1) && (state >> i & 1)) {
+                state |= 1 << i;
+            }
+            else {
+                state &= ~(1 << i);
+            }
+        }
 
-        for (auto& p: _pads) p.process(state);
+        state = one_or_both(1, 2, state, _state);
+        state = one_or_both(5, 6, state, _state);
+
+        _state = state;
+        
+        auto both1_2 = _both(1, 2, state);
+        auto both5_6 = _both(5, 6, state);
+        auto fwd_a = _target_index(Target::OneShotFwdA);
+        auto rev_a = _target_index(Target::OneShotRevA);
+        auto fwd_b = _target_index(Target::OneShotFwdB);
+        auto rev_b = _target_index(Target::OneShotRevB);
+
+        for (uint32_t i = 0; i < targets_count; i++) {
+            if (both1_2 && (i == fwd_a || i == rev_a)) { _pads[i].process(0); continue; }
+            if (both5_6 && (i == fwd_b || i == rev_b)) { _pads[i].process(0); continue; }
+
+            _pads[i].process(state);
+        }
     }
     
     void set_on_touch(std::function<void()> on_touch, Target target) {
@@ -117,11 +150,15 @@ public:
     }
 
 private:
+    static const int _buffer_length = 3;
+    int _iterator = 0;
+    uint16_t _buffer[_buffer_length];
+
     uint16_t _state;
     daisy::Mpr121I2C _mpr;
     DescreteSensorPad _pads[targets_count];
     
     DescreteSensorPad& pad(Target target) {
-        return _pads[static_cast<int>(target)];
+        return _pads[_target_index(target)];
     }
 };
