@@ -17,7 +17,7 @@ public:
     virtual uint32_t beatsPerPattern() = 0;
     virtual void prepareMeterPattern(int step, int shift) = 0;
     virtual void prepareCWordPattern(int onsets, int shift) = 0;
-    virtual void oneShot() = 0;
+    virtual void one_shot(bool reverse) = 0;
     virtual void next(bool engaged) = 0;
     virtual void reset() = 0;
     
