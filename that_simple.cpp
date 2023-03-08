@@ -52,7 +52,7 @@ int main(void) {
 	hw.Configure();
 	hw.Init();
 
-	// HW::hw().setHW(&hw);
+	HW::hw().setHW(&hw);
 #ifdef LOG
 	HW::hw().startLog();
 #endif
