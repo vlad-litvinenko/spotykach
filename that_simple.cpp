@@ -71,15 +71,17 @@ int main(void) {
 	hw.StartAudio(AudioCallback);
 #endif
 
+#ifdef LOG
+	int count_limit = 10e4;
+#else
+	int count_limit = 10e2;
+#endif
 	while(1) {
 		snc.pull(hw);	
 		static uint32_t counter = 0;
-		if (++counter == 10e2 ) {
+		if (++counter == count_limit ) {
 			counter = 0;
 			controller.set_parameters(core, pitchshift);
-			#ifdef LOG
-			hw.PrintLine("%d", int(snc.tempo()));
-			#endif
 		}
 	}
 }
