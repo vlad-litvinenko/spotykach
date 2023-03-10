@@ -206,6 +206,10 @@ void Engine::set_is_playing(bool value) {
     _is_playing = value;
 }
 
+void Engine::one_shot(bool reverse) {
+    _trigger.one_shot(reverse);
+}
+
 void Engine::step(bool engaged) {
     if (!_is_playing) return;
     _trigger.next(engaged);

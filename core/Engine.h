@@ -49,6 +49,8 @@ public:
     
     void set_is_playing(bool value);
 
+    void one_shot(bool reverse);
+
     bool isLocking() { return _trigger.locking(); };
     
     void setSlicePosition(float start);
