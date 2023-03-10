@@ -38,24 +38,16 @@ public:
         ps_.set_ratio(stmlib::SemitonesToRatio(semitones));
     }
 
-    void process(const float* const* in, float **out, size_t size) {
-        if (_bypass) {
-		    memcpy(out[0], in[0], size * sizeof(float));
-		    memcpy(out[1], in[1], size * sizeof(float));
-		    return;
-        }
+    void process(float *in_out_0, float *in_out_1) {
+        if (_bypass) return;
 
-        for (size_t i = 0; i < size; i++) {
-		    _frames[i].l = in[0][i];
-		    _frames[i].r = in[1][i];
-	    }
-	
-	    ps_.Process(_frames, size);
+        clouds::FloatFrame f;
+        f.l = *in_out_0;
+        f.r = *in_out_1;
 
-        for (size_t i = 0; i < size; i++) {
-            out[0][i] = _frames[i].l;
-            out[1][i] = _frames[i].r;
-        }
+        ps_.ProcessFrame(&f);
+        *in_out_0 = f.l;
+        *in_out_1 = f.r;
     }
 
 private:

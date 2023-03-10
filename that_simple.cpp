@@ -18,17 +18,9 @@ Controller controller;
 Spotykach core;
 PlaybackParameters p;
 Sync snc;
-PitchShift pitchshift;
 
 const float tempo { 120 };
 const int bufferSize { 4 };
-
-float sliced_0_[bufferSize];
-float sliced_1_[bufferSize];
-float *sliced_[2] = {
-	&sliced_0_[0],
-	&sliced_1_[0]
-};
 
 void configurePlayback() {
 	p.tempo = snc.tempo();
@@ -43,9 +35,7 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 	}
 
 	core.preprocess(p);
-	core.process(in, sliced_, size);
-
-	pitchshift.process(sliced_, out, size);
+	core.process(in, out, size);
 }
 
 int main(void) {
@@ -60,8 +50,6 @@ int main(void) {
 
 	core.initialize();
 	snc.run(core);
-	pitchshift.initialize(48000, 4096);
-	pitchshift.setShift(0.5);
 	controller.initialize(hw, core);
 
 
@@ -81,7 +69,7 @@ int main(void) {
 		static uint32_t counter = 0;
 		if (++counter == count_limit ) {
 			counter = 0;
-			controller.set_parameters(core, pitchshift);
+			controller.set_parameters(core);
 		}
 	}
 }

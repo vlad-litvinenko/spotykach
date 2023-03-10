@@ -6,7 +6,6 @@
 #include "globaltoggles.h"
 #include "channeltoggles.h"
 #include "Spotykach.h"
-#include "../fx/pitch.shift.h"
 #include "descrete.sensor.h"
 
 namespace vlly {
@@ -19,7 +18,7 @@ public:
 
     void initialize(daisy::DaisySeed& hw, Spotykach& s);
 
-    void set_parameters(Spotykach& core, PitchShift& ps);
+    void set_parameters(Spotykach& core);
 
     bool is_playing();
 
@@ -27,7 +26,7 @@ private:
     void init_sensor(Spotykach& core);
     void init_knobs(daisy::DaisySeed& hw);
     void init_toggles(daisy::DaisySeed& hw);
-    void set_knob_parameters(Spotykach &s, PitchShift& ps);
+    void set_knob_parameters(Spotykach &s);
     void set_channel_toggles(Engine& e, Spotykach &s, ChannelToggles& ct, int i);
     void set_global_toggles(Spotykach &s);
     void read_sensor(Spotykach &core);

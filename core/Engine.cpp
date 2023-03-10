@@ -177,9 +177,15 @@ void Engine::setAntifreeze(bool value) {
     _source.setAntifreeze(value);
 }
 
+void Engine::set_pitch_shift(float value) {
+    _pitch.setShift(value);
+}
+
 void Engine::initialize() {
     _source.initialize();
     _generator.initialize();
+    _pitch.initialize(48000, 4096);
+	_pitch.setShift(0.5);
 }
 
 void Engine::preprocess(PlaybackParameters p) {
@@ -219,6 +225,7 @@ void Engine::process(float in0, float in1, float* out0, float* out1) {
     _jitterLFO.advance();
     _source.write(in0, in1);
     _generator.generate(out0, out1);
+    _pitch.process(out0, out1);
 }
 
 void Engine::reset(bool hard) {

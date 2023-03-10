@@ -55,13 +55,13 @@ void Controller::init_sensor(Spotykach& core) {
     _sensor.set_on_touch([&e_b]{ e_b.next_pattern(); }, Target::PatternPlusB);
 }
 
-void Controller::set_parameters(Spotykach& core, PitchShift& ps) {
+void Controller::set_parameters(Spotykach& core) {
     for (int i = 0; i < core.enginesCount(); i++) {
         Engine& e = core.engineAt(i);
         set_channel_toggles(e, core, _channel_toggles[i], i);
     }
     
-    set_knob_parameters(core, ps);
+    set_knob_parameters(core);
     set_global_toggles(core);
     read_sensor(core);
 };
@@ -69,25 +69,30 @@ void Controller::set_parameters(Spotykach& core, PitchShift& ps) {
 using namespace vlly;
 using namespace spotykach;
 using KT = Knob::Target;
-void Controller::set_knob_parameters(Spotykach &s, PitchShift& ps) {
+void Controller::set_knob_parameters(Spotykach &s) {
     auto& a = s.engineAt(0);
     auto& b = s.engineAt(1);
     for (size_t i = 0; i < _knobs.size(); i++) {
         auto t = _knobs[i].target();
         auto v = _knobs[i].value();
         switch (t) {
-            case KT::SlicePositionA:    a.setSlicePosition(v);    break;
-            case KT::SliceLengthA:      a.setSliceLength(v);      break;
-            case KT::RetriggerA:        a.setRetrigger(v);        break;
-            case KT::JitterAmountA:     a.setJitterAmount(v);     break;
-            case KT::JitterRate:        s.setJitterRate(v);       break;
-            case KT::VolumeCrossfade:   s.setVolumeBalance(0.5);  break;
-            case KT::PatternCrossfade:  s.set_pattern_balance(v); break;
-            case KT::Pitch:             ps.setShift(v);           break;
-            case KT::SlicePositionB:    b.setSlicePosition(v);    break;
-            case KT::SliceLengthB:      b.setSliceLength(v);      break;
-            case KT::RetriggerB:        b.setRetrigger(v);        break;
-            case KT::JitterAmountB:     b.setJitterAmount(v);     break;
+            case KT::SlicePositionA:    a.setSlicePosition(v);          break;
+            case KT::SliceLengthA:      a.setSliceLength(v);            break;
+            case KT::RetriggerA:        a.setRetrigger(v);              break;
+            case KT::JitterAmountA:     a.setJitterAmount(v);           break;
+            case KT::JitterRate:        s.setJitterRate(v);             break;
+            case KT::VolumeCrossfade:   s.setVolumeBalance(0.5);        break;
+            case KT::PatternCrossfade:  s.set_pattern_balance(v);       break;
+            case KT::SlicePositionB:    b.setSlicePosition(v);          break;
+            case KT::SliceLengthB:      b.setSliceLength(v);            break;
+            case KT::RetriggerB:        b.setRetrigger(v);              break;
+            case KT::JitterAmountB:     b.setJitterAmount(v);           break;
+            case KT::Pitch:             
+            { 
+                a.set_pitch_shift(v); 
+                b.set_pitch_shift(v);   
+                break;
+            }
             default:{}
         }
     }   

@@ -14,6 +14,7 @@
 #include "IGenerator.h"
 #include "ILFO.h"
 #include "Parameters.h"
+#include "../fx/pitch.shift.h"
 
 namespace vlly {
 namespace spotykach {
@@ -56,6 +57,8 @@ public:
     void setSlicePosition(float start);
     void setSliceLength(float slice);
     
+    void set_pitch_shift(float value);
+
     void setShift(float shift);
     void next_pattern();
     void prev_pattern();
@@ -81,8 +84,6 @@ public:
     void step(bool engaged = true);
 
     void process(float in0, float in1, float* out0, float* out1);
-    
-    
 
     void reset(bool hard = true);
     
@@ -94,6 +95,7 @@ private:
     IEnvelope& _envelope;
     IGenerator& _generator;
     ILFO& _jitterLFO;
+    PitchShift _pitch;
     
     RawParameters _raw;
     
