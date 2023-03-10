@@ -42,8 +42,13 @@ void Controller::init_sensor(Spotykach& core) {
     auto& e_b = core.engineAt(1);
 
     _sensor.set_mode(DescreteSensorPad::Mode::Toggle, Target::PlayStop);
-    // _sensor.set_on_touch([&core]{ HW::hw().print("#### ONE SHOT A"); }, Target::OneShotA);
-    // _sensor.set_on_touch([&core]{ HW::hw().print("#### ONE SHOT B"); }, Target::OneShotB);
+    
+    _sensor.set_on_touch([&e_a]{ e_a.one_shot(false); }, Target::OneShotFwdA);
+    _sensor.set_on_touch([&e_a]{ e_a.one_shot(true);  }, Target::OneShotRevA);
+
+    _sensor.set_on_touch([&e_b]{ e_b.one_shot(false); }, Target::OneShotFwdB);
+    _sensor.set_on_touch([&e_b]{ e_b.one_shot(true);  }, Target::OneShotRevB);
+
     _sensor.set_on_touch([&e_a]{ e_a.prev_pattern(); }, Target::PatternMinusA);
     _sensor.set_on_touch([&e_a]{ e_a.next_pattern(); }, Target::PatternPlusA);
     _sensor.set_on_touch([&e_b]{ e_b.prev_pattern(); }, Target::PatternMinusB);
@@ -77,12 +82,13 @@ void Controller::set_knob_parameters(Spotykach &s, PitchShift& ps) {
             case KT::JitterAmountA:     a.setJitterAmount(v);     break;
             case KT::JitterRate:        s.setJitterRate(v);       break;
             case KT::VolumeCrossfade:   s.setVolumeBalance(0.5);  break;
-            case KT::PatternCrossfade:  s.setPatternBalance(v);   break;
+            case KT::PatternCrossfade:  s.set_pattern_balance(v); break;
             case KT::Pitch:             ps.setShift(v);           break;
             case KT::SlicePositionB:    b.setSlicePosition(v);    break;
             case KT::SliceLengthB:      b.setSliceLength(v);      break;
             case KT::RetriggerB:        b.setRetrigger(v);        break;
             case KT::JitterAmountB:     b.setJitterAmount(v);     break;
+            default:{}
         }
     }   
 }
@@ -122,9 +128,12 @@ void Controller::read_sensor(Spotykach& core) {
     core.set_is_playing(_sensor.is_on(Target::OneShotFwdA), 0);
     core.set_is_playing(_sensor.is_on(Target::OneShotFwdB), 1);
 
-    // auto& e_a = core.engineAt(0);
-    // auto& e_b = core.engineAt(1);
+    auto& e_a = core.engineAt(0);
+    auto& e_b = core.engineAt(1);
+    e_a.setFrozen(!_sensor.is_on(Target::RecordA));
+    e_b.setFrozen(!_sensor.is_on(Target::RecordB));
 
-    // e_a.setFrozen(!_sensor.is_on(Target::RecordA));
-    // e_a.setFrozen(!_sensor.is_on(Target::RecordB));
+    // if (_sensor.is_on(Target::RecordB)) {
+    //     HW::hw().print("#### RECORD B");
+    // }
 }
