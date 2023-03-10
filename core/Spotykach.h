@@ -38,7 +38,7 @@ public:
     
     void setVolumeBalance(float value);
 
-    void setPatternBalance(float value);
+    void set_pattern_balance(float value);
 
     void setCascade(bool value);
     
