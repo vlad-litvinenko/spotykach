@@ -51,7 +51,7 @@ Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
     setJitterAmount(0);
     setJitterRate(0.75);
     setFrozen(true);
-    _trigger.prepareCWordPattern(_onsets, _shift);
+    set_pattern_index(0);
 }
 
 void Engine::setShift(float normVal) {
