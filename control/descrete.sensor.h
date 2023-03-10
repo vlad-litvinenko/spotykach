@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include "dev/mpr121.h"
 #include "descrete.sensor.pad.h"
+#include "../common/deb.h"
 
 #ifndef _pin
 #define _pin(shift) (1 << shift)
@@ -69,6 +70,7 @@ public:
     void initialize() {
         _state = 0;
         daisy::Mpr121I2C::Config cfg;
+        cfg.touch_threshold = 24;
         _mpr.Init(cfg);
 
         //TARGET TO PIN MAPPING #########################################
@@ -95,23 +97,6 @@ public:
 
     void process() {
         auto state = _mpr.Touched();
-        
-        _buffer[_iterator] = state;
-        _iterator++;
-        if (_iterator < _buffer_length) return;
-        _iterator = 0;
-        for (int i = 0; i < 16; i++) {
-            auto s = 0;
-            for (int j = 0; j < _buffer_length; j++) {
-                s += (_buffer[j] >> i) & 1;
-            }
-            if ((s >= _buffer_length - 1) && (state >> i & 1)) {
-                state |= 1 << i;
-            }
-            else {
-                state &= ~(1 << i);
-            }
-        }
 
         state = one_or_both(1, 2, state, _state);
         state = one_or_both(5, 6, state, _state);
@@ -150,10 +135,6 @@ public:
     }
 
 private:
-    static const int _buffer_length = 3;
-    int _iterator = 0;
-    uint16_t _buffer[_buffer_length];
-
     uint16_t _state;
     daisy::Mpr121I2C _mpr;
     DescreteSensorPad _pads[targets_count];
