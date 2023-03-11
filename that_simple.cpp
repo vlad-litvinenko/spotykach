@@ -6,7 +6,7 @@
 #include "common/deb.h"
 #include "fx/pitch.shift.h"
 
-//#define LOG
+#define LOG
 
 using namespace daisy;
 
@@ -46,7 +46,6 @@ int main(void) {
 #ifdef LOG
 	HW::hw().startLog();
 #endif
-	// HW::hw().setLed(false);
 
 	core.initialize();
 	snc.run(core);
@@ -60,12 +59,12 @@ int main(void) {
 #endif
 
 #ifdef LOG
-	int count_limit = 10e4;
+	uint32_t count_limit = 10e3;
 #else
-	int count_limit = 10e2;
+	uint32_t count_limit = 10e2;
 #endif
 	while(1) {
-		snc.pull(hw);	
+		snc.pull(hw);
 		static uint32_t counter = 0;
 		if (++counter == count_limit ) {
 			counter = 0;

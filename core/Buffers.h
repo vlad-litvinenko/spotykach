@@ -32,7 +32,14 @@ static float DSY_SDRAM_BSS _slcBuf5R[kSliceBufferLength];
 static float DSY_SDRAM_BSS _slcBuf6L[kSliceBufferLength];
 static float DSY_SDRAM_BSS _slcBuf6R[kSliceBufferLength];
 
-static uint16_t DSY_SDRAM_BSS pitch_buf_[4096];
+static const int _pitch_buf_length { 4096 };
+
+static uint16_t DSY_SDRAM_BSS _pitch_buf_1[_pitch_buf_length];
+static uint16_t DSY_SDRAM_BSS _pitch_buf_2[_pitch_buf_length];
+static uint16_t DSY_SDRAM_BSS _pitch_buf_3[_pitch_buf_length];
+static uint16_t DSY_SDRAM_BSS _pitch_buf_4[_pitch_buf_length];
+static uint16_t DSY_SDRAM_BSS _pitch_buf_5[_pitch_buf_length];
+static uint16_t DSY_SDRAM_BSS _pitch_buf_6[_pitch_buf_length];
 
 class Buffers {
 public:
@@ -54,7 +61,8 @@ public:
     };
 
     uint16_t* pitch_buf() {
-        return pitch_buf_;
+        assert(_provided_pitch_buf_count < _pitch_buf_count);
+        return _pitch_bufs[_provided_pitch_buf_count++];
     };
 
 private:
@@ -94,5 +102,16 @@ private:
         _slcBuf5R,
         _slcBuf6L,
         _slcBuf6R
+    };
+
+    int _provided_pitch_buf_count { 0 };
+    static const int _pitch_buf_count { kSlicesCount * kEnginesCount };
+    uint16_t* _pitch_bufs[_pitch_buf_count] = {
+        _pitch_buf_1,
+        _pitch_buf_2,
+        _pitch_buf_3,
+        _pitch_buf_4,
+        _pitch_buf_5,
+        _pitch_buf_6
     };
 };
