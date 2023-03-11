@@ -4,9 +4,8 @@
 #include "control/controller.h"
 #include "control/sync.h"
 #include "common/deb.h"
-#include "fx/pitch.shift.h"
 
-#define LOG
+//#define LOG
 
 using namespace daisy;
 
