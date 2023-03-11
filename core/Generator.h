@@ -31,7 +31,7 @@ public:
 
     void setFramesPerMeasure(uint32_t) override;
     void setSlicePosition(float) override;
-    void setPositionJitterAmount(float) override;
+    void set_jitter_amount(float) override;
     void setSliceLength(float) override;
     void setCycleStart() override;
     void setReverse(bool) override;

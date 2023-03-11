@@ -36,7 +36,7 @@ void Generator::setSlicePosition(float value) {
     _slice_position_frames = _source.length() * _slice_position;
 }
 
-void Generator::setPositionJitterAmount(float value) {
+void Generator::set_jitter_amount(float value) {
     _jitter_amount = value;
 }
 
@@ -84,14 +84,32 @@ void Generator::generate(float* out0, float* out1) {
 void Generator::activate_slice(float in_raw_onset, int direction) {
     auto reset = !fcomp(in_raw_onset, _raw_onset);
     auto offset = _slice_position_frames;
-    if (_jitter_amount > 0) {        
-        auto lfoOffset = _jitter_lfo.triangleValue() * _jitter_amount;
-        offset += lfoOffset * _source.length();
+    auto lfo_value = _jitter_lfo.triangleValue();
+    auto m = modulations(_jitter_amount);
+    if (m.position != 0) {
+        offset += lfo_value * m.position * _source.length();
         offset = std::max(offset, 0ul);
         offset = std::min(offset, _source.length() - 1);
         reset = true;
     }
+    auto pitch_shift = _pitch_shift;
+    auto frames_per_slice = _frames_per_slice;
+    auto reverse = _reverse;
+    if (m.pitch != 0) {
+        auto shift = lfo_value * m.pitch;
+        pitch_shift += shift;
+        pitch_shift = std::max(pitch_shift, 0.0f);
+        pitch_shift = std::min(pitch_shift, 1.0f);
+
+        frames_per_slice += shift * kSourceBufferLength;
+        frames_per_slice = std::max(_frames_per_slice, static_cast<uint32_t>(0));
+        frames_per_slice = std::min(_frames_per_slice, static_cast<uint32_t>(kSourceBufferLength));
+
+        reverse = shift < 0;
+    }
     
+    if (direction != 0) reverse = direction == -1;
+
     if (reset) {
         setNeedsResetSlices();
         _raw_onset = in_raw_onset;
@@ -99,17 +117,13 @@ void Generator::activate_slice(float in_raw_onset, int direction) {
     
     auto onset = _frames_per_beat * _raw_onset;
     auto slice_start = onset + offset;
-    auto reverse = _reverse;
-    if (direction != 0) {
-        reverse = direction == -1;
-    }
 
     if (!_source.isFilled() && _source.readHead() < slice_start) return;
     
     for (size_t i = 0; i < _slices.size(); i ++) {
         auto s = _slices[i];
         if (s->isActive()) continue;
-        s->activate(slice_start, _frames_per_slice, reverse, _pitch_shift);
+        s->activate(slice_start, frames_per_slice, reverse, pitch_shift);
         break;
     }
 }
@@ -121,3 +135,17 @@ void Generator::reset() {
 void Generator::setNeedsResetSlices() {
     for (auto s: _slices) s->setNeedsReset();
 }
+
+struct Modulations {
+    float position;
+    float pitch;
+};
+
+Modulations modulations(float x) {
+    if (fcomp(x, 0)) return { 0, 0 };
+    if (fcomp(x, 1)) return { 0, 0 };
+
+    if (x < 0.33)  return { 2 * x, 0 };
+    if (x < 0.66)  return { 1.32 - 2 * x, 2 * (x - 0.33) };
+    if (x < 1.0)   return { 0, 1.32 - 2 * (x - 0.33) };
+} 
