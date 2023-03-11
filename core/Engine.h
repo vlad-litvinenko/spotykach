@@ -95,7 +95,6 @@ private:
     IEnvelope& _envelope;
     IGenerator& _generator;
     ILFO& _jitterLFO;
-    PitchShift _pitch;
     
     RawParameters _raw;
     

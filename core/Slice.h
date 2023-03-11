@@ -12,6 +12,7 @@
 #include "ISource.h"
 #include "ISliceBuffer.h"
 #include "IEnvelope.h"
+#include "../fx/pitch.shift.h"
 
 class Slice {
 public:
@@ -22,7 +23,7 @@ public:
     bool isActive() { return _active; };
     bool isInactive() { return !_active; };
     void initialize();
-    void activate(long offset, long length, bool reverse);
+    void activate(long offset, long length, bool reverse, float pitch);
     void synthesize(float *out0, float* out1);
     void setNeedsReset();
     
@@ -30,7 +31,8 @@ private :
     ISource& _source;
     IEnvelope& _envelope;
     ISliceBuffer& _buffer;
-    
+    PitchShift _pitch;
+
     bool _active;
     
     long _length;

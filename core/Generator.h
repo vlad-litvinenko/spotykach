@@ -27,6 +27,8 @@ public:
     
     void initialize() override;
 
+    void set_pitch_shift(float) override;
+
     void setFramesPerMeasure(uint32_t) override;
     void setSlicePosition(float) override;
     void setPositionJitterAmount(float) override;
@@ -51,6 +53,7 @@ private:
 
     float _slicePosition;
     float _slicePositionJitterAmount;
+    float _pitch_shift;
     uint32_t _slicePositionFrames;
     uint32_t _framesPerSlice;
     uint32_t _framesPerBeat;

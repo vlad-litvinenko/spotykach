@@ -6,8 +6,6 @@
 #include "mi/units.h"
 #include "../core/Buffers.h"
 
-static clouds::FloatFrame _frames[4];
-
 class PitchShift {
 public:
     PitchShift() = default;

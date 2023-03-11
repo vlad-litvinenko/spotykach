@@ -7,7 +7,7 @@
 //
 
 #include "Slice.h"
-
+#include "globals.h"
 
 Slice::Slice(ISource& inSource, ISliceBuffer& inBuffer, IEnvelope& inEnvelope) :
     _source     { inSource },
@@ -20,7 +20,13 @@ Slice::Slice(ISource& inSource, ISliceBuffer& inBuffer, IEnvelope& inEnvelope) :
     _reverse    { false } 
     {}
 
-void Slice::activate(long offset, long length, bool reverse) {
+void Slice::initialize() {
+    _buffer.initialize();
+    _pitch.initialize(kSampleRate, 4096);
+	_pitch.setShift(0.5);
+}
+
+void Slice::activate(long offset, long length, bool reverse, float pitch) {
     if (_needsReset || offset != _offset) {
         _buffer.reset();
         _needsReset = false;
@@ -29,6 +35,7 @@ void Slice::activate(long offset, long length, bool reverse) {
     _length = length;
     _reverse = reverse;
     _iterator = 0;
+    _pitch.setShift(pitch);
     _active = true;
 }
 
@@ -61,11 +68,9 @@ void Slice::synthesize(float *out0, float* out1) {
     *out0 = out0Val * attenuation;
     *out1 = out1Val * attenuation;
     
-    next();
-}
+    _pitch.process(out0, out1);
 
-void Slice::initialize() {
-    _buffer.initialize();
+    next();
 }
 
 void Slice::next() {

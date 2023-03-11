@@ -16,6 +16,7 @@ class IGenerator {
 public:
     virtual void initialize() = 0;
     virtual void setFramesPerMeasure(uint32_t value) = 0;
+    virtual void set_pitch_shift(float value) = 0;
     virtual void setSlicePosition(float) = 0;
     virtual void setPositionJitterAmount(float value) = 0;
     virtual void setSliceLength(float) = 0;

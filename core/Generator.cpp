@@ -27,6 +27,10 @@ Generator::Generator(ISource& inSource, IEnvelope& inEnvelope, ILFO& inJitterLFO
     reset();
 }
 
+void Generator::set_pitch_shift(float value) {
+    _pitch_shift = value;
+}
+
 void Generator::setSlicePosition(float value) {
     _slicePosition = value;
     _slicePositionFrames = _source.length() * _slicePosition;
@@ -105,7 +109,7 @@ void Generator::activate_slice(float in_raw_onset, int direction) {
     for (size_t i = 0; i < _slices.size(); i ++) {
         auto s = _slices[i];
         if (s->isActive()) continue;
-        s->activate(slice_start, _framesPerSlice, reverse);
+        s->activate(slice_start, _framesPerSlice, reverse, _pitch_shift);
         break;
     }
 }
