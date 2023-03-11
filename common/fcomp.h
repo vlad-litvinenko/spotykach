@@ -1,4 +1,6 @@
 
+#pragma once
+
 inline static bool fcomp(float lhs, float rhs, int precision = 2) {
     auto digits = precision * 10;
     auto lhs_int = static_cast<int>(roundf(lhs * digits));
