@@ -15,10 +15,10 @@
 using namespace vlly;
 using namespace spotykach;
 
-Generator::Generator(ISource& inSource, IEnvelope& inEnvelope, ILFO& inJitterLFO) :
-    _source     { inSource },
-    _envelope   { inEnvelope },
-    _jitterLFO  { inJitterLFO },
+Generator::Generator(ISource& in_source, IEnvelope& in_envelope, ILFO& in_jitter_lfo) :
+    _source     { in_source },
+    _envelope   { in_envelope },
+    _jitter_lfo  { in_jitter_lfo },
     _raw_onset  { 0 },
     _reverse    { false } {
     for (auto i = 0; i < kSlicesCount; i++) {
@@ -32,16 +32,16 @@ void Generator::set_pitch_shift(float value) {
 }
 
 void Generator::setSlicePosition(float value) {
-    _slicePosition = value;
-    _slicePositionFrames = _source.length() * _slicePosition;
+    _slice_position = value;
+    _slice_position_frames = _source.length() * _slice_position;
 }
 
 void Generator::setPositionJitterAmount(float value) {
-    _slicePositionJitterAmount = value;
+    _jitter_amount = value;
 }
 
 void Generator::setSliceLength(float value) {
-    _framesPerSlice = value * kSliceBufferLength;
+    _frames_per_slice = value * kSliceBufferLength;
 }
 
 void Generator::setReverse(bool value) {
@@ -52,7 +52,7 @@ void Generator::setReverse(bool value) {
 }
 
 void Generator::setCycleStart() {
-    _source.setCycleStart(_slicePositionFrames);
+    _source.setCycleStart(_slice_position_frames);
 }
 
 void Generator::initialize() {
@@ -60,7 +60,7 @@ void Generator::initialize() {
 }
 
 void Generator::setFramesPerMeasure(uint32_t value) {
-    _framesPerBeat = value / kBeatsPerMeasure;
+    _frames_per_beat = value / kBeatsPerMeasure;
 }
 
 void Generator::generate(float* out0, float* out1) {
@@ -83,9 +83,9 @@ void Generator::generate(float* out0, float* out1) {
 
 void Generator::activate_slice(float in_raw_onset, int direction) {
     auto reset = !fcomp(in_raw_onset, _raw_onset);
-    auto offset = _slicePositionFrames;
-    if (_slicePositionJitterAmount > 0) {        
-        auto lfoOffset = _jitterLFO.triangleValue() * _slicePositionJitterAmount;
+    auto offset = _slice_position_frames;
+    if (_jitter_amount > 0) {        
+        auto lfoOffset = _jitter_lfo.triangleValue() * _jitter_amount;
         offset += lfoOffset * _source.length();
         offset = std::max(offset, 0ul);
         offset = std::min(offset, _source.length() - 1);
@@ -97,7 +97,7 @@ void Generator::activate_slice(float in_raw_onset, int direction) {
         _raw_onset = in_raw_onset;
     }
     
-    auto onset = _framesPerBeat * _raw_onset;
+    auto onset = _frames_per_beat * _raw_onset;
     auto slice_start = onset + offset;
     auto reverse = _reverse;
     if (direction != 0) {
@@ -109,7 +109,7 @@ void Generator::activate_slice(float in_raw_onset, int direction) {
     for (size_t i = 0; i < _slices.size(); i ++) {
         auto s = _slices[i];
         if (s->isActive()) continue;
-        s->activate(slice_start, _framesPerSlice, reverse, _pitch_shift);
+        s->activate(slice_start, _frames_per_slice, reverse, _pitch_shift);
         break;
     }
 }

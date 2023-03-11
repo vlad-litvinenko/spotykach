@@ -40,23 +40,24 @@ public:
     void generate(float*, float*) override;
     void reset() override;
     
-    uint32_t framesPerSlice() override { return _framesPerSlice; }
+    uint32_t framesPerSlice() override { return _frames_per_slice; }
     
     void setNeedsResetSlices() override;
 
 private:
     ISource& _source;
     IEnvelope& _envelope;
-    ILFO& _jitterLFO;
+    ILFO& _jitter_lfo;
     std::array<std::shared_ptr<Slice>, kSlicesCount> _slices;
     std::array<SliceBuffer, kSlicesCount> _buffers;
 
-    float _slicePosition;
-    float _slicePositionJitterAmount;
+    float _slice_position;
+    float _jitter_amount;
     float _pitch_shift;
-    uint32_t _slicePositionFrames;
-    uint32_t _framesPerSlice;
-    uint32_t _framesPerBeat;
+
+    uint32_t _slice_position_frames;
+    uint32_t _frames_per_slice;
+    uint32_t _frames_per_beat;
     
     float _raw_onset;
     bool _reverse;
