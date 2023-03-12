@@ -145,7 +145,7 @@ void Engine::setRetrigger(float normVal) {
 
 void Engine::setJitterAmount(float value) {
     _raw.jitterAmount = value;
-    _generator.set_jitter_amount(exp_val(value));
+    _generator.set_jitter_amount(value);
 }
 
 void Engine::setJitterRate(float value) {
