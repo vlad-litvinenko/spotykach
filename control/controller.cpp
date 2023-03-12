@@ -44,10 +44,10 @@ void Controller::init_sensor(Spotykach& core) {
     _sensor.set_mode(DescreteSensorPad::Mode::Toggle, Target::PlayStop);
     
     _sensor.set_on_touch([&e_a]{ e_a.one_shot(false); }, Target::OneShotFwdA);
-    _sensor.set_on_touch([&e_a]{ e_a.one_shot(true);  }, Target::OneShotRevA);
+    _sensor.set_on_touch([&e_a]{ e_a.one_shot(true); }, Target::OneShotRevA);
 
     _sensor.set_on_touch([&e_b]{ e_b.one_shot(false); }, Target::OneShotFwdB);
-    _sensor.set_on_touch([&e_b]{ e_b.one_shot(true);  }, Target::OneShotRevB);
+    _sensor.set_on_touch([&e_b]{ e_b.one_shot(true); }, Target::OneShotRevB);
 
     _sensor.set_on_touch([&e_a]{ e_a.prev_pattern(); }, Target::PatternMinusA);
     _sensor.set_on_touch([&e_a]{ e_a.next_pattern(); }, Target::PatternPlusA);
@@ -56,14 +56,12 @@ void Controller::init_sensor(Spotykach& core) {
 }
 
 void Controller::set_parameters(Spotykach& core) {
-    for (int i = 0; i < core.enginesCount(); i++) {
-        Engine& e = core.engineAt(i);
-        set_channel_toggles(e, core, _channel_toggles[i], i);
-    }
-    
-    set_knob_parameters(core);
-    set_global_toggles(core);
     read_sensor(core);
+    
+    for (int i = 0; i < core.enginesCount(); i++) set_channel_toggles(core.engineAt(i), _channel_toggles[i], i);
+    set_global_toggles(core);
+
+    set_knob_parameters(core);
 };
 
 using namespace vlly;
@@ -98,15 +96,16 @@ void Controller::set_knob_parameters(Spotykach &s) {
     }   
 }
 
-void Controller::set_channel_toggles(Engine& e, Spotykach& s, ChannelToggles& ct, int ei) {
+void Controller::set_channel_toggles(Engine& e, ChannelToggles& ct, int ei) {
     for (size_t i = 0; i < ct.count(); i++) {
         auto toggle = ct.at(i);
         auto target = std::get<0>(toggle);
         auto isOn = std::get<1>(toggle);
+        auto holding_reverse = ei == 0 ? _holding_reverse_a : _holding_reverse_b;
         using Target = ChannelToggles::Target;
         switch (target) {
             case Target::Grid:      e.setGrid(isOn ? 1 : 0); break;
-            case Target::Reverse:   e.setReverse(isOn);      break;
+            case Target::Reverse:   e.setReverse(isOn || holding_reverse); break;
             default: {}
         }
     }
@@ -129,16 +128,18 @@ void Controller::set_global_toggles(Spotykach& s) {
 
 void Controller::read_sensor(Spotykach& core) {
     _sensor.process();
+
+    _holding_reverse_a = _sensor.is_on(Target::OneShotRevA);
+    _holding_reverse_b = _sensor.is_on(Target::OneShotRevB);
+
     core.set_is_playing(_sensor.is_on(Target::PlayStop));
     core.set_is_playing(_sensor.is_on(Target::OneShotFwdA), 0);
+    core.set_is_playing(_holding_reverse_a, 0);
     core.set_is_playing(_sensor.is_on(Target::OneShotFwdB), 1);
+    core.set_is_playing(_holding_reverse_b, 1);
 
     auto& e_a = core.engineAt(0);
     auto& e_b = core.engineAt(1);
     e_a.setFrozen(!_sensor.is_on(Target::RecordA));
     e_b.setFrozen(!_sensor.is_on(Target::RecordB));
-
-    // if (_sensor.is_on(Target::RecordB)) {
-    //     HW::hw().print("#### RECORD B");
-    // }
 }

@@ -142,12 +142,12 @@ void Spotykach::initialize() const {
 
 void Spotykach::set_is_playing(bool value) {
     _is_playing = value;
-    set_is_playing(value, 0);
-    set_is_playing(value, 1);
+    set_is_playing(value, 0, true);
+    set_is_playing(value, 1, true);
 }
 
-void Spotykach::set_is_playing(bool value, int index) {
-    engineAt(index).set_is_playing(value || _is_playing);
+void Spotykach::set_is_playing(bool value, int index, bool reset) {
+    engineAt(index).set_is_playing(value || _is_playing, reset);
 }
 
 void Spotykach::step() {

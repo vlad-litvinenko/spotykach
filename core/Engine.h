@@ -48,7 +48,7 @@ public:
     
     void initialize();
     
-    void set_is_playing(bool value);
+    void set_is_playing(bool value, bool clean);
 
     void one_shot(bool reverse);
 

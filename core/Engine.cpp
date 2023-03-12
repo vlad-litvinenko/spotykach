@@ -108,6 +108,7 @@ void Engine::setGrid(float normVal) {
     Grid grid = spotykach::Grid(normVal * (kGrid_Count - 1));
     if (grid != _grid) {
         _grid = grid;
+        set_pattern_index(_pattern_index);
     }
 }
 
@@ -205,8 +206,8 @@ void Engine::preprocess(PlaybackParameters p) {
     }
 }
 
-void Engine::set_is_playing(bool value) {
-    if (value != _is_playing) reset();
+void Engine::set_is_playing(bool value, bool clean = true) {
+    if (clean && value != _is_playing) reset();
     _is_playing = value;
 }
 

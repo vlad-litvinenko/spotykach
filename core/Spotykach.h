@@ -28,7 +28,7 @@ public:
     long enginesCount() const;
     
     void set_is_playing(bool value);
-    void set_is_playing(bool value, int index);
+    void set_is_playing(bool value, int index, bool reset = false);
 
     void step();
 

@@ -122,7 +122,7 @@ void Generator::activate_slice(float in_raw_onset, int direction) {
         reverse = shift < 0;
     }
     
-    if (direction != 0) reverse = direction == -1;
+    if (direction != 0) reverse = (direction == -1);
 
     if (reset) {
         setNeedsResetSlices();
