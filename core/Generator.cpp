@@ -15,6 +15,20 @@
 using namespace vlly;
 using namespace spotykach;
 
+struct Modulations {
+    float position;
+    float pitch;
+};
+
+Modulations modulations(float x) {
+    if (fcomp(x, 0, 3)) return { 0, 0 };
+    if (fcomp(x, 1, 3)) return { 0, 0 };
+
+    if (x < 0.33)  return { 2.f * x, 0 };
+    if (x < 0.66)  return { 1.32f - 2.f * x, 2.f * (x - 0.33f) };
+    if (x < 1.0)   return { 0, 1.32f - 2.f * (x - 0.33f) };
+};
+
 Generator::Generator(ISource& in_source, IEnvelope& in_envelope, ILFO& in_jitter_lfo) :
     _source     { in_source },
     _envelope   { in_envelope },
@@ -96,7 +110,7 @@ void Generator::activate_slice(float in_raw_onset, int direction) {
     auto frames_per_slice = _frames_per_slice;
     auto reverse = _reverse;
     if (m.pitch != 0) {
-        auto shift = lfo_value * m.pitch;
+        auto shift = 0.5 * lfo_value * m.pitch;
         pitch_shift += shift;
         pitch_shift = std::max(pitch_shift, 0.0f);
         pitch_shift = std::min(pitch_shift, 1.0f);
@@ -135,17 +149,3 @@ void Generator::reset() {
 void Generator::setNeedsResetSlices() {
     for (auto s: _slices) s->setNeedsReset();
 }
-
-struct Modulations {
-    float position;
-    float pitch;
-};
-
-Modulations modulations(float x) {
-    if (fcomp(x, 0)) return { 0, 0 };
-    if (fcomp(x, 1)) return { 0, 0 };
-
-    if (x < 0.33)  return { 2 * x, 0 };
-    if (x < 0.66)  return { 1.32 - 2 * x, 2 * (x - 0.33) };
-    if (x < 1.0)   return { 0, 1.32 - 2 * (x - 0.33) };
-} 
