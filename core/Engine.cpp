@@ -206,7 +206,7 @@ void Engine::preprocess(PlaybackParameters p) {
     }
 }
 
-void Engine::set_is_playing(bool value, bool clean = true) {
+void Engine::set_is_playing(bool value, bool clean) {
     if (clean && value != _is_playing) reset();
     _is_playing = value;
 }
