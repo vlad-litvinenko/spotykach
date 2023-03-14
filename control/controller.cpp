@@ -56,10 +56,10 @@ void Controller::init_sensor(Spotykach& core) {
 }
 
 void Controller::set_parameters(Spotykach& core) {
-    read_sensor(core);
-    
     for (int i = 0; i < core.enginesCount(); i++) set_channel_toggles(core.engineAt(i), _channel_toggles[i], i);
     set_global_toggles(core);
+
+    read_sensor(core);
 
     set_knob_parameters(core);
 };
@@ -101,11 +101,12 @@ void Controller::set_channel_toggles(Engine& e, ChannelToggles& ct, int ei) {
         auto toggle = ct.at(i);
         auto target = std::get<0>(toggle);
         auto isOn = std::get<1>(toggle);
-        auto holding_reverse = ei == 0 ? _holding_reverse_a : _holding_reverse_b;
+        auto holding_fwd = ei == 0 ? _holding_fwd_a : _holding_fwd_b;
+        auto holding_rev = ei == 0 ? _holding_rev_a : _holding_rev_b;
         using Target = ChannelToggles::Target;
         switch (target) {
             case Target::Grid:      e.setGrid(isOn ? 1 : 0); break;
-            case Target::Reverse:   e.setReverse(isOn || holding_reverse); break;
+            case Target::Reverse:   e.setReverse(isOn && !holding_fwd || holding_rev); break;
             default: {}
         }
     }
@@ -129,17 +130,24 @@ void Controller::set_global_toggles(Spotykach& s) {
 void Controller::read_sensor(Spotykach& core) {
     _sensor.process();
 
-    _holding_reverse_a = _sensor.is_on(Target::OneShotRevA);
-    _holding_reverse_b = _sensor.is_on(Target::OneShotRevB);
+    _holding_fwd_a = _sensor.is_on(Target::OneShotFwdA);
+    _holding_fwd_b = _sensor.is_on(Target::OneShotFwdB);
 
-    core.set_is_playing(_sensor.is_on(Target::PlayStop));
-    core.set_is_playing(_sensor.is_on(Target::OneShotFwdA), 0);
-    core.set_is_playing(_holding_reverse_a, 0);
-    core.set_is_playing(_sensor.is_on(Target::OneShotFwdB), 1);
-    core.set_is_playing(_holding_reverse_b, 1);
+    _holding_rev_a = _sensor.is_on(Target::OneShotRevA);
+    _holding_rev_b = _sensor.is_on(Target::OneShotRevB);
 
     auto& e_a = core.engineAt(0);
     auto& e_b = core.engineAt(1);
+
+    auto is_playing_toggled = _sensor.is_on(Target::PlayStop);
+    auto holding_a = _holding_fwd_a || _holding_rev_a;
+    auto holding_b = _holding_fwd_b || _holding_rev_b;
+    auto reset = is_playing_toggled && !(_is_playing_toggled || holding_a || holding_b);
+    _is_playing_toggled = is_playing_toggled;
+
+    e_a.set_is_playing(is_playing_toggled || holding_a, reset);
+    e_b.set_is_playing(is_playing_toggled || holding_b, reset);
+
     e_a.setFrozen(!_sensor.is_on(Target::RecordA));
     e_b.setFrozen(!_sensor.is_on(Target::RecordB));
 }
