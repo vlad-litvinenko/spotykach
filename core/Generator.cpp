@@ -110,14 +110,14 @@ void Generator::activate_slice(float in_raw_onset, int direction) {
     auto frames_per_slice = _frames_per_slice;
     auto reverse = _reverse;
     if (m.pitch != 0) {
-        auto shift = 0.5 * lfo_value * m.pitch;
-        pitch_shift += shift;
+        auto shift = lfo_value * m.pitch;
+        pitch_shift += 0.5 * shift;
         pitch_shift = std::max(pitch_shift, 0.0f);
         pitch_shift = std::min(pitch_shift, 1.0f);
 
-        frames_per_slice += shift * kSourceBufferLength;
-        frames_per_slice = std::max(_frames_per_slice, static_cast<uint32_t>(0));
-        frames_per_slice = std::min(_frames_per_slice, static_cast<uint32_t>(kSourceBufferLength));
+        frames_per_slice += 0.5 * shift * frames_per_slice;
+        frames_per_slice = std::max(frames_per_slice, static_cast<uint32_t>(0));
+        frames_per_slice = std::min(frames_per_slice, static_cast<uint32_t>(kSliceBufferLength));
 
         reverse = shift < 0;
     }

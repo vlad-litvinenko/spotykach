@@ -36,8 +36,11 @@ private:
     std::array<ChannelToggles, 2> _channel_toggles;
     GlobalToggles _global_toggles;
 
-    bool _holding_reverse_a = false;
-    bool _holding_reverse_b = false;
+    bool _holding_fwd_a = false;
+    bool _holding_fwd_b = false;
+    bool _holding_rev_a = false;
+    bool _holding_rev_b = false;
+    bool _is_playing_toggled = false;
 };
 }
 }
