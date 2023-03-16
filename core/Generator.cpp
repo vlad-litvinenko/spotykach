@@ -153,4 +153,9 @@ void Generator::reset() {
 
 void Generator::setNeedsResetSlices() {
     for (auto s: _slices) s->setNeedsReset();
+    if (_on_update) _on_update();
+}
+
+void Generator::set_on_update(std::function<void()> on_update) {
+    _on_update = on_update;
 }

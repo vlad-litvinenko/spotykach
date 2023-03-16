@@ -19,19 +19,32 @@ using namespace spotykach;
 Spotykach::Spotykach() {
     auto l = std::make_shared<LFO>();
     _releasePool.emplace_back(l);
-    for (int i = 0; i < enginesCount(); i++) {
-        auto e = std::make_shared<Envelope>();
-        auto s = std::make_shared<Source>();
-        auto g = std::make_shared<Generator>(*s, *e, *l);
-        auto t = std::make_shared<Trigger>(*g);
-        _engines[i] = std::make_shared<Engine>(*t, *s, *e, *g, *l);
-        _engines[i]->index = i + 1;
-        _releasePool.emplace_back(e);
-        _releasePool.emplace_back(s);
-        _releasePool.emplace_back(g);
-        _releasePool.emplace_back(t);
-    }
+
+    auto e_a = std::make_shared<Envelope>();
+    auto s_a = std::make_shared<Source>();
+    auto g_a = std::make_shared<Generator>(*s_a, *e_a, *l);
+    auto t_a = std::make_shared<Trigger>(*g_a);
+    _engines[0] = std::make_shared<Engine>(*t_a, *s_a, *e_a, *g_a, *l);
+    _engines[0]->index = 1;
+    _releasePool.emplace_back(e_a);
+    _releasePool.emplace_back(s_a);
+    _releasePool.emplace_back(g_a);
+    _releasePool.emplace_back(t_a);
+
+    auto e_b = std::make_shared<Envelope>();
+    auto s_b = std::make_shared<Source>();
+    auto g_b = std::make_shared<Generator>(*s_b, *e_b, *l);
+    auto t_b = std::make_shared<Trigger>(*g_b);
+    _engines[1] = std::make_shared<Engine>(*t_b, *s_b, *e_b, *g_b, *l);
+    _engines[1]->index = 2;
+    _releasePool.emplace_back(e_b);
+    _releasePool.emplace_back(s_b);
+    _releasePool.emplace_back(g_b);
+    _releasePool.emplace_back(t_b);
     
+
+    g_a->set_on_update([this, g_b]{ if (this->_cascade) g_b->reset(); });
+
     setMutex(false);
     setCascade(false);
     setSplit(false);

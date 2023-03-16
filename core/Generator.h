@@ -36,6 +36,8 @@ public:
     void setCycleStart() override;
     void setReverse(bool) override;
     
+    void set_on_update(std::function<void()> on_update);
+
     void activate_slice(float, int) override;
     void generate(float*, float*) override;
     void reset() override;
@@ -50,6 +52,8 @@ private:
     ILFO& _jitter_lfo;
     std::array<std::shared_ptr<Slice>, kSlicesCount> _slices;
     std::array<SliceBuffer, kSlicesCount> _buffers;
+
+    std::function<void()> _on_update;
 
     float _slice_position;
     float _jitter_amount;
