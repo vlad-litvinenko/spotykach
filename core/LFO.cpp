@@ -25,7 +25,7 @@ LFO::LFO():
     {}
 
 void LFO::setPeriod(float value) {
-    _period = std::fmin(std::fmax(value, 0.0078125), 1.); // 1/128...1
+    _period = std::fmin(std::fmax(value, 0.03125), 1.); // 1/32...1
 }
 
 void LFO::setFramesPerMeasure(long framesPerMeasure) {
