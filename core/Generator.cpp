@@ -91,6 +91,7 @@ void Generator::generate(float* out0, float* out1) {
         out0Val += sliceOut0;
         out1Val += sliceOut1;
     }
+
     *out0 = out0Val;
     *out1 = out1Val;
 }
@@ -119,10 +120,6 @@ void Generator::activate_slice(float in_raw_onset, int direction) {
         volume += 2.f * shift;
         volume = std::max(volume, 0.f);
         volume = std::min(volume, 1.0f);
-
-        // frames_per_slice += 0.5 * shift * frames_per_slice;
-        // frames_per_slice = std::max(frames_per_slice, static_cast<uint32_t>(0));
-        // frames_per_slice = std::min(frames_per_slice, static_cast<uint32_t>(kSliceBufferLength));
 
         reverse = shift < 0;
     }
