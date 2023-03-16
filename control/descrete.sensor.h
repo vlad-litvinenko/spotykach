@@ -70,7 +70,7 @@ public:
     void initialize() {
         _state = 0;
         daisy::Mpr121I2C::Config cfg;
-        cfg.touch_threshold = 40;
+        cfg.touch_threshold = 30;
         _mpr.Init(cfg);
 
         //TARGET TO PIN MAPPING #########################################
