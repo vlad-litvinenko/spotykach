@@ -109,6 +109,7 @@ void Engine::setGrid(float normVal) {
     if (grid != _grid) {
         _grid = grid;
         set_pattern_index(_pattern_index);
+        prepare_pattern();
     }
 }
 
