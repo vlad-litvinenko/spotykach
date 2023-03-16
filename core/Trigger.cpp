@@ -129,7 +129,7 @@ void Trigger::next(bool engaged) {
                 onset = static_cast<float>(_triggerPoints[_nextPointIndex]) / kTicksPerBeat;
             }
             _generator.activate_slice(onset, 0);
-            _ticksTillUnlock = 3;
+            _ticksTillUnlock = 1;
         }
         _nextPointIndex = (_nextPointIndex + 1) % _pointsCount;
     }
