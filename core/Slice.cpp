@@ -17,7 +17,8 @@ Slice::Slice(ISource& inSource, ISliceBuffer& inBuffer, IEnvelope& inEnvelope) :
     _length     { 0 },
     _offset     { 0 },
     _iterator   { 0 },
-    _reverse    { false } 
+    _reverse    { false },
+    _volume     { 1.0 }
     {}
 
 void Slice::initialize() {
@@ -26,7 +27,7 @@ void Slice::initialize() {
 	_pitch.setShift(0.5);
 }
 
-void Slice::activate(long offset, long length, bool reverse, float pitch) {
+void Slice::activate(long offset, long length, bool reverse, float pitch, float volume) {
     if (_needsReset || offset != _offset) {
         _buffer.reset();
         _needsReset = false;
@@ -37,6 +38,7 @@ void Slice::activate(long offset, long length, bool reverse, float pitch) {
     _iterator = 0;
     _pitch.setShift(pitch);
     _active = true;
+    _volume = volume;
 }
 
 void Slice::synthesize(float *out0, float* out1) {
@@ -65,8 +67,8 @@ void Slice::synthesize(float *out0, float* out1) {
         attenuation = _envelope.decayAttenuation(_iterator - _length + _envelope.decayLength());
     }
     
-    *out0 = out0Val * attenuation;
-    *out1 = out1Val * attenuation;
+    *out0 = out0Val * attenuation * _volume;
+    *out1 = out1Val * attenuation * _volume;
     
     _pitch.process(out0, out1);
 

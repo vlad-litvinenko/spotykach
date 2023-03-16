@@ -23,7 +23,7 @@ public:
     bool isActive() { return _active; };
     bool isInactive() { return !_active; };
     void initialize();
-    void activate(long offset, long length, bool reverse, float pitch);
+    void activate(long offset, long length, bool reverse, float pitch, float volume);
     void synthesize(float *out0, float* out1);
     void setNeedsReset();
     
@@ -44,6 +44,7 @@ private :
     
     float *_declickIn;
     float *_declickOut;
+    float _volume;
     
     void next();
 };
