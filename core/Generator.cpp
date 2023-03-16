@@ -24,8 +24,8 @@ Modulations modulations(float x) {
     if (fcomp(x, 0, 3)) return { 0, 0 };
     if (fcomp(x, 1, 3)) return { 0, 0 };
 
-    if (x < 0.33)  return { 2.f * x, 0 };
-    if (x < 0.66)  return { 1.32f - 2.f * x, 2.f * (x - 0.33f) };
+    if (x < 0.33)  return { 2.27f * x, 0 };
+    if (x < 0.66)  return { 1.5f - 2.27f * x, 2.f * (x - 0.33f) };
     if (x < 1.0)   return { 0, 1.32f - 2.f * (x - 0.33f) };
 };
 
@@ -108,16 +108,21 @@ void Generator::activate_slice(float in_raw_onset, int direction) {
     }
     auto pitch_shift = _pitch_shift;
     auto frames_per_slice = _frames_per_slice;
+    auto volume = 1.f;
     auto reverse = _reverse;
     if (m.pitch != 0) {
         auto shift = lfo_value * m.pitch;
-        pitch_shift += 0.5 * shift;
+        pitch_shift += 0.25 * shift;
         pitch_shift = std::max(pitch_shift, 0.0f);
         pitch_shift = std::min(pitch_shift, 1.0f);
 
-        frames_per_slice += 0.5 * shift * frames_per_slice;
-        frames_per_slice = std::max(frames_per_slice, static_cast<uint32_t>(0));
-        frames_per_slice = std::min(frames_per_slice, static_cast<uint32_t>(kSliceBufferLength));
+        volume += 2.f * shift;
+        volume = std::max(volume, 0.f);
+        volume = std::min(volume, 1.0f);
+
+        // frames_per_slice += 0.5 * shift * frames_per_slice;
+        // frames_per_slice = std::max(frames_per_slice, static_cast<uint32_t>(0));
+        // frames_per_slice = std::min(frames_per_slice, static_cast<uint32_t>(kSliceBufferLength));
 
         reverse = shift < 0;
     }
@@ -137,7 +142,7 @@ void Generator::activate_slice(float in_raw_onset, int direction) {
     for (size_t i = 0; i < _slices.size(); i ++) {
         auto s = _slices[i];
         if (s->isActive()) continue;
-        s->activate(slice_start, frames_per_slice, reverse, pitch_shift);
+        s->activate(slice_start, frames_per_slice, reverse, pitch_shift, volume);
         break;
     }
 }
