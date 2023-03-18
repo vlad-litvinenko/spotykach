@@ -148,6 +148,9 @@ void Controller::read_sensor(Spotykach& core) {
     e_a.set_is_playing(is_playing_toggled || holding_a, reset);
     e_b.set_is_playing(is_playing_toggled || holding_b, reset);
 
-    e_a.setFrozen(!_sensor.is_on(Target::RecordA));
-    e_b.setFrozen(!_sensor.is_on(Target::RecordB));
+    auto rec_a = _sensor.is_on(Target::RecordA);
+    auto rec_b = _sensor.is_on(Target::RecordB);
+
+    e_a.setFrozen(!rec_a);
+    e_b.setFrozen(!rec_b);
 }
