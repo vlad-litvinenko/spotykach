@@ -81,9 +81,9 @@ public:
           _together(_pin(1), _pin(2)),  //RecordA
           _pin(3),                      //PatternMinusA
           _pin(4),                      //PatternPlusA,
-          _pin(9),                      //OneShotFwdB,
+          _pin(5),                      //OneShotFwdB,
           _pin(6),                      //OneShotRevB,
-          _together(_pin(9), _pin(6)),  //RecordB
+          _together(_pin(5), _pin(6)),  //RecordB
           _pin(7),                      //PatternMinusB,
           _pin(8)                       //PatternPlusB
         };
@@ -100,12 +100,13 @@ public:
         _iterator++;
         if (_iterator < _buffer_length) return;
         _iterator = 0;
+        auto _buffer2_3rds = 2 * _buffer_length / 3;
         for (int i = 0; i < 16; i++) {
             auto s = 0;
             for (int j = 0; j < _buffer_length; j++) {
                 s += (_buffer[j] >> i) & 1;
             }
-            if ((s >= _buffer_length - 1) && (state >> i & 1)) {
+            if ((s >= _buffer2_3rds) && (state >> i & 1)) {
                 state |= 1 << i;
             }
             else {
@@ -117,20 +118,8 @@ public:
         state = one_or_both(5, 6, state, _state);
 
         _state = state;
-        
-        auto both1_2 = _both(1, 2, state);
-        auto both5_6 = _both(5, 6, state);
-        auto fwd_a = _target_index(Target::OneShotFwdA);
-        auto rev_a = _target_index(Target::OneShotRevA);
-        auto fwd_b = _target_index(Target::OneShotFwdB);
-        auto rev_b = _target_index(Target::OneShotRevB);
 
-        for (uint32_t i = 0; i < targets_count; i++) {
-            if (both1_2 && (i == fwd_a || i == rev_a)) { _pads[i].process(0); continue; }
-            if (both5_6 && (i == fwd_b || i == rev_b)) { _pads[i].process(0); continue; }
-
-            _pads[i].process(state);
-        }
+        for (auto p: _pads) p.process(state);
     }
     
     void set_on_touch(std::function<void()> on_touch, Target target) {
