@@ -31,10 +31,13 @@ namespace spotykach {
     };
 
     using Step24ppgn = int;
-    static constexpr std::array<Step24ppgn, 5> EvenSteps {{
+    static constexpr std::array<Step24ppgn, 8> EvenSteps {{
         16, //1
+        12, //1 / 2.
         8,  //1 / 2
+        6,  //1 / 4.
         4,  //1 / 4
+        3,  //1 / 8.
         2,  //1 / 8
         1,  //1 / 16
     }};
