@@ -97,7 +97,7 @@ void Generator::generate(float* out0, float* out1) {
 }
 
 void Generator::activate_slice(float in_raw_onset, int direction) {
-    auto reset = !fcomp(in_raw_onset, _raw_onset);
+    auto reset = !fcomp(in_raw_onset, _raw_onset) || !_source.isFrozen();
     auto offset = _slice_position_frames;
     auto lfo_value = _jitter_lfo.triangleValue();
     auto m = modulations(_jitter_amount);
