@@ -42,9 +42,9 @@ int main(void) {
 	hw.Init();
 
 	HW::hw().setHW(&hw);
-#ifdef LOG
+// #ifdef LOG
 	HW::hw().startLog();
-#endif
+// #endif
 
 	core.initialize();
 	snc.run(core);
