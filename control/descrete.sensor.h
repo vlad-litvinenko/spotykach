@@ -119,7 +119,7 @@ public:
 
         _state = state;
 
-        for (auto p: _pads) p.process(state);
+        for (auto& p: _pads) p.process(state);
     }
     
     void set_on_touch(std::function<void()> on_touch, Target target) {
