@@ -75,17 +75,17 @@ public:
         //
         //The order should correspond order of Target enum entries
         uint16_t mask[targets_count] = {
-          _pin(0),                      //PlayStop
-          _pin(1),                      //OneShotFwdA
-          _pin(2),                      //OneShotRevA
-          _together(_pin(1), _pin(2)),  //RecordA
+          _pin(8),                      //PlayStop
+          _pin(6),                      //OneShotFwdA
+          _pin(4),                      //OneShotRevA
+          _together(_pin(4), _pin(6)),  //RecordA
           _pin(3),                      //PatternMinusA
-          _pin(4),                      //PatternPlusA,
-          _pin(5),                      //OneShotFwdB,
-          _pin(6),                      //OneShotRevB,
-          _together(_pin(5), _pin(6)),  //RecordB
-          _pin(7),                      //PatternMinusB,
-          _pin(8)                       //PatternPlusB
+          _pin(2),                      //PatternPlusA,
+          _pin(10),                      //OneShotFwdB,
+          _pin(11),                      //OneShotRevB,
+          _together(_pin(10), _pin(11)),  //RecordB
+          _pin(9),                      //PatternMinusB,
+          _pin(5)                       //PatternPlusB
         };
         //
         //#################################################################
@@ -95,7 +95,7 @@ public:
 
     void process() {
         auto state = _mpr.Touched();
-        
+
         _buffer[_iterator] = state;
         _iterator++;
         if (_iterator < _buffer_length) return;
@@ -114,8 +114,8 @@ public:
             }
         }
 
-        state = one_or_both(1, 2, state, _state);
-        state = one_or_both(5, 6, state, _state);
+        state = one_or_both(4, 6, state, _state);
+        state = one_or_both(10, 11, state, _state);
 
         _state = state;
 
