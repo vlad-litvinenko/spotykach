@@ -75,17 +75,17 @@ public:
         //
         //The order should correspond order of Target enum entries
         uint16_t mask[targets_count] = {
-          _pin(8),                      //PlayStop
+          _pin(7),                      //PlayStop
           _pin(6),                      //OneShotFwdA
           _pin(4),                      //OneShotRevA
           _together(_pin(4), _pin(6)),  //RecordA
-          _pin(3),                      //PatternMinusA
-          _pin(2),                      //PatternPlusA,
-          _pin(10),                      //OneShotFwdB,
-          _pin(11),                      //OneShotRevB,
-          _together(_pin(10), _pin(11)),  //RecordB
-          _pin(9),                      //PatternMinusB,
-          _pin(5)                       //PatternPlusB
+          _pin(2),                      //PatternMinusA
+          _pin(3),                      //PatternPlusA,
+          _pin(9),                      //OneShotFwdB,
+          _pin(10),                      //OneShotRevB,
+          _together(_pin(9), _pin(10)),  //RecordB
+          _pin(5),                      //PatternMinusB,
+          _pin(8)                       //PatternPlusB
         };
         //
         //#################################################################
