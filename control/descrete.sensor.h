@@ -115,7 +115,7 @@ public:
         }
 
         state = one_or_both(4, 6, state, _state);
-        state = one_or_both(10, 11, state, _state);
+        state = one_or_both(9, 10, state, _state);
 
         _state = state;
 
