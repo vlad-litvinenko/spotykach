@@ -80,7 +80,9 @@ public:
     
     void setFrozen(bool frozen);
     void setAntifreeze(bool value);
-    
+
+    void set_on_slice(std::function<void(uint32_t)> f);
+
     void step(bool engaged = true);
 
     void process(float in0, float in1, float* out0, float* out1);

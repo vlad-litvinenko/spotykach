@@ -11,6 +11,7 @@
 #include "Parameters.h"
 #include "IEnvelope.h"
 #include <stdint.h>
+#include <algorithm>
 
 class IGenerator {
 public:
@@ -26,8 +27,8 @@ public:
     virtual void generate(float* out0, float* out1) = 0;
     virtual void setNeedsResetSlices() = 0;
     virtual void reset() = 0;
-    
     virtual void setCycleStart() = 0;
+    virtual void set_on_slice(std::function<void(uint32_t)> f) = 0;
 
     virtual ~IGenerator() {};
 };

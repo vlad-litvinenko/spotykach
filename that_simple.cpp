@@ -3,6 +3,7 @@
 #include "core/Spotykach.h"
 #include "control/controller.h"
 #include "control/sync.h"
+#include "control/leds.h"
 #include "common/deb.h"
 
 //#define LOG
@@ -17,6 +18,7 @@ Controller controller;
 Spotykach core;
 PlaybackParameters p;
 Sync snc;
+Leds leds;
 
 const float tempo { 120 };
 const int bufferSize { 4 };
@@ -50,6 +52,9 @@ int main(void) {
 	snc.run(core);
 	controller.initialize(hw, core);
 
+	leds.initialize();
+	core.engineAt(0).set_on_slice([](uint32_t sl){ leds.blink_a(sl); });
+	core.engineAt(1).set_on_slice([](uint32_t sl){ leds.blink_b(sl); });
 
 #ifndef LOG
 	hw.SetAudioBlockSize(bufferSize);
@@ -64,10 +69,11 @@ int main(void) {
 #endif
 	while(1) {
 		snc.pull(hw);
+		leds.tick();
 		static uint32_t counter = 0;
 		if (++counter == count_limit ) {
 			counter = 0;
-			controller.set_parameters(core);
+			controller.set_parameters(core, leds);
 		}
 	}
 }

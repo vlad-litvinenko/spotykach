@@ -7,6 +7,7 @@
 #include "channeltoggles.h"
 #include "Spotykach.h"
 #include "descrete.sensor.h"
+#include "leds.h"
 
 namespace vlly {
 namespace spotykach {
@@ -18,7 +19,7 @@ public:
 
     void initialize(daisy::DaisySeed& hw, Spotykach& s);
 
-    void set_parameters(Spotykach& core);
+    void set_parameters(Spotykach& core, Leds& leds);
 
     bool is_playing();
 
@@ -28,8 +29,8 @@ private:
     void init_toggles(daisy::DaisySeed& hw);
     void set_knob_parameters(Spotykach &s);
     void set_channel_toggles(Engine& e, ChannelToggles& ct, int i);
-    void set_global_toggles(Spotykach &s);
-    void read_sensor(Spotykach &core);
+    void set_global_toggles(Spotykach& s);
+    void read_sensor(Spotykach& core, Leds& leds);
 
     DescreteSensor _sensor;
     std::array<Knob, 12> _knobs;

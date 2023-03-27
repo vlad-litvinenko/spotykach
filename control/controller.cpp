@@ -55,11 +55,11 @@ void Controller::init_sensor(Spotykach& core) {
     _sensor.set_on_touch([&e_b]{ e_b.next_pattern(); }, Target::PatternPlusB);
 }
 
-void Controller::set_parameters(Spotykach& core) {
+void Controller::set_parameters(Spotykach& core, Leds& leds) {
     for (int i = 0; i < core.enginesCount(); i++) set_channel_toggles(core.engineAt(i), _channel_toggles[i], i);
     set_global_toggles(core);
 
-    read_sensor(core);
+    read_sensor(core, leds);
 
     set_knob_parameters(core);
 };
@@ -127,7 +127,7 @@ void Controller::set_global_toggles(Spotykach& s) {
     }
 }
 
-void Controller::read_sensor(Spotykach& core) {
+void Controller::read_sensor(Spotykach& core, Leds& leds) {
     _sensor.process();
 
     _holding_fwd_a = _sensor.is_on(Target::OneShotFwdA);
@@ -153,4 +153,6 @@ void Controller::read_sensor(Spotykach& core) {
 
     e_a.setFrozen(!rec_a);
     e_b.setFrozen(!rec_b);
+
+    leds.set_rec_on(rec_a || rec_b);
 }
