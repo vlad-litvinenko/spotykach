@@ -6,8 +6,6 @@
 #include "control/leds.h"
 #include "common/deb.h"
 
-//#define LOG
-
 using namespace daisy;
 
 using namespace vlly;
@@ -44,29 +42,21 @@ int main(void) {
 	hw.Init();
 
 	HW::hw().setHW(&hw);
-// #ifdef LOG
 	HW::hw().startLog();
-// #endif
 
 	core.initialize();
 	snc.run(core);
 	controller.initialize(hw, core);
 
 	leds.initialize();
-	core.engineAt(0).set_on_slice([](uint32_t sl){ leds.blink_a(sl); });
-	core.engineAt(1).set_on_slice([](uint32_t sl){ leds.blink_b(sl); });
+	core.engineAt(0).set_on_slice([](uint32_t sl, bool rev){ leds.blink_a(sl, rev); });
+	core.engineAt(1).set_on_slice([](uint32_t sl, bool rev){ leds.blink_b(sl, rev); });
 
-#ifndef LOG
 	hw.SetAudioBlockSize(bufferSize);
 	hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_48KHZ);
 	hw.StartAudio(AudioCallback);
-#endif
 
-#ifdef LOG
-	uint32_t count_limit = 10e3;
-#else
 	uint32_t count_limit = 10e2;
-#endif
 	while(1) {
 		snc.pull(hw);
 		leds.tick();

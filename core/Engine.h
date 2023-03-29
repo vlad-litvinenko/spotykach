@@ -81,7 +81,7 @@ public:
     void setFrozen(bool frozen);
     void setAntifreeze(bool value);
 
-    void set_on_slice(std::function<void(uint32_t)> f);
+    void set_on_slice(SliceCallback f);
 
     void step(bool engaged = true);
 

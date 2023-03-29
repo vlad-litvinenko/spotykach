@@ -42,7 +42,7 @@ public:
     void generate(float*, float*) override;
     void reset() override;
 
-    void set_on_slice(std::function<void(uint32_t)>) override;
+    void set_on_slice(SliceCallback) override;
 
     uint32_t framesPerSlice() override { return _frames_per_slice; }
     
@@ -68,7 +68,7 @@ private:
     float _raw_onset;
     bool _reverse;
 
-    std::function<void(uint32_t)> _on_slice;
+    SliceCallback _on_slice;
 };
 
 #endif /* defined(__Spotykach__Synth__) */

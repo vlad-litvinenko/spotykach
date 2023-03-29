@@ -96,7 +96,7 @@ void Generator::generate(float* out0, float* out1) {
     *out1 = out1Val;
 }
 
-void Generator::set_on_slice(std::function<void(uint32_t)> f) {
+void Generator::set_on_slice(SliceCallback f) {
     _on_slice = f;
 }
 
@@ -144,7 +144,7 @@ void Generator::activate_slice(float in_raw_onset, int direction) {
         auto s = _slices[i];
         if (s->isActive()) continue;
         s->activate(slice_start, frames_per_slice, reverse, pitch_shift, volume);
-        if (_on_slice) _on_slice(frames_per_slice);
+        if (_on_slice) _on_slice(frames_per_slice, reverse);
         break;
     }
 }

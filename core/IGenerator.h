@@ -13,6 +13,8 @@
 #include <stdint.h>
 #include <algorithm>
 
+using SliceCallback = std::function<void(uint32_t, bool)>;
+
 class IGenerator {
 public:
     virtual void initialize() = 0;
@@ -28,7 +30,7 @@ public:
     virtual void setNeedsResetSlices() = 0;
     virtual void reset() = 0;
     virtual void setCycleStart() = 0;
-    virtual void set_on_slice(std::function<void(uint32_t)> f) = 0;
+    virtual void set_on_slice(SliceCallback f) = 0;
 
     virtual ~IGenerator() {};
 };

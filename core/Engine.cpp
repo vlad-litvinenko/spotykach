@@ -183,7 +183,7 @@ void Engine::set_pitch_shift(float value) {
     _generator.set_pitch_shift(value);
 }
 
-void Engine::set_on_slice(std::function<void(uint32_t)> f) {
+void Engine::set_on_slice(SliceCallback f) {
     _generator.set_on_slice(f);
 }
 
