@@ -11,9 +11,9 @@ public:
     ~Leds() = default;
 
     void initialize() {
-        _led_play_a.Init(daisy::seed::D4, false, 31250);
-        _led_play_b.Init(daisy::seed::D6, false, 31250);
-        _led_rec.Init(daisy::seed::D5, false);
+        _led_a.Init(daisy::seed::D4, false, 31250);
+        _led_b.Init(daisy::seed::D6, false, 31250);
+        _led_r.Init(daisy::seed::D5, false);
     }
 
     void blink_a(uint32_t duration, bool reverse) {
@@ -31,21 +31,21 @@ public:
     }
 
     void set_rec_on(bool value) {
-        _led_rec.Set(value ? 1.0 : 0);
-        _led_rec.Update();
+        _led_r.Set(value ? 1 : 0);
+        _led_r.Update();
     }
 
     void tick() {
         if (_led_a_duration > 0) {
             _led_a_duration --;
-            _led_play_a.Set(led_brightness(_led_a_duration, _led_a_decay_treshld, _led_a_rev));
-            _led_play_a.Update();
+            _led_a.Set(led_brightness(_led_a_duration, _led_a_decay_treshld, _led_a_rev));
+            _led_a.Update();
         }
 
         if (_led_b_duration > 0) {
             _led_b_duration --;
-            _led_play_b.Set(led_brightness(_led_b_duration, _led_b_decay_treshld, _led_b_rev));
-            _led_play_b.Update();
+            _led_b.Set(led_brightness(_led_b_duration, _led_b_decay_treshld, _led_b_rev));
+            _led_b.Update();
         }
     }
 
@@ -56,15 +56,14 @@ private:
         return duration > decay_treshld ? 1 : duration / decay_treshld;
     }
 
-    daisy::Led _led_play_a;
-    daisy::Led _led_play_b;
-    daisy::Led _led_rec;
+    daisy::Led _led_a;
+    daisy::Led _led_b;
+    daisy::Led _led_r;
 
     uint32_t _led_a_duration = 0;
     uint32_t _led_a_decay_treshld = 0;
     uint32_t _led_b_duration = 0;
     uint32_t _led_b_decay_treshld = 0;
-    uint32_t _led_rec_count = 0;
 
     bool _led_a_rev = false;
     bool _led_b_rev = false;
