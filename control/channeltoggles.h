@@ -23,6 +23,18 @@ public:
 private:
     bool isOnAt(int index);
 
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wreturn-type"
+    Pin pin(Target t, Channel ch) {
+        using namespace seed;
+        auto ch_a { ch == 0 };
+        switch (t) {
+            case Target::Grid:      return ch_a ? D0 : D10;
+            case Target::Reverse:   return ch_a ? D1 : D26;
+        };
+    };
+    #pragma GCC diagnostic pop
+
     daisy::Pin pin(Target t, Channel ch);
 
     static const int kTargetsCount { 5 };

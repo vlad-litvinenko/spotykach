@@ -22,8 +22,15 @@ public:
 
 private:
     bool isOnAt(int index);
-
-    daisy::Pin pin(Target t);
+    Pin pin(Target t) {
+        using namespace seed;
+        switch (t) {
+            case Target::Mutex:     return D30;
+            case Target::Cascade:   return D29;
+            case Target::Split:     return D27;
+            default: return {};
+        };
+    };
 
     static const int kTargetsCount { 3 };
     constexpr static std::array<Target, kTargetsCount> _targets = {
