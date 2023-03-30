@@ -25,7 +25,10 @@ void Controller::init_knobs(DaisySeed& hw) {
         
     hw.adc.Init(conf, knobs_count);
     
-    for (i = 0; i < knobs_count; i++) _knobs[i].configure(hw);
+    for (auto& k: _knobs) {
+        auto flip = k.target() != Knob::Target::VolumeCrossfade;
+        k.configure(hw, flip);
+    }
 }
 
 void Controller::init_toggles(DaisySeed& hw) {
@@ -74,21 +77,21 @@ void Controller::set_knob_parameters(Spotykach &s) {
         auto t = _knobs[i].target();
         auto v = _knobs[i].value();
         switch (t) {
-            case KT::SlicePositionA:    a.setSlicePosition(v);          break;
-            case KT::SliceLengthA:      a.setSliceLength(v);            break;
-            case KT::RetriggerA:        a.setRetrigger(v);              break;
-            case KT::JitterAmountA:     a.setJitterAmount(v);           break;
-            case KT::JitterRate:        s.setJitterRate(v);             break;
-            case KT::VolumeCrossfade:   s.setVolumeBalance(v);          break;
-            case KT::PatternCrossfade:  s.set_pattern_balance(v);       break;
-            case KT::SlicePositionB:    b.setSlicePosition(v);          break;
-            case KT::SliceLengthB:      b.setSliceLength(v);            break;
-            case KT::RetriggerB:        b.setRetrigger(v);              break;
-            case KT::JitterAmountB:     b.setJitterAmount(v);           break;
+            case KT::SlicePositionA:    a.setSlicePosition(v);      break;
+            case KT::SliceLengthA:      a.setSliceLength(v);        break;
+            case KT::RetriggerA:        a.setRetrigger(v);          break;
+            case KT::JitterAmountA:     a.setJitterAmount(v);       break;
+            case KT::JitterRate:        s.setJitterRate(v);         break;
+            case KT::VolumeCrossfade:   s.setVolumeBalance(v);      break;
+            case KT::PatternCrossfade:  s.set_pattern_balance(v);   break;
+            case KT::SlicePositionB:    b.setSlicePosition(v);      break;
+            case KT::SliceLengthB:      b.setSliceLength(v);        break;
+            case KT::RetriggerB:        b.setRetrigger(v);          break;
+            case KT::JitterAmountB:     b.setJitterAmount(v);       break;
             case KT::Pitch:             
             { 
                 a.set_pitch_shift(v); 
-                b.set_pitch_shift(v);   
+                b.set_pitch_shift(v);
                 break;
             }
             default:{}

@@ -24,7 +24,7 @@ public:
     ~Knob() = default;
 
     void initialize(daisy::AdcChannelConfig& conf, int channel);
-    void configure(daisy::DaisySeed& hw);
+    void configure(daisy::DaisySeed& hw, bool flip = true);
     Knob::Target target() const { return _targets[_channel]; };
     float value();
 
