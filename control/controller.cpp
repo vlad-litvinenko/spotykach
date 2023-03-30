@@ -25,10 +25,7 @@ void Controller::init_knobs(DaisySeed& hw) {
         
     hw.adc.Init(conf, knobs_count);
     
-    for (auto& k: _knobs) {
-        auto flip = k.target() != Knob::Target::VolumeCrossfade;
-        k.configure(hw, flip);
-    }
+    for (auto& k: _knobs) k.configure(hw);
 }
 
 void Controller::init_toggles(DaisySeed& hw) {

@@ -24,7 +24,7 @@ public:
     ~Knob() = default;
 
     void initialize(daisy::AdcChannelConfig& conf, int channel);
-    void configure(daisy::DaisySeed& hw, bool flip = true);
+    void configure(daisy::DaisySeed& hw);
     Knob::Target target() const { return _targets[_channel]; };
     float value();
 
@@ -67,4 +67,11 @@ private:
             default: return {};
         }
     };
+
+    bool flip() {
+        switch (_targets[_channel]) {
+            case Knob::Target::VolumeCrossfade: return false;
+            default: return true;
+        }
+    }
 };
