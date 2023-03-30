@@ -79,7 +79,7 @@ void Controller::set_knob_parameters(Spotykach &s) {
             case KT::RetriggerA:        a.setRetrigger(v);              break;
             case KT::JitterAmountA:     a.setJitterAmount(v);           break;
             case KT::JitterRate:        s.setJitterRate(v);             break;
-            case KT::VolumeCrossfade:   s.setVolumeBalance(0.5);        break;
+            case KT::VolumeCrossfade:   s.setVolumeBalance(v);          break;
             case KT::PatternCrossfade:  s.set_pattern_balance(v);       break;
             case KT::SlicePositionB:    b.setSlicePosition(v);          break;
             case KT::SliceLengthB:      b.setSliceLength(v);            break;
