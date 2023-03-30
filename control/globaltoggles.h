@@ -22,7 +22,8 @@ public:
 
 private:
     bool isOnAt(int index);
-    Pin pin(Target t) {
+    daisy::Pin pin(Target t) {
+        using namespace daisy;
         using namespace seed;
         switch (t) {
             case Target::Mutex:     return D30;

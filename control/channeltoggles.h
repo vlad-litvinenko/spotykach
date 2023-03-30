@@ -25,7 +25,8 @@ private:
 
     #pragma GCC diagnostic push
     #pragma GCC diagnostic ignored "-Wreturn-type"
-    Pin pin(Target t, Channel ch) {
+    daisy::Pin pin(Target t, Channel ch) {
+        using namespace daisy;
         using namespace seed;
         auto ch_a { ch == 0 };
         switch (t) {
@@ -34,8 +35,6 @@ private:
         };
     };
     #pragma GCC diagnostic pop
-
-    daisy::Pin pin(Target t, Channel ch);
 
     static const int kTargetsCount { 5 };
     constexpr static std::array<Target, kTargetsCount> _targets = {
