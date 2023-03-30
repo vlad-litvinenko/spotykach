@@ -13,12 +13,40 @@
       ],
       "executable": "${workspaceRoot}/build/that_simple.elf",
       "interface": "swd",
-      "name": "Cortex Debug",
+      "name": "Debug",
       "openOCDLaunchCommands": [
         "init",
         "reset init"
       ],
-      //"preLaunchTask": "build_all_debug",
+      "preRestartCommands": [
+        "load",
+        "enable breakpoint",
+        "monitor reset"
+      ],
+      "request": "launch",
+      "servertype": "openocd",
+      "showDevDebugOutput": "vscode",
+      "svdFile": "${workspaceRoot}/.vscode/STM32H750x.svd",
+      "type": "cortex-debug"
+    },
+    {
+      "configFiles": [
+        "interface/stlink.cfg",
+        "target/stm32h7x.cfg"
+      ],
+      "cwd": "${workspaceFolder}",
+      "debuggerArgs": [
+        "-d",
+        "${workspaceRoot}"
+      ],
+      "executable": "${workspaceRoot}/build/that_simple.elf",
+      "interface": "swd",
+      "name": "Build & Debug",
+      "openOCDLaunchCommands": [
+        "init",
+        "reset init"
+      ],
+      "preLaunchTask": "build_all_debug",
       "preRestartCommands": [
         "load",
         "enable breakpoint",
