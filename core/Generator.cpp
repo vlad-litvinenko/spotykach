@@ -137,11 +137,8 @@ void Generator::activate_slice(float in_raw_onset, int direction) {
     
     auto onset = _frames_per_beat * _raw_onset;
     auto slice_start = onset + offset;
-
-    if (!_source.isFilled() && _source.readHead() < slice_start) return;
     
-    for (size_t i = 0; i < _slices.size(); i ++) {
-        auto s = _slices[i];
+    for (auto& s: _slices) {
         if (s->isActive()) continue;
         s->activate(slice_start, frames_per_slice, reverse, pitch_shift, volume);
         if (_on_slice) _on_slice(frames_per_slice, reverse);
