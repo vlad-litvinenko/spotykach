@@ -79,13 +79,13 @@ public:
           _pin(6),                      //OneShotFwdA
           _pin(4),                      //OneShotRevA
           _together(_pin(4), _pin(6)),  //RecordA
-          _pin(2),                      //PatternMinusA
-          _pin(3),                      //PatternPlusA,
+          _pin(3),                      //PatternMinusA
+          _pin(2),                      //PatternPlusA,
           _pin(9),                      //OneShotFwdB,
           _pin(10),                      //OneShotRevB,
           _together(_pin(9), _pin(10)),  //RecordB
-          _pin(5),                      //PatternMinusB,
-          _pin(8)                       //PatternPlusB
+          _pin(8),                      //PatternMinusB,
+          _pin(5)                       //PatternPlusB
         };
         //
         //#################################################################
