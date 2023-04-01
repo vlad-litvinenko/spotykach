@@ -45,7 +45,7 @@ void Generator::set_pitch_shift(float value) {
     _pitch_shift = value;
 }
 
-void Generator::setSlicePosition(float value) {
+void Generator::set_slice_position(float value) {
     _slice_position = value;
     _slice_position_frames = _source.length() * _slice_position;
 }
@@ -54,18 +54,18 @@ void Generator::set_jitter_amount(float value) {
     _jitter_amount = value;
 }
 
-void Generator::setSliceLength(float value) {
+void Generator::set_slice_length(float value) {
     _frames_per_slice = value * kSliceBufferLength;
 }
 
-void Generator::setReverse(bool value) {
+void Generator::set_reverse(bool value) {
     if (value != _reverse) {
-        setNeedsResetSlices();
+        set_needs_reset_slices();
     } 
     _reverse = value;
 }
 
-void Generator::setCycleStart() {
+void Generator::set_cycle_start() {
     _source.setCycleStart(_slice_position_frames);
 }
 
@@ -73,7 +73,7 @@ void Generator::initialize() {
     for (auto s: _slices) s->initialize();
 }
 
-void Generator::setFramesPerMeasure(uint32_t value) {
+void Generator::set_frames_per_measure(uint32_t value) {
     _frames_per_beat = value / kBeatsPerMeasure;
 }
 
@@ -131,7 +131,7 @@ void Generator::activate_slice(float in_raw_onset, int direction) {
     if (direction != 0) reverse = (direction == -1);
 
     if (reset) {
-        setNeedsResetSlices();
+        set_needs_reset_slices();
         _raw_onset = in_raw_onset;
     }
     
@@ -147,10 +147,10 @@ void Generator::activate_slice(float in_raw_onset, int direction) {
 }
 
 void Generator::reset() {
-    setNeedsResetSlices();
+    set_needs_reset_slices();
 }
 
-void Generator::setNeedsResetSlices() {
+void Generator::set_needs_reset_slices() {
     for (auto s: _slices) s->setNeedsReset();
     if (_on_update) _on_update();
 }

@@ -29,12 +29,12 @@ public:
 
     void set_pitch_shift(float) override;
 
-    void setFramesPerMeasure(uint32_t) override;
-    void setSlicePosition(float) override;
+    void set_frames_per_measure(uint32_t) override;
+    void set_slice_position(float) override;
     void set_jitter_amount(float) override;
-    void setSliceLength(float) override;
-    void setCycleStart() override;
-    void setReverse(bool) override;
+    void set_slice_length(float) override;
+    void set_cycle_start() override;
+    void set_reverse(bool) override;
     
     void set_on_update(std::function<void()> on_update);
 
@@ -44,9 +44,9 @@ public:
 
     void set_on_slice(SliceCallback) override;
 
-    uint32_t framesPerSlice() override { return _frames_per_slice; }
+    uint32_t frames_per_slice() override { return _frames_per_slice; }
     
-    void setNeedsResetSlices() override;
+    void set_needs_reset_slices() override;
 
 private:
     ISource& _source;

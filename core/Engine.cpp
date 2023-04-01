@@ -119,7 +119,7 @@ void Engine::setSlicePosition(float normVal) {
     float start = std::min(normVal, 127.f/128.f);
     if (start != _start) {
         _start = start;
-        _generator.setSlicePosition(_start);
+        _generator.set_slice_position(_start);
     }
 }
 
@@ -129,7 +129,7 @@ void Engine::setSliceLength(float normVal) {
     float slice = fmax(normVal, 1./128.);
     if (slice != _slice) {
         _slice = slice;
-        _generator.setSliceLength(exp_val(_slice));
+        _generator.set_slice_length(exp_val(_slice));
         _invalidateCrossfade = true;
     }
 }
@@ -162,7 +162,7 @@ void Engine::setDeclick(bool declick) {
 void Engine::setReverse(bool value) {
     if (value == _raw.reverse) return;
     _raw.reverse = value;
-    _generator.setReverse(value);
+    _generator.set_reverse(value);
 }
 
 void Engine::setFrozen(bool frozen) {
@@ -170,8 +170,8 @@ void Engine::setFrozen(bool frozen) {
     _raw.frozen = frozen;
     _source.setFrozen(frozen);
     if (isTurningOff) {
-        _generator.setCycleStart();
-        _generator.setNeedsResetSlices();
+        _generator.set_cycle_start();
+        _generator.set_needs_reset_slices();
     }
 }
 
@@ -198,14 +198,14 @@ void Engine::preprocess(PlaybackParameters p) {
     if (!fcomp(p.tempo, _tempo)) {
         _tempo = p.tempo;
         framesPerMeasure = static_cast<uint32_t>(kSecondsPerMinute * p.sampleRate * kBeatsPerMeasure / p.tempo);
-        _generator.setFramesPerMeasure(framesPerMeasure);
+        _generator.set_frames_per_measure(framesPerMeasure);
         _jitterLFO.setFramesPerMeasure(framesPerMeasure);
         _invalidateCrossfade = true;
     }
 
     if (_invalidateCrossfade) {
         auto framesPerStep { static_cast<uint32_t>(static_cast<float>(_step) * framesPerMeasure / (kTicksPerBeat * kBeatsPerMeasure)) };
-        auto framesPerSlice { _generator.framesPerSlice() };
+        auto framesPerSlice { _generator.frames_per_slice() };
         _envelope.setFramesPerCrossfade(std::max(framesPerSlice - framesPerStep, uint32_t(0)));
         _invalidateCrossfade = false;
     }
@@ -234,7 +234,7 @@ void Engine::process(float in0, float in1, float* out0, float* out1) {
 void Engine::reset(bool hard) {
     if (hard) {
         _source.reset();
-        _generator.setCycleStart();
+        _generator.set_cycle_start();
     }
         
     _generator.reset();
