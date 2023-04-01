@@ -72,7 +72,7 @@ void Trigger::prepareCWordPattern(int onsets, int shift) {
         _pointsCount ++;
     }
     
-    adjustRepeatsIfNeeded();
+    setRepeats(_repeats);
     adjustIterator();
 }
 
@@ -94,7 +94,7 @@ void Trigger::prepareMeterPattern(int step, int shift) {
         }
         _triggerPoints[i] = point;
     }
-    adjustRepeatsIfNeeded();
+    setRepeats(_repeats);
     adjustIterator();
 }
 
@@ -106,12 +106,8 @@ void Trigger::adjustIterator() {
     adjustNextIndex(_triggerPoints.data(), _pointsCount, _iterator, _nextPointIndex);
 }
 
-void Trigger::adjustRepeatsIfNeeded() {
-    if (_repeats > _pointsCount) setRepeats(std::max(_pointsCount, uint32_t(1)));
-}
-
 void Trigger::setRepeats(int repeats) {
-    _repeats = _pointsCount ? std::min(_pointsCount, static_cast<uint32_t>(repeats)) : repeats;    
+    _repeats = _pointsCount && repeats > _pointsCount ? _pointsCount : _repeats = repeats;
 }
 
 void Trigger::one_shot(bool reverse) {
