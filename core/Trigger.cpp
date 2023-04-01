@@ -10,6 +10,7 @@
 #include <cmath>
 #include <algorithm>
 #include "globals.h"
+#include "../common/deb.h"
 
 Trigger::Trigger(IGenerator& inGenerator) :
     _generator          { inGenerator },
@@ -25,7 +26,6 @@ Trigger::Trigger(IGenerator& inGenerator) :
 void Trigger::prepareCWordPattern(int onsets, int shift) {
     _pointsCount = 0;
     _triggerPoints.fill(0);
-    bool keepRepeats = _repeats < _pointsCount;
     const size_t size = 16;
     int y = onsets, a = y;
     int x = size - onsets, b = x;
@@ -72,12 +72,11 @@ void Trigger::prepareCWordPattern(int onsets, int shift) {
         _pointsCount ++;
     }
     
-    adjustRepeatsIfNeeded(keepRepeats);
+    adjustRepeatsIfNeeded();
     adjustIterator();
 }
 
 void Trigger::prepareMeterPattern(int step, int shift) {
-    bool keep_repeats = _repeats < _pointsCount;
     _pointsCount = 0;
     _triggerPoints.fill(0);
     int pattern_length { 0 };
@@ -95,7 +94,7 @@ void Trigger::prepareMeterPattern(int step, int shift) {
         }
         _triggerPoints[i] = point;
     }
-    adjustRepeatsIfNeeded(keep_repeats);
+    adjustRepeatsIfNeeded();
     adjustIterator();
 }
 
@@ -103,18 +102,16 @@ void Trigger::setRetrigger(int retrigger) {
     _retrigger = retrigger;
 }
 
-void Trigger::setRepeats(int repeats) {
-    _repeats = _pointsCount ? std::min(_pointsCount, static_cast<uint32_t>(repeats)) : repeats;
-}
-
 void Trigger::adjustIterator() {
     adjustNextIndex(_triggerPoints.data(), _pointsCount, _iterator, _nextPointIndex);
 }
 
-void Trigger::adjustRepeatsIfNeeded(bool keep) {
-    if (!keep || _repeats > _pointsCount) {
-        _repeats = std::max(_pointsCount, uint32_t(1));
-    }
+void Trigger::adjustRepeatsIfNeeded() {
+    if (_repeats > _pointsCount) setRepeats(std::max(_pointsCount, uint32_t(1)));
+}
+
+void Trigger::setRepeats(int repeats) {
+    _repeats = _pointsCount ? std::min(_pointsCount, static_cast<uint32_t>(repeats)) : repeats;    
 }
 
 void Trigger::one_shot(bool reverse) {

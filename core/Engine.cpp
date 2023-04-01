@@ -41,10 +41,10 @@ Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
     _shift      { 0 }
 {
     setSlicePosition(0);
+    setRepeats(1.0);
     setShift(0);
     setGrid(1);
     setSliceLength(0.5);
-    setRepeats(9);
     setReverse(false);
     setRetrigger(0);
     setDeclick(true);

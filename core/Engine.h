@@ -48,6 +48,8 @@ public:
     
     void initialize();
     
+    void set_index(int ndx) { index = ndx; _trigger.set_index(ndx); }
+
     void set_is_playing(bool value, bool clean);
 
     void one_shot(bool reverse);

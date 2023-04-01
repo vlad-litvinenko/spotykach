@@ -13,6 +13,8 @@
 
 class ITrigger {
 public:
+    virtual void set_index(int index) = 0;
+
     virtual uint32_t pointsCount() = 0;
     virtual uint32_t beatsPerPattern() = 0;
     virtual void prepareMeterPattern(int step, int shift) = 0;

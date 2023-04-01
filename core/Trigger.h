@@ -48,9 +48,14 @@ public:
     
     bool locking() override { return _ticksTillUnlock > 0; };
     
+    void set_index(int ndx) {
+        index = ndx;
+    }
+    int index;
+
 private:
     void adjustIterator();
-    void adjustRepeatsIfNeeded(bool keep);
+    void adjustRepeatsIfNeeded();
 
     IGenerator& _generator;
 
