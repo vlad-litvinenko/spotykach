@@ -35,8 +35,8 @@ Generator::Generator(ISource& in_source, IEnvelope& in_envelope, ILFO& in_jitter
     _jitter_lfo  { in_jitter_lfo },
     _raw_onset  { 0 },
     _reverse    { false },
-    _continual { false },
     _slice_position { -1 },
+    _continual { false },
     _continual_rev { false },
     _continual_iterator { 0 } {
     for (auto i = 0; i < kSlicesCount; i++) {
@@ -47,6 +47,7 @@ Generator::Generator(ISource& in_source, IEnvelope& in_envelope, ILFO& in_jitter
 
 void Generator::set_pitch_shift(float value) {
     _pitch_shift = value;
+    _continual_pitch.setShift(value);
 }
 
 void Generator::set_slice_position(float value) {
@@ -77,6 +78,7 @@ void Generator::set_cycle_start() {
 
 void Generator::initialize() {
     for (auto s: _slices) s->initialize();
+    _continual_pitch.initialize(kSampleRate, 4096);
 }
 
 void Generator::set_frames_per_measure(uint32_t value) {
@@ -105,6 +107,7 @@ void Generator::generate(float* out0, float* out1, bool continual, bool reverse)
 
     if (continual) {
         _source.read(slice_out_0, slice_out_1, _slice_position_frames + _continual_iterator);
+        _continual_pitch.process(&slice_out_0, &slice_out_1);
         out_0_val += slice_out_0;
         out_1_val += slice_out_1;
         if (reverse) {

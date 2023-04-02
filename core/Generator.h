@@ -52,6 +52,7 @@ private:
     ISource& _source;
     IEnvelope& _envelope;
     ILFO& _jitter_lfo;
+    PitchShift _continual_pitch;
     std::array<std::shared_ptr<Slice>, kSlicesCount> _slices;
     std::array<SliceBuffer, kSlicesCount> _buffers;
 
