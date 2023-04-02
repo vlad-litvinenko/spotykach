@@ -39,7 +39,7 @@ public:
     void set_on_update(std::function<void()> on_update);
 
     void activate_slice(float, int) override;
-    void generate(float*, float*) override;
+    void generate(float*, float*, bool, bool) override;
     void reset() override;
 
     void set_on_slice(SliceCallback) override;
@@ -69,6 +69,10 @@ private:
     bool _reverse;
 
     SliceCallback _on_slice;
+
+    bool _continual;
+    bool _continual_rev;
+    uint32_t _continual_iterator;
 };
 
 #endif /* defined(__Spotykach__Synth__) */

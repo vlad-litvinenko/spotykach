@@ -26,7 +26,7 @@ public:
     virtual uint32_t frames_per_slice() = 0;
     virtual void set_reverse(bool value) = 0;
     virtual void activate_slice(float onset, int direction) = 0;
-    virtual void generate(float* out0, float* out1) = 0;
+    virtual void generate(float* out0, float* out1, bool continual, bool reverse) = 0;
     virtual void set_needs_reset_slices() = 0;
     virtual void set_cycle_start() = 0;
     virtual void set_on_slice(SliceCallback f) = 0;

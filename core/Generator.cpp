@@ -34,7 +34,11 @@ Generator::Generator(ISource& in_source, IEnvelope& in_envelope, ILFO& in_jitter
     _envelope   { in_envelope },
     _jitter_lfo  { in_jitter_lfo },
     _raw_onset  { 0 },
-    _reverse    { false } {
+    _reverse    { false },
+    _continual { false },
+    _slice_position { -1 },
+    _continual_rev { false },
+    _continual_iterator { 0 } {
     for (auto i = 0; i < kSlicesCount; i++) {
         _slices[i] = std::make_shared<Slice>(_source, _buffers[i] ,_envelope);
     }
@@ -46,8 +50,10 @@ void Generator::set_pitch_shift(float value) {
 }
 
 void Generator::set_slice_position(float value) {
+    auto init_sycle_start = _slice_position < 0;
     _slice_position = value;
     _slice_position_frames = _source.length() * _slice_position;
+    if (init_sycle_start) set_cycle_start();
 }
 
 void Generator::set_jitter_amount(float value) {
@@ -77,23 +83,45 @@ void Generator::set_frames_per_measure(uint32_t value) {
     _frames_per_beat = value / kBeatsPerMeasure;
 }
 
-void Generator::generate(float* out0, float* out1) {
-    float out0Val = 0;
-    float out1Val = 0;
-    float sliceOut0 = 0;
-    float sliceOut1 = 0;
+void Generator::generate(float* out0, float* out1, bool continual, bool reverse) {
+    float out_0_val = 0;
+    float out_1_val = 0;
+    float slice_out_0 = 0;
+    float slice_out_1 = 0;
     
     for (size_t i = 0; i < _slices.size(); i ++) {
         auto s = _slices[i];
         if (s->isInactive()) continue;
         
-        s->synthesize(&sliceOut0, &sliceOut1);
-        out0Val += sliceOut0;
-        out1Val += sliceOut1;
+        s->synthesize(&slice_out_0, &slice_out_1);
+        out_0_val += slice_out_0;
+        out_1_val += slice_out_1;
     }
 
-    *out0 = out0Val;
-    *out1 = out1Val;
+    if (continual != _continual) {
+            _continual_iterator = reverse ? _source.length() : 0;
+            _continual = continual;
+        }
+
+    if (continual) {
+        _source.read(slice_out_0, slice_out_1, _slice_position_frames + _continual_iterator);
+        out_0_val += slice_out_0;
+        out_1_val += slice_out_1;
+        if (reverse) {
+            if (_continual_iterator == 0) {
+                _continual_iterator = _source.length();
+            }
+            else {
+                _continual_iterator --;
+            }
+        } 
+        else {
+            _continual_iterator ++;
+        }
+    }
+
+    *out0 = out_0_val;
+    *out1 = out_1_val;
 }
 
 void Generator::set_on_slice(SliceCallback f) {

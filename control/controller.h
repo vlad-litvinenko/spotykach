@@ -23,6 +23,11 @@ public:
 
     bool is_playing();
 
+    bool holding_fwd_a() { return _holding_fwd_a; };
+    bool holding_fwd_b() { return _holding_fwd_b; };
+    bool holding_rev_a() { return _holding_rev_a; };
+    bool holding_rev_b() { return _holding_rev_b; };
+
 private:
     void init_sensor(Spotykach& core);
     void init_knobs(daisy::DaisySeed& hw);

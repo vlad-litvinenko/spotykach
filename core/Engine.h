@@ -87,7 +87,7 @@ public:
 
     void step(bool engaged = true);
 
-    void process(float in0, float in1, float* out0, float* out1);
+    void process(float in0, float in1, float* out0, float* out1, bool continual, bool reverse);
 
     void reset(bool hard = true);
     

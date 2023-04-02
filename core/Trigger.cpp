@@ -71,8 +71,6 @@ void Trigger::prepareCWordPattern(int onsets, int shift) {
         _triggerPoints[_pointsCount] = point;
         _pointsCount ++;
     }
-    
-    setRepeats(_repeats);
     adjustIterator();
 }
 
@@ -94,7 +92,6 @@ void Trigger::prepareMeterPattern(int step, int shift) {
         }
         _triggerPoints[i] = point;
     }
-    setRepeats(_repeats);
     adjustIterator();
 }
 

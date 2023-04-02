@@ -21,15 +21,11 @@ Leds leds;
 const float tempo { 120 };
 const int bufferSize { 4 };
 
-void configurePlayback() {
-	p.tempo = snc.tempo();
-	p.sampleRate = kSampleRate;
-}
-
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size) {
 	static int cnfg_cnt { 0 };
 	if (++cnfg_cnt == 40) {
-		configurePlayback();
+		p.tempo = snc.tempo();
+		p.sampleRate = kSampleRate;
 		cnfg_cnt = 0;
 	}
 

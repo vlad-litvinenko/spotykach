@@ -40,7 +40,6 @@ Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
     _step       { 0 },
     _shift      { 0 }
 {
-    setSlicePosition(0);
     setRepeats(1.0);
     setShift(0);
     setGrid(1);
@@ -110,6 +109,7 @@ void Engine::setGrid(float normVal) {
         _grid = grid;
         set_pattern_index(_pattern_index);
         prepare_pattern();
+        setRepeats(_raw.repeats);
     }
 }
 
@@ -225,10 +225,11 @@ void Engine::step(bool engaged) {
     _trigger.next(engaged);
 }
 
-void Engine::process(float in0, float in1, float* out0, float* out1) {
+void Engine::process(float in0, float in1, float* out0, float* out1, bool continual, bool reverse) {
     _jitterLFO.advance();
     _source.write(in0, in1);
-    _generator.generate(out0, out1);
+    auto s = _slice < 0.05;
+    _generator.generate(out0, out1, continual && (!_is_playing || s), reverse);
 }
 
 void Engine::reset(bool hard) {

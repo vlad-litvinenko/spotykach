@@ -42,12 +42,6 @@ void Controller::init_sensor(Spotykach& core) {
     auto& e_b = core.engineAt(1);
 
     _sensor.set_mode(DescreteSensorPad::Mode::Toggle, Target::PlayStop);
-    
-    _sensor.set_on_touch([&e_a]{ e_a.one_shot(false); }, Target::OneShotFwdA);
-    _sensor.set_on_touch([&e_a]{ e_a.one_shot(true); }, Target::OneShotRevA);
-
-    _sensor.set_on_touch([&e_b]{ e_b.one_shot(false); }, Target::OneShotFwdB);
-    _sensor.set_on_touch([&e_b]{ e_b.one_shot(true); }, Target::OneShotRevB);
 
     _sensor.set_on_touch([&e_a]{ e_a.prev_pattern(); }, Target::PatternMinusA);
     _sensor.set_on_touch([&e_a]{ e_a.next_pattern(); }, Target::PatternPlusA);
@@ -106,7 +100,7 @@ void Controller::set_channel_toggles(Engine& e, ChannelToggles& ct, int ei) {
         using Target = ChannelToggles::Target;
         switch (target) {
             case Target::Grid:      e.setGrid(isOn ? 1 : 0); break;
-            case Target::Reverse:   e.setReverse(isOn && !holding_fwd || holding_rev); break;
+            case Target::Reverse:   e.setReverse((isOn && !holding_fwd) || holding_rev); break;
             default: {}
         }
     }
@@ -130,23 +124,8 @@ void Controller::set_global_toggles(Spotykach& s) {
 void Controller::read_sensor(Spotykach& core, Leds& leds) {
     _sensor.process();
 
-    _holding_fwd_a = _sensor.is_on(Target::OneShotFwdA);
-    _holding_fwd_b = _sensor.is_on(Target::OneShotFwdB);
-
-    _holding_rev_a = _sensor.is_on(Target::OneShotRevA);
-    _holding_rev_b = _sensor.is_on(Target::OneShotRevB);
-
     auto& e_a = core.engineAt(0);
     auto& e_b = core.engineAt(1);
-
-    auto is_playing_toggled = _sensor.is_on(Target::PlayStop);
-    auto holding_a = _holding_fwd_a || _holding_rev_a;
-    auto holding_b = _holding_fwd_b || _holding_rev_b;
-    auto reset = is_playing_toggled && !(_is_playing_toggled || holding_a || holding_b);
-    _is_playing_toggled = is_playing_toggled;
-
-    e_a.set_is_playing(is_playing_toggled || holding_a, reset);
-    e_b.set_is_playing(is_playing_toggled || holding_b, reset);
 
     auto rec_a = _sensor.is_on(Target::RecordA);
     auto rec_b = _sensor.is_on(Target::RecordB);
@@ -155,4 +134,26 @@ void Controller::read_sensor(Spotykach& core, Leds& leds) {
     e_b.setFrozen(!rec_b);
 
     leds.set_rec_on(rec_a || rec_b);
+
+    _holding_fwd_a = _sensor.is_on(Target::OneShotFwdA);
+    _holding_fwd_b = _sensor.is_on(Target::OneShotFwdB);
+
+    _holding_rev_a = !rec_a && _sensor.is_on(Target::OneShotRevA);
+    _holding_rev_b = !rec_b && _sensor.is_on(Target::OneShotRevB);
+
+    auto is_playing_toggled = _sensor.is_on(Target::PlayStop);
+    auto holding_a = _holding_fwd_a || _holding_rev_a;
+    auto holding_b = _holding_fwd_b || _holding_rev_b;
+    auto reset = is_playing_toggled && !(_is_playing_toggled || holding_a || holding_b);
+    _is_playing_toggled = is_playing_toggled;
+
+    e_a.set_is_playing(is_playing_toggled, reset);
+    e_b.set_is_playing(is_playing_toggled, reset);
+
+    PlaybackControls pc;
+    pc.ctns_a = _holding_fwd_a || _holding_rev_a;
+    pc.ctns_b = _holding_fwd_b || _holding_rev_b;
+    pc.rev_a = _holding_rev_a;
+    pc.rev_b = _holding_rev_b;
+    core.set_playback_controls(pc);
 }

@@ -162,6 +162,10 @@ void Spotykach::step() {
     e2.step(engaged);
 }
 
+void Spotykach::set_playback_controls(PlaybackControls c) {
+    _p_ctrls = c;
+}
+
 void Spotykach::preprocess(PlaybackParameters p) const {
     for (auto e: _engines) e->preprocess(p);
 }
@@ -178,7 +182,7 @@ void Spotykach::process(const float* const* in_buf, float** out_buf, int num_fra
 
         float out_0_a = 0;
         float out_1_a = 0;
-        e1.process(in_0_ext, in_1_ext, &out_0_a, &out_1_a);
+        e1.process(in_0_ext, in_1_ext, &out_0_a, &out_1_a, _p_ctrls.ctns_a, _p_ctrls.rev_a);
         out_0_a *= e1_vol;
         out_1_a *= e1_vol;
 
@@ -186,7 +190,7 @@ void Spotykach::process(const float* const* in_buf, float** out_buf, int num_fra
         float out_1_b = 0;
         float e2_in0 = _cascade ? out_0_a : in_0_ext;
         float e2_in1 = _cascade ? out_0_a : in_1_ext;
-        e2.process(e2_in0, e2_in1, &out_0_b, &out_1_b);
+        e2.process(e2_in0, e2_in1, &out_0_b, &out_1_b, _p_ctrls.ctns_b, _p_ctrls.rev_b);
         out_0_b *= e2_vol;
         out_1_b *= e2_vol;
 

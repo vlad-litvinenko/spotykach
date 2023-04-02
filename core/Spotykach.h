@@ -19,6 +19,13 @@
 namespace vlly {
 namespace spotykach {
 
+struct PlaybackControls {
+    bool ctns_a;
+    bool ctns_b;
+    bool rev_a;
+    bool rev_b;
+};
+
 class Spotykach {
 public:
     Spotykach();
@@ -40,7 +47,9 @@ public:
     void setCascade(bool value);
     
     void setJitterRate(float normVal);
-    
+
+    void set_playback_controls(PlaybackControls c);
+
     void initialize() const;
     void preprocess(PlaybackParameters p) const;
     void process(const float* const* inBuf, float** outBuf, int numFrames) const;
@@ -53,7 +62,7 @@ private:
     bool _split;
     bool _mutex;
     bool _cascade;
-
+    PlaybackControls _p_ctrls;
     std::vector<std::shared_ptr<void>> _releasePool;
 };
 }
