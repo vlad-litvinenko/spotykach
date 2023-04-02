@@ -30,6 +30,16 @@ public:
         _led_b_rev = reverse;
     }
 
+    void set_led_a_on(bool value) {
+        _led_a.Set(value ? 1 : 0);
+        _led_a.Update();
+    }
+
+    void set_led_b_on(bool value) {
+        _led_b.Set(value ? 1 : 0);
+        _led_b.Update();
+    }
+
     void set_rec_on(bool value) {
         _led_r.Set(value ? 1 : 0);
         _led_r.Update();

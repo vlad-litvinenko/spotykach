@@ -133,8 +133,6 @@ void Controller::read_sensor(Spotykach& core, Leds& leds) {
     e_a.setFrozen(!rec_a);
     e_b.setFrozen(!rec_b);
 
-    leds.set_rec_on(rec_a || rec_b);
-
     _holding_fwd_a = _sensor.is_on(Target::OneShotFwdA);
     _holding_fwd_b = _sensor.is_on(Target::OneShotFwdB);
 
@@ -156,4 +154,8 @@ void Controller::read_sensor(Spotykach& core, Leds& leds) {
     pc.rev_a = _holding_rev_a;
     pc.rev_b = _holding_rev_b;
     core.set_playback_controls(pc);
+
+    leds.set_led_a_on(holding_a && !is_playing_toggled);
+    leds.set_led_b_on(holding_b && !is_playing_toggled);
+    leds.set_rec_on(rec_a || rec_b);
 }
