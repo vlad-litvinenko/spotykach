@@ -1,6 +1,7 @@
 #pragma once
 
 #include "daisy_seed.h"
+#include "layout.h"
 
 struct ChannelToggles {
 public:
@@ -30,8 +31,13 @@ private:
         using namespace seed;
         auto ch_a { ch == 0 };
         switch (t) {
+        #ifdef ROEY
+            case Target::Grid:      return ch_a ? D1 : D14;
+            case Target::Reverse:   return ch_a ? D2 : D7;
+        #else
             case Target::Grid:      return ch_a ? D0 : D10;
             case Target::Reverse:   return ch_a ? D1 : D26;
+        #endif
         };
     };
     #pragma GCC diagnostic pop

@@ -2,7 +2,6 @@
 
 #include <algorithm>
 #include "hid/led.h"
-#include "../common/deb.h"
 #include "../core/globals.h"
 
 class Leds {
@@ -11,9 +10,15 @@ public:
     ~Leds() = default;
 
     void initialize() {
+    #ifdef ROEY
+        _led_a.Init(daisy::seed::D8, false, 31250);
+        _led_b.Init(daisy::seed::D9, false, 31250);
+        _led_r.Init(daisy::seed::D10, false);
+    #else
         _led_a.Init(daisy::seed::D4, false, 31250);
         _led_b.Init(daisy::seed::D6, false, 31250);
         _led_r.Init(daisy::seed::D5, false);
+    #endif
     }
 
     void blink_a(uint32_t duration, bool reverse) {

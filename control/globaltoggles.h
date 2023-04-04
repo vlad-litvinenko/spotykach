@@ -1,6 +1,7 @@
 #pragma once
 
 #include "daisy_seed.h"
+#include "layout.h"
 
 struct GlobalToggles {
 public:
@@ -26,11 +27,19 @@ private:
         using namespace daisy;
         using namespace seed;
         switch (t) {
-            case Target::Mutex:     return D30;
-            case Target::Cascade:   return D29;
-            case Target::Split:     return D27;
+        #ifdef ROEY
+            case Target::Mutex:     return D4;
+            case Target::Cascade:   return D5;
+            case Target::Split:     return D3;
             default: return {};
+        #else
+            case Target::Mutex:     return D29;
+            case Target::Cascade:   return D27;
+            case Target::Split:     return D30;
+            default: return {};
+        #endif
         };
+        
     };
 
     static const int kTargetsCount { 3 };

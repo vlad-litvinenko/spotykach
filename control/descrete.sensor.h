@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include "dev/mpr121.h"
 #include "descrete.sensor.pad.h"
+#include "layout.h"
 
 #ifndef _pin
 #define _pin(shift) (1 << shift)
@@ -75,6 +76,19 @@ public:
         //
         //The order should correspond order of Target enum entries
         uint16_t mask[targets_count] = {
+        #ifdef ROEY
+          _pin(4),                      //PlayStop
+          _pin(3),                      //OneShotFwdA
+          _pin(2),                      //OneShotRevA
+          _together(_pin(3), _pin(2)),  //RecordA
+          _pin(6),                      //PatternMinusA
+          _pin(1),                      //PatternPlusA,
+          _pin(5),                      //OneShotFwdB,
+          _pin(0),                      //OneShotRevB,
+          _together(_pin(5), _pin(0)),  //RecordB
+          _pin(8),                      //PatternMinusB,
+          _pin(9)                       //PatternPlusB
+        #else
           _pin(7),                      //PlayStop
           _pin(6),                      //OneShotFwdA
           _pin(4),                      //OneShotRevA
@@ -86,6 +100,7 @@ public:
           _together(_pin(9), _pin(10)),  //RecordB
           _pin(8),                      //PatternMinusB,
           _pin(5)                       //PatternPlusB
+        #endif
         };
         //
         //#################################################################
@@ -113,9 +128,13 @@ public:
                 state &= ~(1 << i);
             }
         }
-
+    #ifdef ROEY
+        state = one_or_both(3, 2, state, _state);
+        state = one_or_both(5, 0, state, _state);
+    #else
         state = one_or_both(4, 6, state, _state);
         state = one_or_both(9, 10, state, _state);
+    #endif
 
         _state = state;
 

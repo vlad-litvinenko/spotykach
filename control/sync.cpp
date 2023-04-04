@@ -1,9 +1,14 @@
 #include "sync.h"
+#include "layout.h"
 
 void Sync::run(vlly::spotykach::Spotykach& core) {
     _core = &core;
     daisy::GPIO::Config cfg;
-	cfg.pin = daisy::seed::D2;
+#ifdef ROEY
+	cfg.pin = daisy::seed::D0;
+#else
+    cfg.pin = daisy::seed::D2;
+#endif
 	g.Init(cfg);
 }
 
