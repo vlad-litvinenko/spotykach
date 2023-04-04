@@ -112,6 +112,7 @@ void Trigger::one_shot(bool reverse) {
 }
 
 void Trigger::next(bool engaged) {
+    if (_ticksTillUnlock > 0) _ticksTillUnlock--;
     if (_iterator == _triggerPoints[_nextPointIndex]) {
         if (engaged && _nextPointIndex < _repeats) {
             long onset = 0;
@@ -124,7 +125,6 @@ void Trigger::next(bool engaged) {
         _nextPointIndex = (_nextPointIndex + 1) % _pointsCount;
     }
     _iterator = (_iterator + 1) % (_beatsPerPattern * kTicksPerBeat);
-    if (_ticksTillUnlock > 0) _ticksTillUnlock--;
 }
 
 void Trigger::reset() {
