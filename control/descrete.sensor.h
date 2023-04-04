@@ -158,7 +158,7 @@ public:
     }
 
 private:
-    static const int _buffer_length = 72;
+    static const int _buffer_length = 60;
     int _iterator = 0;
     uint16_t _buffer[_buffer_length];
 
