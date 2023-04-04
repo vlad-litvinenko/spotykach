@@ -212,7 +212,7 @@ void Engine::preprocess(PlaybackParameters p) {
 }
 
 void Engine::set_is_playing(bool value, bool clean) {
-    if (clean && value != _is_playing) reset();
+    //if (clean && value != _is_playing) reset();
     _is_playing = value;
 }
 
@@ -228,8 +228,7 @@ void Engine::step(bool engaged) {
 void Engine::process(float in0, float in1, float* out0, float* out1, bool continual, bool reverse) {
     _jitterLFO.advance();
     _source.write(in0, in1);
-    auto s = _slice < 0.05;
-    _generator.generate(out0, out1, continual && (!_is_playing || s), reverse);
+    _generator.generate(out0, out1, continual, reverse);
 }
 
 void Engine::reset(bool hard) {
