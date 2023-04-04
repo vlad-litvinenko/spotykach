@@ -149,8 +149,8 @@ void Controller::read_sensor(Spotykach& core, Leds& leds) {
     e_b.set_is_playing(is_playing_toggled, reset);
 
     PlaybackControls pc;
-    pc.ctns_a = _holding_fwd_a || _holding_rev_a;
-    pc.ctns_b = _holding_fwd_b || _holding_rev_b;
+    pc.ctns_a = !(rec_a && is_playing_toggled) && (_holding_fwd_a || _holding_rev_a);
+    pc.ctns_b = !(rec_b && is_playing_toggled) && (_holding_fwd_b || _holding_rev_b);
     pc.rev_a = _holding_rev_a;
     pc.rev_b = _holding_rev_b;
     core.set_playback_controls(pc);
