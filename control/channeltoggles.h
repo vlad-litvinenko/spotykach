@@ -31,7 +31,7 @@ private:
         using namespace seed;
         auto ch_a { ch == 0 };
         switch (t) {
-        #ifdef ROEY
+        #ifdef ROEY_LAYOUT
             case Target::Grid:      return ch_a ? D1 : D14;
             case Target::Reverse:   return ch_a ? D2 : D7;
         #else

@@ -4,7 +4,7 @@
 void Sync::run(vlly::spotykach::Spotykach& core) {
     _core = &core;
     daisy::GPIO::Config cfg;
-#ifdef ROEY
+#ifdef ROEY_LAYOUT
 	cfg.pin = daisy::seed::D0;
 #else
     cfg.pin = daisy::seed::D2;

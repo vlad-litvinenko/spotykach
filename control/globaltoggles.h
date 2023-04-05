@@ -27,7 +27,7 @@ private:
         using namespace daisy;
         using namespace seed;
         switch (t) {
-        #ifdef ROEY
+        #ifdef ROEY_LAYOUT
             case Target::Mutex:     return D4;
             case Target::Cascade:   return D5;
             case Target::Split:     return D3;

@@ -53,7 +53,7 @@ private:
         using namespace seed;
         using KT = Knob::Target;
         switch (usage) {
-        #ifdef ROEY
+        #ifdef ROEY_LAYOUT
             case KT::SlicePositionA:    return A8;
             case KT::SliceLengthA:      return A7;
             case KT::RetriggerA:        return A6;

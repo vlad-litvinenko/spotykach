@@ -10,7 +10,7 @@ public:
     ~Leds() = default;
 
     void initialize() {
-    #ifdef ROEY
+    #ifdef ROEY_LAYOUT
         _led_a.Init(daisy::seed::D8, false, 31250);
         _led_b.Init(daisy::seed::D9, false, 31250);
         _led_r.Init(daisy::seed::D10, false);

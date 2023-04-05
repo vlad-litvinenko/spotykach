@@ -76,7 +76,7 @@ public:
         //
         //The order should correspond order of Target enum entries
         uint16_t mask[targets_count] = {
-        #ifdef ROEY
+        #ifdef ROEY_LAYOUT
           _pin(4),                      //PlayStop
           _pin(3),                      //OneShotFwdA
           _pin(2),                      //OneShotRevA
@@ -128,7 +128,7 @@ public:
                 state &= ~(1 << i);
             }
         }
-    #ifdef ROEY
+    #ifdef ROEY_LAYOUT
         state = one_or_both(3, 2, state, _state);
         state = one_or_both(5, 0, state, _state);
     #else
