@@ -15,7 +15,18 @@ void Controller::initialize(DaisySeed& hw, Spotykach& core) {
     init_sensor(core);
 
     _store.initialize(hw);
-    set_persisted(core);
+    if (_store.is_updated()) {
+        set_persisted(core);
+    }
+    else {
+        auto i_a = core.engineAt(0).pattern_idexes();
+        store_pattern_index_a(i_a[0], Grid::even);
+        store_pattern_index_a(i_a[1], Grid::c_word);
+
+        auto i_b = core.engineAt(1).pattern_idexes();
+        store_pattern_index_b(i_b[0], Grid::even);
+        store_pattern_index_b(i_b[1], Grid::c_word);
+    }
 }
 
 void Controller::init_knobs(DaisySeed& hw) {
@@ -47,9 +58,9 @@ void Controller::init_sensor(Spotykach& core) {
     _sensor.set_mode(DescreteSensorPad::Mode::Toggle, Target::PlayStop);
 
     _sensor.set_on_touch([&e_a, this]{ this->store_pattern_index_a(e_a.prev_pattern(), e_a.grid()); }, Target::PatternMinusA);
-    _sensor.set_on_touch([&e_a, this]{ this->store_pattern_index_a(e_a.prev_pattern(), e_a.grid()); }, Target::PatternPlusA);
+    _sensor.set_on_touch([&e_a, this]{ this->store_pattern_index_a(e_a.next_pattern(), e_a.grid()); }, Target::PatternPlusA);
     _sensor.set_on_touch([&e_b, this]{ this->store_pattern_index_b(e_b.prev_pattern(), e_b.grid()); }, Target::PatternMinusB);
-    _sensor.set_on_touch([&e_b, this]{ this->store_pattern_index_b(e_b.prev_pattern(), e_b.grid()); }, Target::PatternPlusB);
+    _sensor.set_on_touch([&e_b, this]{ this->store_pattern_index_b(e_b.next_pattern(), e_b.grid()); }, Target::PatternPlusB);
 }
 
 void Controller::store_pattern_index_a(int index, Grid g) {
@@ -62,15 +73,15 @@ void Controller::store_pattern_index_a(int index, Grid g) {
 void Controller::store_pattern_index_b(int index, Grid g) {
     switch (g) {
         case Grid::c_word: _store.set_cword_pattern_b(index); break;
-        case Grid::even: _store.set_even_pattern_b(index); break;
+        case Grid::even: _store.set_even_pattern_b(index);  break;
     };
 }
 
 void Controller::set_persisted(Spotykach& core) {
     auto& e_a = core.engineAt(0);
     auto& e_b = core.engineAt(1);
-    e_a.init_pattern_index(_store.even_pattern_a(), _store.cword_pattern_a());
-    e_b.init_pattern_index(_store.even_pattern_b(), _store.cword_pattern_b());
+    e_a.init_pattern_indexes({ _store.even_pattern_a(), _store.cword_pattern_a() });
+    e_b.init_pattern_indexes({ _store.even_pattern_b(), _store.cword_pattern_b() });
 }
 
 void Controller::set_parameters(Spotykach& core, Leds& leds) {

@@ -62,7 +62,9 @@ public:
     void set_pitch_shift(float value);
 
     void setShift(float shift);
-    void init_pattern_index(int even, int cword);
+
+    std::array<int, kGrid_Count> pattern_idexes() { return _pattern_indexes; }
+    void init_pattern_indexes(std::array<int, kGrid_Count> indexes);
     int next_pattern();
     int prev_pattern();
     void set_grid(float grid);
@@ -108,7 +110,7 @@ private:
     float _tempo;
     
     Grid _grid;
-    int _pattern_index[kGrid_Count];
+    std::array<int, kGrid_Count> _pattern_indexes;
     int _onsets;
     int _step;
     int _shift;

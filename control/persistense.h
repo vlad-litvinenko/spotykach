@@ -5,6 +5,7 @@ struct StoredParams {
     int cword_pattern_a;
     int even_pattern_b;
     int cword_pattern_b; 
+    int tag;
 };
 
 static StoredParams DSY_QSPI_BSS params_qspi;
@@ -17,6 +18,10 @@ public:
     void initialize(daisy::DaisySeed& hw) {
         _params = params_qspi;
         _hw = &hw;
+    }
+
+    bool is_updated() {
+        return _params.tag == 3;
     }
 
     int cword_pattern_a() { return _params.cword_pattern_a; }
@@ -45,11 +50,18 @@ public:
 
 private:
     void store() {
+        _params.tag = 3;
         size_t size = sizeof(_params);
 	    size_t address = (size_t)(&params_qspi);
 	    
 	    _hw->qspi.Erase(address, address + size);
 	    _hw->qspi.Write(address, size, (uint8_t*)(&_params));    
+    }
+
+    void clear() {
+        size_t size = sizeof(_params);
+	    size_t address = (size_t)(&params_qspi);
+	    _hw->qspi.Erase(address, address + size);
     }
 
     daisy::DaisySeed* _hw;

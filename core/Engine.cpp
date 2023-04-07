@@ -35,7 +35,7 @@ Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
     _is_playing { false },
     _tempo      { 0 },
     _grid       { Grid::c_word },
-    _pattern_index  ({ 6, 4 }), //Even: 6 (1/8), CWord: 4 (9 insets)
+    _pattern_indexes { 6, 4 },
     _onsets     { 7 },
     _step       { 0 },
     _shift      { 0 }
@@ -50,7 +50,6 @@ Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
     setJitterAmount(0);
     setJitterRate(0.75);
     setFrozen(true);
-    set_pattern_index(4);
 }
 
 void Engine::setShift(float normVal) {
@@ -61,18 +60,17 @@ void Engine::setShift(float normVal) {
     prepare_pattern();
 }
 
-void Engine::init_pattern_index(int even, int cword) {
-    _pattern_index[0] = even;
-    _pattern_index[1] = cword;
+void Engine::init_pattern_indexes(std::array<int, kGrid_Count> indexes) {
+    _pattern_indexes = indexes;
 }
 
 int Engine::next_pattern() {
-    auto index = _pattern_index[int(_grid)];
+    auto index = _pattern_indexes[int(_grid)];
     return set_pattern_index(++index);
 }
 
 int Engine::prev_pattern() {
-    auto index = _pattern_index[int(_grid)];
+    auto index = _pattern_indexes[int(_grid)];
     return set_pattern_index(-- index);
 }
 
@@ -83,7 +81,7 @@ int Engine::set_pattern_index(int index) {
     index = std::max(index, 0);
     index = std::min(index, max_index);
 
-    _pattern_index[int(_grid)] = index;    
+    _pattern_indexes[int(_grid)] = index;    
 
     switch (_grid) {
         case Grid::even: step = EvenSteps[index]; break;
@@ -114,7 +112,7 @@ void Engine::set_grid(float normVal) {
     Grid grid = spotykach::Grid(normVal * (kGrid_Count - 1));
     if (grid != _grid) {
         _grid = grid;
-        set_pattern_index(_pattern_index[int(_grid)]);
+        set_pattern_index(_pattern_indexes[int(_grid)]);
         prepare_pattern();
         setRepeats(_raw.repeats);
     }
