@@ -1,5 +1,4 @@
 #include "controller.h"
-#include "../common/deb.h"
 
 using namespace vlly;
 using namespace spotykach;

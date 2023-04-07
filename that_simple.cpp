@@ -37,7 +37,7 @@ int main(void) {
 	hw.Configure();
 	hw.Init();
 
-	HW::hw().setHW(&hw);
+	//HW::hw().setHW(&hw);
 	//HW::hw().startLog();
 
 	core.initialize();
