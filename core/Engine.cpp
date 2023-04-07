@@ -35,7 +35,7 @@ Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
     _is_playing { false },
     _tempo      { 0 },
     _grid       { Grid::c_word },
-    _pattern_index { 4 },
+    _pattern_index  ({ 6, 4 }), //Even: 6 (1/8), CWord: 4 (9 insets)
     _onsets     { 7 },
     _step       { 0 },
     _shift      { 0 }
@@ -61,13 +61,18 @@ void Engine::setShift(float normVal) {
     prepare_pattern();
 }
 
+void Engine::init_pattern_index(int even, int cword) {
+    _pattern_index[0] = even;
+    _pattern_index[1] = cword;
+}
+
 int Engine::next_pattern() {
-    auto index = _pattern_index;
+    auto index = _pattern_index[int(_grid)];
     return set_pattern_index(++index);
 }
 
 int Engine::prev_pattern() {
-    auto index = _pattern_index;
+    auto index = _pattern_index[int(_grid)];
     return set_pattern_index(-- index);
 }
 
@@ -78,7 +83,7 @@ int Engine::set_pattern_index(int index) {
     index = std::max(index, 0);
     index = std::min(index, max_index);
 
-    _pattern_index = index;    
+    _pattern_index[int(_grid)] = index;    
 
     switch (_grid) {
         case Grid::even: step = EvenSteps[index]; break;
@@ -91,7 +96,7 @@ int Engine::set_pattern_index(int index) {
         prepare_pattern();
     }
 
-    return _pattern_index;
+    return index;
 }
 
 void Engine::prepare_pattern() {
@@ -109,7 +114,7 @@ void Engine::set_grid(float normVal) {
     Grid grid = spotykach::Grid(normVal * (kGrid_Count - 1));
     if (grid != _grid) {
         _grid = grid;
-        set_pattern_index(_pattern_index);
+        set_pattern_index(_pattern_index[int(_grid)]);
         prepare_pattern();
         setRepeats(_raw.repeats);
     }

@@ -70,14 +70,8 @@ void Controller::store_pattern_index_b(int index, Grid g) {
 void Controller::set_persisted(Spotykach& core) {
     auto& e_a = core.engineAt(0);
     auto& e_b = core.engineAt(1);
-    e_a.set_pattern_index(e_a.grid() == Grid::c_word 
-        ? _store.cword_pattern_a() 
-        : _store.even_pattern_a()
-    );
-    e_b.set_pattern_index(e_b.grid() == Grid::c_word 
-        ? _store.cword_pattern_b() 
-        : _store.even_pattern_b()
-    );
+    e_a.init_pattern_index(_store.even_pattern_a(), _store.cword_pattern_a());
+    e_b.init_pattern_index(_store.even_pattern_b(), _store.cword_pattern_b());
 }
 
 void Controller::set_parameters(Spotykach& core, Leds& leds) {

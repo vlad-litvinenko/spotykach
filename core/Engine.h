@@ -62,7 +62,7 @@ public:
     void set_pitch_shift(float value);
 
     void setShift(float shift);
-    int set_pattern_index(int index);
+    void init_pattern_index(int even, int cword);
     int next_pattern();
     int prev_pattern();
     void set_grid(float grid);
@@ -108,7 +108,7 @@ private:
     float _tempo;
     
     Grid _grid;
-    int _pattern_index;
+    int _pattern_index[kGrid_Count];
     int _onsets;
     int _step;
     int _shift;
@@ -117,6 +117,7 @@ private:
     
     bool _invalidateCrossfade;
 
+    int set_pattern_index(int index);
     void prepare_pattern();
 };
 }
