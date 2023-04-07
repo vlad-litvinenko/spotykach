@@ -19,6 +19,15 @@ But you'll look sweet upon the seat of a bicycle built for two...
 2001: A Space Odyssey (1968)
 ```
 
+###Setup
+Assumes libDaisy and DaisyDP are located at the same level with the project, i.e.
+```
+|
+|--that-simple
+|--libDaisy
+|--daisySP
+```
+
 ### Build and upload
 ```shell
 $ make clean; make; make program-dfu
