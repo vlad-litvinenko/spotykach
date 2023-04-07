@@ -62,8 +62,9 @@ public:
     void set_pitch_shift(float value);
 
     void setShift(float shift);
-    void next_pattern();
-    void prev_pattern();
+    int set_pattern_index(int index);
+    int next_pattern();
+    int prev_pattern();
     void setGrid(float grid);
     
     void setRepeats(float repeats);
@@ -115,7 +116,6 @@ private:
     
     bool _invalidateCrossfade;
 
-    void set_pattern_index(int index);
     void prepare_pattern();
 };
 }

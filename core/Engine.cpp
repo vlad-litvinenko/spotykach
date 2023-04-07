@@ -61,17 +61,17 @@ void Engine::setShift(float normVal) {
     prepare_pattern();
 }
 
-void Engine::next_pattern() {
+int Engine::next_pattern() {
     auto index = _pattern_index;
-    set_pattern_index(++index);
+    return set_pattern_index(++index);
 }
 
-void Engine::prev_pattern() {
+int Engine::prev_pattern() {
     auto index = _pattern_index;
-    set_pattern_index(-- index);
+    return set_pattern_index(-- index);
 }
 
-void Engine::set_pattern_index(int index) {
+int Engine::set_pattern_index(int index) {
     auto step = _step;
     auto onsets = _onsets;
     int max_index = _grid == Grid::even ? EvenStepsCount - 1 : CWordsCount - 1; 
@@ -90,6 +90,8 @@ void Engine::set_pattern_index(int index) {
         _onsets = onsets;
         prepare_pattern();
     }
+
+    return _pattern_index;
 }
 
 void Engine::prepare_pattern() {
