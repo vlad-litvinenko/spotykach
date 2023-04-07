@@ -104,7 +104,7 @@ void Trigger::adjustIterator() {
 }
 
 void Trigger::setRepeats(int repeats) {
-    _repeats = _pointsCount && repeats > _pointsCount ? _pointsCount : _repeats = repeats;
+    _repeats = _pointsCount && repeats > _pointsCount ? _pointsCount : repeats;
 }
 
 void Trigger::one_shot(bool reverse) {
