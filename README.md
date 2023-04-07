@@ -19,7 +19,7 @@ But you'll look sweet upon the seat of a bicycle built for two...
 2001: A Space Odyssey (1968)
 ```
 
-###Setup
+### Setup
 Assumes libDaisy and DaisyDP are located at the same level with the project, i.e.
 ```
 |
