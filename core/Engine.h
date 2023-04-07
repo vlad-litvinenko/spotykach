@@ -65,7 +65,8 @@ public:
     int set_pattern_index(int index);
     int next_pattern();
     int prev_pattern();
-    void setGrid(float grid);
+    void set_grid(float grid);
+    Grid grid() { return _grid; };
     
     void setRepeats(float repeats);
     int repeats() { return _trigger.repeats(); };

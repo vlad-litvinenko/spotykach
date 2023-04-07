@@ -42,7 +42,7 @@ Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
 {
     setRepeats(1.0);
     setShift(0);
-    setGrid(1);
+    set_grid(1);
     setSliceLength(0.5);
     setReverse(false);
     setRetrigger(0);
@@ -104,7 +104,7 @@ void Engine::prepare_pattern() {
     _invalidateCrossfade = true;
 }
 
-void Engine::setGrid(float normVal) {
+void Engine::set_grid(float normVal) {
     _raw.grid = normVal;
     Grid grid = spotykach::Grid(normVal * (kGrid_Count - 1));
     if (grid != _grid) {

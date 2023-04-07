@@ -7,12 +7,16 @@ using namespace spotykach;
 using namespace daisy;
 
 void Controller::initialize(DaisySeed& hw, Spotykach& core) {
+    
     init_knobs(hw);
     init_toggles(hw);
-
+    
     hw.adc.Start();
 
     init_sensor(core);
+
+    _store.initialize(hw);
+    set_persisted(core);
 }
 
 void Controller::init_knobs(DaisySeed& hw) {
@@ -43,10 +47,37 @@ void Controller::init_sensor(Spotykach& core) {
 
     _sensor.set_mode(DescreteSensorPad::Mode::Toggle, Target::PlayStop);
 
-    _sensor.set_on_touch([&e_a]{ e_a.prev_pattern(); }, Target::PatternMinusA);
-    _sensor.set_on_touch([&e_a]{ e_a.next_pattern(); }, Target::PatternPlusA);
-    _sensor.set_on_touch([&e_b]{ e_b.prev_pattern(); }, Target::PatternMinusB);
-    _sensor.set_on_touch([&e_b]{ e_b.next_pattern(); }, Target::PatternPlusB);
+    _sensor.set_on_touch([&e_a, this]{ this->store_pattern_index_a(e_a.prev_pattern(), e_a.grid()); }, Target::PatternMinusA);
+    _sensor.set_on_touch([&e_a, this]{ this->store_pattern_index_a(e_a.prev_pattern(), e_a.grid()); }, Target::PatternPlusA);
+    _sensor.set_on_touch([&e_b, this]{ this->store_pattern_index_b(e_b.prev_pattern(), e_b.grid()); }, Target::PatternMinusB);
+    _sensor.set_on_touch([&e_b, this]{ this->store_pattern_index_b(e_b.prev_pattern(), e_b.grid()); }, Target::PatternPlusB);
+}
+
+void Controller::store_pattern_index_a(int index, Grid g) {
+    switch (g) {
+        case Grid::c_word: _store.set_cword_pattern_a(index); break;
+        case Grid::even: _store.set_even_pattern_a(index); break;
+    };
+}
+
+void Controller::store_pattern_index_b(int index, Grid g) {
+    switch (g) {
+        case Grid::c_word: _store.set_cword_pattern_b(index); break;
+        case Grid::even: _store.set_even_pattern_b(index); break;
+    };
+}
+
+void Controller::set_persisted(Spotykach& core) {
+    auto& e_a = core.engineAt(0);
+    auto& e_b = core.engineAt(1);
+    e_a.set_pattern_index(e_a.grid() == Grid::c_word 
+        ? _store.cword_pattern_a() 
+        : _store.even_pattern_a()
+    );
+    e_b.set_pattern_index(e_b.grid() == Grid::c_word 
+        ? _store.cword_pattern_b() 
+        : _store.even_pattern_b()
+    );
 }
 
 void Controller::set_parameters(Spotykach& core, Leds& leds) {
@@ -99,7 +130,7 @@ void Controller::set_channel_toggles(Engine& e, ChannelToggles& ct, int ei) {
         auto holding_rev = ei == 0 ? _holding_rev_a : _holding_rev_b;
         using Target = ChannelToggles::Target;
         switch (target) {
-            case Target::Grid:      e.setGrid(isOn ? 1 : 0); break;
+            case Target::Grid:      e.set_grid(isOn ? 1 : 0); break;
             case Target::Reverse:   e.setReverse((isOn && !holding_fwd) || holding_rev); break;
             default: {}
         }
@@ -135,13 +166,14 @@ void Controller::read_sensor(Spotykach& core, Leds& leds) {
 
     _holding_fwd_a = _sensor.is_on(Target::OneShotFwdA);
     _holding_fwd_b = _sensor.is_on(Target::OneShotFwdB);
-
     _holding_rev_a = !rec_a && _sensor.is_on(Target::OneShotRevA);
     _holding_rev_b = !rec_b && _sensor.is_on(Target::OneShotRevB);
+    
 
     auto is_playing_toggled = _sensor.is_on(Target::PlayStop);
     auto holding_a = _holding_fwd_a || _holding_rev_a;
     auto holding_b = _holding_fwd_b || _holding_rev_b;
+
     auto reset = is_playing_toggled && !(_is_playing_toggled || holding_a || holding_b);
     _is_playing_toggled = is_playing_toggled;
 
