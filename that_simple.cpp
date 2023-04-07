@@ -38,7 +38,7 @@ int main(void) {
 	hw.Init();
 
 	HW::hw().setHW(&hw);
-	HW::hw().startLog();
+	//HW::hw().startLog();
 
 	core.initialize();
 	snc.run(core);
