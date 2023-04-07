@@ -16,7 +16,8 @@
                 "/Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/**"
             ],
             "name": "macOS",
-            "macFrameworkPath": []
+            "macFrameworkPath": [],
+            "configurationProvider": "ms-vscode.makefile-tools"
         }
     ],
     "version": 4
