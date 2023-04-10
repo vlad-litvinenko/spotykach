@@ -58,9 +58,9 @@ private:
             case KT::SliceLengthA:      return A7;
             case KT::RetriggerA:        return A6;
             case KT::JitterAmountA:     return A9;
-            case KT::JitterRate:        return A4;
+            case KT::JitterRate:        return A5;
             case KT::VolumeCrossfade:   return A11;
-            case KT::PatternCrossfade:  return A5;
+            case KT::PatternCrossfade:  return A4;
             case KT::Pitch:             return A10;
             case KT::SlicePositionB:    return A1;
             case KT::SliceLengthB:      return A0;
@@ -72,9 +72,9 @@ private:
             case KT::SliceLengthA:      return A9;
             case KT::RetriggerA:        return A8;
             case KT::JitterAmountA:     return A11;
-            case KT::JitterRate:        return A6;
+            case KT::JitterRate:        return A7;
             case KT::VolumeCrossfade:   return A5;
-            case KT::PatternCrossfade:  return A7;
+            case KT::PatternCrossfade:  return A6;
             case KT::Pitch:             return A4;
             case KT::SlicePositionB:    return A2;
             case KT::SliceLengthB:      return A1;
