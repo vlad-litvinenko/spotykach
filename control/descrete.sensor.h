@@ -89,7 +89,7 @@ public:
           _pin(8),                      //PatternMinusB,
           _pin(9)                       //PatternPlusB
         #else
-          _pin(7),                      //PlayStop
+          _pin(7),                      //PlayStop 
           _pin(6),                      //OneShotFwdA
           _pin(4),                      //OneShotRevA
           _together(_pin(4), _pin(6)),  //RecordA
