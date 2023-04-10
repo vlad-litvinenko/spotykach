@@ -26,7 +26,7 @@ public:
             _bypass = true;
         }
         else if (s < 0.5) {
-            semitones = 22.0 * (s - 0.5);
+            semitones = 48.0 * (s - 0.5);
             _bypass = false;
         }
         else {
