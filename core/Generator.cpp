@@ -73,7 +73,7 @@ void Generator::set_reverse(bool value) {
 }
 
 void Generator::set_cycle_start() {
-    _source.setCycleStart(_slice_position_frames);
+    _source.set_cycle_start(_slice_position_frames);
 }
 
 void Generator::initialize() {
@@ -101,12 +101,13 @@ void Generator::generate(float* out0, float* out1, bool continual, bool reverse)
     }
 
     if (continual != _continual) {
-            _continual_iterator = reverse ? _source.length() : 0;
-            _continual = continual;
-        }
+        _continual_iterator = 0;
+        _continual = continual;
+    }
 
     if (continual) {
-        _source.read(slice_out_0, slice_out_1, _slice_position_frames + _continual_iterator);
+        auto frame = _source.is_frozen() ? _slice_position_frames + _continual_iterator :  _source.read_head();
+        _source.read(slice_out_0, slice_out_1, frame);
         _continual_pitch.process(&slice_out_0, &slice_out_1);
         out_0_val += slice_out_0;
         out_1_val += slice_out_1;
@@ -132,7 +133,7 @@ void Generator::set_on_slice(SliceCallback f) {
 }
 
 void Generator::activate_slice(float in_raw_onset, int direction) {
-    auto reset = !fcomp(in_raw_onset, _raw_onset) || !_source.isFrozen();
+    auto reset = !fcomp(in_raw_onset, _raw_onset) || !_source.is_frozen();
     auto offset = _slice_position_frames;
     auto lfo_value = _jitter_lfo.triangleValue();
     auto m = modulations(_jitter_amount);

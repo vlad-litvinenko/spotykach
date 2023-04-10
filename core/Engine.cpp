@@ -173,7 +173,7 @@ void Engine::setReverse(bool value) {
 void Engine::setFrozen(bool frozen) {
     auto isTurningOff = _raw.frozen && !frozen;
     _raw.frozen = frozen;
-    _source.setFrozen(frozen);
+    _source.set_frozen(frozen);
     if (isTurningOff) {
         _generator.set_cycle_start();
         _generator.set_needs_reset_slices();
@@ -181,7 +181,7 @@ void Engine::setFrozen(bool frozen) {
 }
 
 void Engine::setAntifreeze(bool value) {
-    _source.setAntifreeze(value);
+    _source.set_antifreeze(value);
 }
 
 void Engine::set_pitch_shift(float value) {

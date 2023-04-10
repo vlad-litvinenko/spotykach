@@ -15,23 +15,23 @@
 class Source: public ISource {
 public:
     Source();
-    void setFrozen(bool) override;
-    bool isFrozen() override { return _frozen; }
+    void set_frozen(bool) override;
+    bool is_frozen() override { return _frozen; }
 
-    void setAntifreeze(bool) override;
+    void set_antifreeze(bool) override;
     
-    void setCycleStart(uint32_t) override;
+    void set_cycle_start(uint32_t) override;
 
     void initialize() override;
     
     uint32_t length() override { return _bufferLength; };
 
     void write(float, float) override;
-    uint32_t readHead() override;
+    uint32_t read_head() override;
     
     void read(float&, float&, uint32_t) override;
     
-    bool isFilled() override { return _filled; }
+    bool is_filled() override { return _filled; }
     
     void reset() override;
     

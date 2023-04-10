@@ -22,22 +22,22 @@ Source::Source() :
     _sycleStart { 0 }
     {}
 
-void Source::setFrozen(bool frozen) {
+void Source::set_frozen(bool frozen) {
     _frozen = _antifreeze ? false : frozen;
 }
 
-void Source::setAntifreeze(bool value) {
+void Source::set_antifreeze(bool value) {
     _antifreeze = value;
-    if (_antifreeze) setFrozen(false);
+    if (_antifreeze) set_frozen(false);
 }
 
-void Source::setCycleStart(uint32_t start) {
+void Source::set_cycle_start(uint32_t start) {
     if (start >= _bufferLength) return;
     _writeHead = start;
     _sycleStart = start;
 }
 
-unsigned long Source::readHead() {
+unsigned long Source::read_head() {
     return _readHead;
 }
 
