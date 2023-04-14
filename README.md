@@ -20,15 +20,16 @@ But you'll look sweet upon the seat of a bicycle built for two...
 ```
 
 ### Setup
-Assumes libDaisy and DaisyDP are located at the same level with the project, i.e.
-```
-|
-|--that-simple
-|--libDaisy
-|--daisySP
+```shell
+$ git clone git@github.com:vlad-litvinenko/that-simple.git
+$ git submodule update --init
+$ cd lib/libdaisy
+$ make
+$ cd ../.. 
+$ make clean; make
 ```
 
-### Build and upload
+### Upload
 ```shell
-$ make clean; make; make program-dfu
+$ make program-dfu
 ```
